@@ -1,0 +1,94 @@
+[project]
+name = "rescuelens"
+version = "0.1.0"
+description = "Find missing people in drone imagery: YOLO + SAHI detection, verified by Claude vision."
+readme = "README.md"
+license = "AGPL-3.0-only"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "anthropic>=0.70",
+    "fastapi>=0.120",
+    "matplotlib>=3.9",
+    "numpy>=2.0",
+    "pillow>=11.0",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "sahi>=0.11",
+    "sse-starlette>=2.1",
+    "structlog>=24.4",
+    "tenacity>=9.0",
+    "tqdm>=4.66",
+    "typer>=0.15",
+    "ultralytics>=8.3",
+    "uvicorn[standard]>=0.32",
+]
+
+[project.optional-dependencies]
+# Pick exactly one: `uv sync --extra cpu` (default, CI) or `uv sync --extra cu128` (NVIDIA GPU).
+cpu = ["torch>=2.7", "torchvision>=0.22"]
+cu128 = ["torch>=2.7", "torchvision>=0.22"]
+
+[project.scripts]
+rescuelens = "rescuelens.cli:app"
+
+[dependency-groups]
+dev = [
+    "httpx>=0.27",
+    "mypy>=1.13",
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+conflicts = [[{ extra = "cpu" }, { extra = "cu128" }]]
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu128", extra = "cu128" },
+]
+torchvision = [
+    { index = "pytorch-cpu", extra = "cpu" },
+    { index = "pytorch-cu128", extra = "cu128" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "RUF", "PTH", "ASYNC", "S", "ANN"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN", "S"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+files = ["src", "tests"]
+
+[[tool.mypy.overrides]]
+module = ["sahi.*", "ultralytics.*", "piexif.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
