@@ -1,8 +1,18 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+
+  /* topographic sheet + rescue signal colours */
+  --color-paper: #eef1f0;
+  --color-sheet: #f7f9f8;
+  --color-ink: #18221f;
+  --color-ink-soft: #46534e;
+  --color-contour: #7e918a;
+  --color-rule: #d3dbd8;
+  --color-signal: #ff5a1f;
+  --color-ochre: #c38f22;
+  --color-sky: #3a86d4;
 }
 
 html,
@@ -12,5 +22,117 @@ body,
 }
 
 body {
-  @apply bg-zinc-950 text-zinc-100 antialiased;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wordmark {
+  font-stretch: 125%;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.condensed {
+  font-stretch: 75%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sky);
+  outline-offset: 2px;
+}
+
+/* rank pins on the map */
+.pin {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.5);
+  color: #fff;
+  font: 700 12px/1 var(--font-sans);
+  font-stretch: 85%;
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+.pin[data-selected='true'],
+.pin-dot[data-selected='true'] {
+  transform: scale(1.35);
+  border-color: var(--color-ink);
+}
+.pin-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  cursor: pointer;
+}
+
+.loupe {
+  transition: transform 650ms cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+
+.report h2 {
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 1.4rem 0 0.5rem;
+}
+.report p,
+.report li {
+  line-height: 1.55;
+  margin: 0.4rem 0;
+}
+.report ul {
+  list-style: disc;
+  padding-left: 1.2rem;
+}
+.report table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin: 0.6rem 0;
+}
+.report th,
+.report td {
+  white-space: nowrap;
+  text-align: left;
+  padding: 0.3rem 0.4rem;
+  border-bottom: 1px solid var(--color-rule);
+  vertical-align: top;
+}
+.report td:last-child {
+  white-space: normal;
+  min-width: 13rem;
+}
+.report th {
+  color: var(--color-ink-soft);
+  font-weight: 600;
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+.sweep {
+  animation: sweep 1.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loupe,
+  .pin {
+    transition: none;
+  }
+  .sweep {
+    animation: none;
+  }
 }

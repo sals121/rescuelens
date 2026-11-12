@@ -18,13 +18,13 @@ from rescuelens.logging import configure_logging, get_logger
 app = typer.Typer(no_args_is_help=True, add_completion=False, pretty_exceptions_enable=False)
 log = get_logger(__name__)
 
-DEFAULT_WEIGHTS = PROJECT_ROOT / "weights" / "yolo26s.pt"
+COCO_WEIGHTS = PROJECT_ROOT / "weights" / "yolo26s.pt"
 
 
 def _default_device() -> str:
-    import torch
+    from rescuelens.detect.detector import auto_device
 
-    return "cuda:0" if torch.cuda.is_available() else "cpu"
+    return auto_device()
 
 
 @app.callback()
@@ -48,10 +48,12 @@ def serve(host: str = "127.0.0.1", port: int = 8731, reload: bool = False) -> No
 @app.command()
 def analyze(
     source: Annotated[Path, typer.Argument(exists=True, file_okay=False, help="Image folder")],
-    weights: Annotated[Path, typer.Option(help="YOLO weights (.pt)")] = DEFAULT_WEIGHTS,
+    weights: Annotated[
+        Path | None, typer.Option(help="YOLO weights (default: HERIDAL fine-tune if present)")
+    ] = None,
     device: Annotated[str | None, typer.Option(help="cpu | cuda:0 (default: auto)")] = None,
     sahi: Annotated[bool, typer.Option(help="Use SAHI slicing")] = True,
-    conf: Annotated[float, typer.Option(help="Detector confidence threshold")] = 0.25,
+    conf: Annotated[float, typer.Option(help="Detector confidence threshold")] = 0.4,
     llm: Annotated[bool, typer.Option(help="Verify candidates with Claude")] = True,
     geo: Annotated[str, typer.Option(help="auto | exif | simulated")] = "auto",
     limit: Annotated[int | None, typer.Option(help="Only the first N images")] = None,
@@ -63,7 +65,7 @@ def analyze(
         raise typer.BadParameter("geo must be auto, exif or simulated")
     opts = AnalysisOptions(
         source_dir=source,
-        weights=weights,
+        weights=weights or get_settings().default_weights,
         device=device or _default_device(),
         use_sahi=sahi,
         confidence=conf,
@@ -141,10 +143,34 @@ def data_prepare(
     typer.echo(json.dumps(manifest["splits"], indent=1))
 
 
+@data_app.command("samples")
+def data_samples(
+    prefix: Annotated[str, typer.Option(help="HERIDAL test series to copy")] = "test_BRA_",
+    name: Annotated[str, typer.Option(help="Folder name under data/samples")] = "heridal-bra",
+) -> None:
+    """Copy one HERIDAL test flight (real EXIF GPS) to data/samples/<name> for the UI."""
+    import shutil
+
+    s = get_settings()
+    src = s.data_dir / "heridal" / "test_full" / "images"
+    boxes = json.loads((src.parent / "boxes.json").read_text(encoding="utf-8"))
+    files = sorted(src.glob(f"{prefix}*.jpg"))
+    if not files:
+        raise typer.BadParameter(f"no {prefix}*.jpg in {src}; run `just prepare-data` first")
+    dest = s.samples_dir / name
+    dest.mkdir(parents=True, exist_ok=True)
+    ann: dict[str, list[list[float]]] = {}
+    for f in files:
+        shutil.copy2(f, dest / f.name)
+        ann[f.name] = [[x0, y0, x1 - x0, y1 - y0] for x0, y0, x1, y1 in boxes[f.stem]["boxes"]]
+    (dest / "annotations.json").write_text(json.dumps(ann, indent=1), encoding="utf-8")
+    typer.echo(f"{len(files)} frames (+ annotations.json) -> {dest}")
+
+
 @app.command()
 def train(
     data: Annotated[Path | None, typer.Option(help="dataset.yaml")] = None,
-    weights: Annotated[Path, typer.Option(help="Starting checkpoint")] = DEFAULT_WEIGHTS,
+    weights: Annotated[Path, typer.Option(help="Starting checkpoint")] = COCO_WEIGHTS,
     out: Annotated[Path, typer.Option(help="Where to copy the best checkpoint")] = (
         PROJECT_ROOT / "weights" / "rescuelens-yolo26s-heridal.pt"
     ),
@@ -169,6 +195,53 @@ def train(
     )
     summary = train_detector(cfg)
     typer.echo(json.dumps(summary["test_tiles"], indent=1))
+
+
+DEMO_ATTRIBUTION = """# Demo data
+
+`run.json` is a recorded RescueLens analysis (`rescuelens export-demo`). The photos in
+`frames/` and `crops/` are downscaled from the HERIDAL test set:
+
+D. Božić-Štulić, Ž. Marušić, S. Gotovac, "Deep Learning Approach in Aerial Imagery for
+Supporting Land Search and Rescue Missions", IJCV 127, 2019. Data: Zenodo record 5662351,
+licensed CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/). Changes: resized and
+cropped; detection boxes and Claude's verdicts added by RescueLens.
+"""
+
+
+@app.command("export-demo")
+def export_demo(
+    run_id: Annotated[str, typer.Argument(help="Finished run under runs/")],
+    out: Annotated[Path, typer.Option(help="Static demo folder")] = (
+        PROJECT_ROOT / "frontend" / "public" / "demo"
+    ),
+    max_side: Annotated[int, typer.Option(help="Longest side of the frame previews")] = 1400,
+) -> None:
+    """Copy a finished run (run.json + images) into the static replay demo."""
+    import shutil
+
+    from PIL import Image
+
+    from rescuelens.schemas import Run
+
+    src = get_settings().runs_dir / run_id
+    run = Run.model_validate_json((src / "run.json").read_text(encoding="utf-8"))
+    if run.status != "done":
+        raise typer.BadParameter(f"run {run_id} is {run.status}, not done")
+    if out.exists():
+        shutil.rmtree(out)
+    (out / "frames").mkdir(parents=True)
+    shutil.copytree(src / "crops", out / "crops")
+    for f in run.frames:
+        with Image.open(src / f.preview) as im:
+            im.thumbnail((max_side, max_side))
+            im.save(out / f.preview, format="JPEG", quality=80, optimize=True)
+    (out / "run.json").write_text(run.model_dump_json(), encoding="utf-8")
+    (out / "ATTRIBUTION.md").write_text(DEMO_ATTRIBUTION, encoding="utf-8")
+    size = sum(p.stat().st_size for p in out.rglob("*") if p.is_file()) / 1e6
+    typer.echo(
+        f"{len(run.frames)} frames, {len(run.candidates)} candidates -> {out} ({size:.1f} MB)"
+    )
 
 
 eval_app = typer.Typer(no_args_is_help=True, help="Evaluate on the full-resolution test set.")

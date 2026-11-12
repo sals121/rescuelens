@@ -36,6 +36,7 @@ typecheck:
 
 test:
     {{uvr}} pytest -q
+    cd frontend; npm test
 
 # Download HERIDAL (8.3 GB from Zenodo, resumable, md5-verified)
 download-data:
@@ -45,6 +46,10 @@ download-data:
 prepare-data:
     {{uvr}} rescuelens data prepare
 
+# Copy one real HERIDAL flight (12 frames, EXIF GPS) to data/samples/heridal-bra
+samples:
+    {{uvr}} rescuelens data samples
+
 # Run backend (port 8731) and frontend dev server (port 5179)
 run:
     {{uvr}} rescuelens serve
@@ -52,3 +57,8 @@ run:
 ui:
     cd frontend; npm run dev
 
+
+# Export a finished run and build the static replay demo into frontend/dist
+demo run_id:
+    {{uvr}} rescuelens export-demo {{run_id}}
+    cd frontend; $env:VITE_DEMO = '1'; npm run build

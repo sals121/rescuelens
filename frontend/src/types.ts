@@ -5,6 +5,9 @@ export type Posture = 'standing' | 'lying' | 'sitting' | 'unknown'
 export type Priority = 'high' | 'medium' | 'low'
 export type VerifyStatus = 'pending' | 'verified' | 'cached' | 'error' | 'skipped'
 
+/** x, y, w, h in original-frame pixels */
+export type Box = [number, number, number, number]
+
 export interface Verification {
   is_person: boolean
   confidence: number
@@ -25,12 +28,13 @@ export interface Frame {
   preview: string
   n_candidates: number
   detect_s: number
+  ground_truth: Box[] | null
 }
 
 export interface Candidate {
   id: string
   frame_id: string
-  bbox: [number, number, number, number]
+  bbox: Box
   yolo_score: number
   lat: number
   lon: number
@@ -53,6 +57,7 @@ export interface RunStats {
   duration_s: number
   detect_s: number
   cost_usd: number
+  cost_full_run_usd: number
   input_tokens: number
   output_tokens: number
   llm_calls: number
@@ -91,3 +96,23 @@ export interface RunSummary {
   model: string | null
   geo_mode: string
 }
+
+export interface Source {
+  name: string
+  n_images: number
+}
+
+export interface Status {
+  busy: boolean
+  active_run_id: string | null
+  weights: string
+}
+
+/** Server-sent events emitted by `run_analysis` (and re-created by the replay). */
+export type RunEvent =
+  | { type: 'run_started'; data: { run_id: string; config: RunConfig; n_frames: number } }
+  | { type: 'frame_done'; data: { frame: Frame; candidates: Candidate[]; progress: number } }
+  | { type: 'candidate_verified'; data: { candidate: Candidate; cost_usd: number } }
+  | { type: 'report_ready'; data: { markdown: string } }
+  | { type: 'run_finished'; data: { run_id: string; stats: RunStats } }
+  | { type: 'error'; data: { message: string } }

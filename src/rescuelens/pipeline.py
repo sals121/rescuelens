@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import json
 import time
 from collections.abc import AsyncIterator
 from dataclasses import dataclass
@@ -47,7 +48,7 @@ class AnalysisOptions:
     weights: Path
     device: str = "cpu"
     use_sahi: bool = True
-    confidence: float = 0.25
+    confidence: float = 0.4  # best F1 with Claude on HERIDAL test (results/2026-11-12)
     max_candidates_per_frame: int = 15
     llm_enabled: bool = True
     prompt_version: str = "v1"
@@ -77,6 +78,18 @@ def _candidate_position(frame: SourceFrame, det: Detection) -> tuple[float, floa
     return frame.lat, frame.lon
 
 
+Annotations = dict[str, list[tuple[float, float, float, float]]]
+
+
+def load_annotations(source_dir: Path) -> Annotations:
+    """Optional `annotations.json` ({filename: [[x, y, w, h], ...]}) next to the images."""
+    path = source_dir / "annotations.json"
+    if not path.is_file():
+        return {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return {name: [(b[0], b[1], b[2], b[3]) for b in boxes] for name, boxes in raw.items()}
+
+
 def _save_preview(img: Image.Image, path: Path) -> None:
     scale = min(1.0, PREVIEW_MAX_SIDE / max(img.width, img.height))
     preview = img.resize((round(img.width * scale), round(img.height * scale)))
@@ -104,12 +117,13 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
     if not paths:
         raise FileNotFoundError(f"no images found in {opts.source_dir}")
     frames_src = load_frames(paths, geo_mode=opts.geo_mode)
+    annotations = load_annotations(opts.source_dir)
 
     run = Run(
         run_id=run_id,
         created_at=datetime.now(UTC).isoformat(timespec="seconds"),
         config=RunConfig(
-            source_dir=str(opts.source_dir),
+            source_dir=opts.source_dir.name,
             weights=opts.weights.name,
             use_sahi=opts.use_sahi,
             confidence=opts.confidence,
@@ -171,7 +185,8 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
             else:
                 cand.verification = res.verification
                 cand.verify_status = "cached" if res.cached else "verified"
-                cand.llm_cost_usd, cand.llm_latency_s = res.cost_usd, res.latency_s
+                # what the call cost when it was made, even if this run read it from the cache
+                cand.llm_cost_usd, cand.llm_latency_s = res.source_cost_usd, res.source_latency_s
         await queue.put(
             Event(
                 type="candidate_verified",
@@ -204,6 +219,7 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
                 preview=preview_rel,
                 n_candidates=len(dets),
                 detect_s=round(detect_s, 3),
+                ground_truth=annotations.get(src.path.name),
             )
             run.frames.append(frame)
             run.stats.detect_s += detect_s
@@ -278,6 +294,7 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
     s.n_errors = sum(c.verify_status == "error" for c in run.candidates)
     s.detect_s = round(s.detect_s, 2)
 
+    spent_before_report = tracker.spent_usd
     if backend is not None and s.n_verified and not budget_hit.is_set():
         try:
             run.report_markdown = await llm_report(
@@ -290,6 +307,8 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
     yield Event(type="report_ready", data={"markdown": run.report_markdown})
 
     s.cost_usd = round(tracker.spent_usd, 5)
+    report_cost = tracker.spent_usd - spent_before_report
+    s.cost_full_run_usd = round(sum(c.llm_cost_usd for c in run.candidates) + report_cost, 5)
     s.input_tokens = tracker.usage.input_tokens + tracker.usage.cache_read_input_tokens
     s.output_tokens = tracker.usage.output_tokens
     s.llm_calls, s.cache_hits = tracker.calls, tracker.cache_hits

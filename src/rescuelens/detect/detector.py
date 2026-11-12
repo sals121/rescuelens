@@ -27,6 +27,12 @@ def person_class_ids(names: dict[int, str]) -> set[int]:
     return {i for i, n in names.items() if n.lower() in PERSON_CLASS_NAMES}
 
 
+def auto_device() -> str:
+    import torch
+
+    return "cuda:0" if torch.cuda.is_available() else "cpu"
+
+
 @dataclass(frozen=True, slots=True)
 class Detection:
     x: float  # top-left, pixels in the original frame

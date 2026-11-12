@@ -24,6 +24,8 @@ class Frame(BaseModel):
     preview: str  # path relative to the run directory
     n_candidates: int = 0
     detect_s: float = 0.0
+    # annotated people (x, y, w, h), when the folder ships an annotations.json (HERIDAL samples)
+    ground_truth: list[tuple[float, float, float, float]] | None = None
 
 
 class Candidate(BaseModel):
@@ -52,6 +54,9 @@ class RunStats(BaseModel):
     duration_s: float = 0.0
     detect_s: float = 0.0
     cost_usd: float = 0.0  # API list-price equivalent (not billed on the claude-code backend)
+    cost_full_run_usd: float = (
+        0.0  # same run with an empty cache (cached verdicts at their original price)
+    )
     input_tokens: int = 0
     output_tokens: int = 0
     llm_calls: int = 0
@@ -59,7 +64,7 @@ class RunStats(BaseModel):
 
 
 class RunConfig(BaseModel):
-    source_dir: str
+    source_dir: str  # folder name only, so run files never leak local paths
     weights: str
     use_sahi: bool
     confidence: float
