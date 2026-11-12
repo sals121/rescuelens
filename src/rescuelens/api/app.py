@@ -8,8 +8,9 @@ from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field, ValidationError
 from sse_starlette.sse import EventSourceResponse
@@ -26,6 +27,9 @@ log = get_logger(__name__)
 
 _SAFE_ID = re.compile(r"^[A-Za-z0-9._-]{1,64}$")
 _ASSET_DIRS = ("frames", "crops")
+# Local tool: only answer to local host names (blocks DNS rebinding) and local web origins.
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
+ALLOWED_ORIGINS = ["http://localhost:5179", "http://127.0.0.1:5179"]
 
 
 class Health(BaseModel):
@@ -105,9 +109,10 @@ def create_app(settings: Settings | None = None, runner: Runner | None = None) -
     jobs = JobManager(runner or default_runner(lambda: cfg))
 
     app = FastAPI(title="RescueLens", version=__version__)
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=ALLOWED_HOSTS)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:5179", "http://127.0.0.1:5179"],
+        allow_origins=ALLOWED_ORIGINS,
         allow_methods=["GET", "POST"],
         allow_headers=["*"],
     )
@@ -128,8 +133,13 @@ def create_app(settings: Settings | None = None, runner: Runner | None = None) -
         return [Source(name=k, n_images=len(list_images(v))) for k, v in found.items()]
 
     @app.post("/api/analyze", status_code=202)
-    async def analyze(req: AnalyzeRequest) -> AnalyzeResponse:
+    async def analyze(req: AnalyzeRequest, request: Request) -> AnalyzeResponse:
         from rescuelens.detect.detector import auto_device
+
+        # starting a job spends GPU time and Claude budget: refuse other web pages
+        origin = request.headers.get("origin")
+        if origin is not None and origin not in ALLOWED_ORIGINS:
+            raise HTTPException(status_code=403, detail="origin not allowed")
 
         source = list_sources(settings).get(req.source)
         if source is None:

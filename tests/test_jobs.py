@@ -86,3 +86,11 @@ def test_analyze_rejects_unknown_source_and_paths(client: TestClient) -> None:
 
 def test_events_for_unknown_run(client: TestClient) -> None:
     assert client.get("/api/runs/whatever/events").status_code == 404
+
+
+def test_analyze_refuses_foreign_origins_and_hosts(client: TestClient) -> None:
+    body = {"source": "flight-a"}
+    r = client.post("/api/analyze", json=body, headers={"origin": "https://evil.example"})
+    assert r.status_code == 403
+    r = client.post("/api/analyze", json=body, headers={"host": "evil.example"})
+    assert r.status_code == 400  # DNS rebinding: unknown Host header
