@@ -1,0 +1,7437 @@
+{
+ "meta": {
+  "preds": "rescuelens-yolo26s-heridal_sahi.json",
+  "detector": {
+   "weights": "rescuelens-yolo26s-heridal.pt",
+   "sahi": true,
+   "s_per_frame": 1.5665982829994756
+  },
+  "conf": 0.4,
+  "model": "claude-opus-5-5",
+  "summary": {
+   "candidates": 409,
+   "verified": 409,
+   "errors": 0,
+   "skipped": 0,
+   "said_person": 326,
+   "cost_usd": 7.3915518,
+   "cost_per_call_usd": 0.01807225378973105,
+   "spent_this_run_usd": 0.0,
+   "llm_calls": 0,
+   "cache_hits": 409,
+   "latency_p50_s": 4.195094299997436,
+   "latency_p90_s": 7.455052000004798
+  },
+  "metrics": {
+   "yolo": {
+    "images": 101,
+    "ground_truth": 337,
+    "conf": 0.4,
+    "detections": 409,
+    "tp": 273,
+    "fp": 136,
+    "fn": 64,
+    "precision": 0.6674816625916871,
+    "recall": 0.8100890207715133,
+    "f1": 0.7319034852546918,
+    "fp_per_image": 1.3465346534653466,
+    "ap50": 0.7502043638883488,
+    "ap50_95": 0.47469522266944936
+   },
+   "yolo+claude_filter": {
+    "images": 101,
+    "ground_truth": 337,
+    "conf": 0.4,
+    "detections": 326,
+    "tp": 270,
+    "fp": 56,
+    "fn": 67,
+    "precision": 0.8282208588957055,
+    "recall": 0.8011869436201781,
+    "f1": 0.8144796380090498,
+    "fp_per_image": 0.5544554455445545,
+    "ap50": 0.7608762400538385,
+    "ap50_95": 0.480653339027842
+   },
+   "yolo+claude_rescored": {
+    "images": 101,
+    "ground_truth": 337,
+    "conf": 0.5,
+    "detections": 326,
+    "tp": 270,
+    "fp": 56,
+    "fn": 67,
+    "precision": 0.8282208588957055,
+    "recall": 0.8011869436201781,
+    "f1": 0.8144796380090498,
+    "fp_per_image": 0.5544554455445545,
+    "ap50": 0.7523779115251243,
+    "ap50_95": 0.4530639522514674
+   }
+  }
+ },
+ "verdicts": [
+  {
+   "stem": "test_BLI_0001",
+   "box": [
+    1679.5364685058594,
+    764.1651458740234,
+    1724.3747863769531,
+    805.6083984375
+   ],
+   "score": 0.8382920026779175,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.030412,
+   "latency_s": 5.617335999995703,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0001",
+   "box": [
+    3471.774169921875,
+    2103.495849609375,
+    3548.2100830078125,
+    2158.26025390625
+   ],
+   "score": 0.8149113655090332,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.027432,
+   "latency_s": 3.7722341000044253,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0001",
+   "box": [
+    1092.3512878417969,
+    1302.0365905761719,
+    1155.4934997558594,
+    1354.8588562011719
+   ],
+   "score": 0.800782322883606,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.030812,
+   "latency_s": 5.657555000012508,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0001",
+   "box": [
+    1975.7390747070312,
+    524.6410827636719,
+    2057.0469360351562,
+    587.9226989746094
+   ],
+   "score": 0.7935658097267151,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.027872,
+   "latency_s": 3.8549914000032004,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0001",
+   "box": [
+    2622.980224609375,
+    524.8400402069092,
+    2687.970458984375,
+    575.5483245849609
+   ],
+   "score": 0.7871330380439758,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.027872,
+   "latency_s": 3.889428399997996,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0001",
+   "box": [
+    3289.0145568847656,
+    1442.61279296875,
+    3361.697967529297,
+    1501.2408447265625
+   ],
+   "score": 0.6060013175010681,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.027792,
+   "latency_s": 4.167004799994174,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    2163.25691986084,
+    1686.7596435546875,
+    2203.676788330078,
+    1719.5180053710938
+   ],
+   "score": 0.8353663086891174,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0165866,
+   "latency_s": 4.24006820001523,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    3355.75927734375,
+    1777.8982849121094,
+    3405.3321533203125,
+    1812.5315246582031
+   ],
+   "score": 0.7790722846984863,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.8963890000013635,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    1601.0145263671875,
+    2390.05517578125,
+    1703.7255859375,
+    2443.28076171875
+   ],
+   "score": 0.761079728603363,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 4.005741900007706,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    1493.1549377441406,
+    1977.7774047851562,
+    1583.6768798828125,
+    2023.4711303710938
+   ],
+   "score": 0.7257826328277588,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0157666,
+   "latency_s": 3.7658279000024777,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    1561.9628295898438,
+    1631.7836303710938,
+    1606.4771118164062,
+    1664.0
+   ],
+   "score": 0.7254979610443115,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.018726600000000003,
+   "latency_s": 5.655614699993748,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    1311.179443359375,
+    118.69749450683594,
+    1379.902587890625,
+    221.6636505126953
+   ],
+   "score": 0.7092592716217041,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.95,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016026600000000002,
+   "latency_s": 3.8038081000267994,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    917.2174072265625,
+    674.1026153564453,
+    997.9450073242188,
+    719.6149139404297
+   ],
+   "score": 0.6496462821960449,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0162266,
+   "latency_s": 3.522172099997988,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    789.9967651367188,
+    2082.3603515625,
+    859.4390869140625,
+    2147.739013671875
+   ],
+   "score": 0.6456286907196045,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0162066,
+   "latency_s": 3.9808424999937415,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0002",
+   "box": [
+    122.95478820800781,
+    725.4865417480469,
+    164.83555603027344,
+    764.5122375488281
+   ],
+   "score": 0.4671579599380493,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.021066599999999998,
+   "latency_s": 6.0165783999837,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0003",
+   "box": [
+    3095.2938842773438,
+    2234.0916748046875,
+    3162.8417358398438,
+    2295.7553100585938
+   ],
+   "score": 0.8215517997741699,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163066,
+   "latency_s": 4.0630786000110675,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0003",
+   "box": [
+    2255.8638305664062,
+    602.446044921875,
+    2314.3054809570312,
+    639.98291015625
+   ],
+   "score": 0.7660195231437683,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0174266,
+   "latency_s": 4.676838899991708,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0003",
+   "box": [
+    3273.1658325195312,
+    575.3585319519043,
+    3322.1942749023438,
+    625.4562835693359
+   ],
+   "score": 0.6736955046653748,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0161066,
+   "latency_s": 3.5639229000080377,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0003",
+   "box": [
+    1610.70458984375,
+    1137.927978515625,
+    1726.3101806640625,
+    1191.64013671875
+   ],
+   "score": 0.6372150778770447,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0176266,
+   "latency_s": 4.791237299999921,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0003",
+   "box": [
+    954.3436889648438,
+    2351.8798217773438,
+    1044.840087890625,
+    2396.9199829101562
+   ],
+   "score": 0.5898939371109009,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0158666,
+   "latency_s": 3.6311387000023387,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    1866.0794067382812,
+    241.341064453125,
+    1910.7369995117188,
+    309.24908447265625
+   ],
+   "score": 0.8174770474433899,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.7258093999989796,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    1786.5076904296875,
+    792.9265747070312,
+    1854.3994750976562,
+    858.7949829101562
+   ],
+   "score": 0.8146295547485352,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0166066,
+   "latency_s": 4.037303500022972,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    3454.201416015625,
+    789.6958618164062,
+    3566.286376953125,
+    879.1967163085938
+   ],
+   "score": 0.8088923096656799,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0166666,
+   "latency_s": 4.2624018999922555,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    1836.7479248046875,
+    1600.3623046875,
+    1889.3553466796875,
+    1696.4974975585938
+   ],
+   "score": 0.8000147342681885,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0160666,
+   "latency_s": 3.859341300005326,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    1387.5699157714844,
+    497.0336608886719,
+    1464.3278503417969,
+    568.56591796875
+   ],
+   "score": 0.7866147756576538,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0164066,
+   "latency_s": 4.029265599994687,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    1997.4595947265625,
+    2607.7757568359375,
+    2047.78173828125,
+    2693.9359130859375
+   ],
+   "score": 0.7681351900100708,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.015986600000000004,
+   "latency_s": 3.73216750001302,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    1024.0,
+    1190.3624572753906,
+    1088.4112167358398,
+    1294.4740905761719
+   ],
+   "score": 0.7605996131896973,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163866,
+   "latency_s": 4.202686600008747,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    2614.8170776367188,
+    304.7640686035156,
+    2688.0,
+    419.2606506347656
+   ],
+   "score": 0.7591512799263,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0211466,
+   "latency_s": 6.236076600005617,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    952.8226928710938,
+    122.37779998779297,
+    1040.4991455078125,
+    230.312255859375
+   ],
+   "score": 0.7508646249771118,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.016706600000000002,
+   "latency_s": 4.117681900010211,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    606.9647216796875,
+    533.791748046875,
+    684.6353759765625,
+    594.8245849609375
+   ],
+   "score": 0.7481658458709717,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0164866,
+   "latency_s": 4.06562649999978,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    2513.7646484375,
+    314.9288330078125,
+    2562.8336181640625,
+    404.8853759765625
+   ],
+   "score": 0.7321295142173767,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0242866,
+   "latency_s": 8.410169799986761,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    1752.8356628417969,
+    847.0721130371094,
+    1799.4219970703125,
+    902.1713562011719
+   ],
+   "score": 0.7267462611198425,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0211866,
+   "latency_s": 6.612551899976097,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    3353.398193359375,
+    1572.2972412109375,
+    3481.26611328125,
+    1646.5728759765625
+   ],
+   "score": 0.675896942615509,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0234866,
+   "latency_s": 7.583965600002557,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    3013.4683227539062,
+    0.0,
+    3064.8876953125,
+    99.14892578125
+   ],
+   "score": 0.6215532422065735,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0204666,
+   "latency_s": 6.199709800013807,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    3367.675048828125,
+    1642.116943359375,
+    3481.053955078125,
+    1737.2177734375
+   ],
+   "score": 0.6092400550842285,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0166466,
+   "latency_s": 3.9977746000222396,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    2849.802978515625,
+    886.5178833007812,
+    2926.733154296875,
+    964.9934692382812
+   ],
+   "score": 0.5465433597564697,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 3.9984903000004124,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0004",
+   "box": [
+    2277.2540283203125,
+    1651.3470840454102,
+    2370.4216918945312,
+    1717.4900817871094
+   ],
+   "score": 0.43445542454719543,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0159266,
+   "latency_s": 3.7277127999986988,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0005",
+   "box": [
+    1621.8006134033203,
+    512.0,
+    1682.933349609375,
+    579.2093200683594
+   ],
+   "score": 0.8244220614433289,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0168266,
+   "latency_s": 4.19384020002326,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0005",
+   "box": [
+    2948.3997802734375,
+    517.1877517700195,
+    3038.119873046875,
+    588.9738464355469
+   ],
+   "score": 0.7657570838928223,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0185866,
+   "latency_s": 5.205005900003016,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0005",
+   "box": [
+    3128.1413040161133,
+    575.4734878540039,
+    3174.227607727051,
+    621.4298629760742
+   ],
+   "score": 0.4508996307849884,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0230066,
+   "latency_s": 7.469968299992615,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0005",
+   "box": [
+    2069.3240966796875,
+    1476.8598022460938,
+    2122.808349609375,
+    1529.1276245117188
+   ],
+   "score": 0.4150241017341614,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0179866,
+   "latency_s": 4.993493999994826,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0005",
+   "box": [
+    3519.38818359375,
+    1358.097412109375,
+    3560.9910888671875,
+    1386.408447265625
+   ],
+   "score": 0.40462419390678406,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.93,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 3.9016582000185736,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0006",
+   "box": [
+    2409.2027282714844,
+    45.46440505981445,
+    2459.8434143066406,
+    88.74174499511719
+   ],
+   "score": 0.7370278835296631,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.6,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0240066,
+   "latency_s": 8.59308069999679,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0006",
+   "box": [
+    1492.8643188476562,
+    576.2631530761719,
+    1552.6570434570312,
+    662.7718811035156
+   ],
+   "score": 0.6291350722312927,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0164466,
+   "latency_s": 4.0780577000114135,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0006",
+   "box": [
+    2560.1912841796875,
+    818.2771911621094,
+    2630.0958251953125,
+    874.6589050292969
+   ],
+   "score": 0.5749425888061523,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.022766599999999998,
+   "latency_s": 7.284778500004904,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0006",
+   "box": [
+    1381.0764770507812,
+    1318.8605041503906,
+    1430.444580078125,
+    1362.2963562011719
+   ],
+   "score": 0.46710681915283203,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.65,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0184466,
+   "latency_s": 4.970211699983338,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0007",
+   "box": [
+    742.6835632324219,
+    494.5762634277344,
+    815.5873718261719,
+    572.0809326171875
+   ],
+   "score": 0.7966449856758118,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0230666,
+   "latency_s": 7.508701099985046,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0007",
+   "box": [
+    1663.4466247558594,
+    0.0,
+    1717.0157775878906,
+    29.57866096496582
+   ],
+   "score": 0.6770870089530945,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.75,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0250066,
+   "latency_s": 8.209414599987213,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0008",
+   "box": [
+    1674.9056701660156,
+    1648.6848449707031,
+    1735.5162658691406,
+    1759.9954223632812
+   ],
+   "score": 0.7838348746299744,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0178066,
+   "latency_s": 4.660742400010349,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0008",
+   "box": [
+    628.990119934082,
+    1492.755126953125,
+    698.1654052734375,
+    1601.2589111328125
+   ],
+   "score": 0.7483278512954712,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0181066,
+   "latency_s": 4.978442499996163,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0009",
+   "box": [
+    2098.71533203125,
+    2651.914306640625,
+    2465.118408203125,
+    2893.39208984375
+   ],
+   "score": 0.8401442766189575,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.020966600000000002,
+   "latency_s": 6.068935899995267,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0009",
+   "box": [
+    2741.5640563964844,
+    1543.211669921875,
+    2798.3790588378906,
+    1590.162841796875
+   ],
+   "score": 0.6537157297134399,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0161466,
+   "latency_s": 3.770243000006303,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0009",
+   "box": [
+    2220.1925659179688,
+    1738.0070495605469,
+    2299.697509765625,
+    1811.8211975097656
+   ],
+   "score": 0.6023061275482178,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0183066,
+   "latency_s": 4.9247380000015255,
+   "error": null
+  },
+  {
+   "stem": "test_BLI_0009",
+   "box": [
+    1045.7730712890625,
+    1937.318359375,
+    1090.6773681640625,
+    1981.2418212890625
+   ],
+   "score": 0.5892395973205566,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0188466,
+   "latency_s": 5.533565399993677,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0001",
+   "box": [
+    2058.9102783203125,
+    245.28756713867188,
+    2132.0970458984375,
+    294.6629943847656
+   ],
+   "score": 0.47919076681137085,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.6078804999997374,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0002",
+   "box": [
+    2033.046630859375,
+    1574.64501953125,
+    2107.0819091796875,
+    1618.2529296875
+   ],
+   "score": 0.6847543120384216,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016966600000000002,
+   "latency_s": 4.248674200003734,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0002",
+   "box": [
+    693.1553344726562,
+    2668.0433349609375,
+    767.0411071777344,
+    2727.25830078125
+   ],
+   "score": 0.571921169757843,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0239066,
+   "latency_s": 7.940452099981485,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0002",
+   "box": [
+    1230.005126953125,
+    1024.0,
+    1266.4049682617188,
+    1039.3489332199097
+   ],
+   "score": 0.46694374084472656,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.019586600000000003,
+   "latency_s": 5.658502900012536,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0003",
+   "box": [
+    746.0700073242188,
+    490.13958740234375,
+    818.6028442382812,
+    553.7927856445312
+   ],
+   "score": 0.6631441712379456,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0161066,
+   "latency_s": 3.555543700000271,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0003",
+   "box": [
+    587.1075592041016,
+    1514.647705078125,
+    679.9737396240234,
+    1576.4588623046875
+   ],
+   "score": 0.415060430765152,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.93,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0161266,
+   "latency_s": 3.864105799992103,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0004",
+   "box": [
+    613.4804992675781,
+    1982.218017578125,
+    694.8827819824219,
+    2048.669677734375
+   ],
+   "score": 0.7323517799377441,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0199066,
+   "latency_s": 5.756796000001486,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0005",
+   "box": [
+    3450.235565185547,
+    1083.637451171875,
+    3501.978302001953,
+    1124.3505859375
+   ],
+   "score": 0.511329174041748,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.75,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.021806600000000002,
+   "latency_s": 6.52253099999507,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0005",
+   "box": [
+    934.8736267089844,
+    2238.6718139648438,
+    988.8632507324219,
+    2280.7659606933594
+   ],
+   "score": 0.49638083577156067,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.7,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0164666,
+   "latency_s": 3.6382156999898143,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0005",
+   "box": [
+    2651.877685546875,
+    1769.631103515625,
+    2687.8125,
+    1816.987548828125
+   ],
+   "score": 0.4696003496646881,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0159666,
+   "latency_s": 3.3781207999854814,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0006",
+   "box": [
+    1811.5482177734375,
+    1630.9039916992188,
+    1857.7256469726562,
+    1664.0
+   ],
+   "score": 0.790454626083374,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.024466599999999998,
+   "latency_s": 8.713274300011108,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0007",
+   "box": [
+    414.57147216796875,
+    1074.5796508789062,
+    479.97381591796875,
+    1124.0199584960938
+   ],
+   "score": 0.5483993291854858,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.016166600000000003,
+   "latency_s": 4.225404400000116,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0008",
+   "box": [
+    2861.497833251953,
+    2454.3269653320312,
+    2899.006561279297,
+    2503.1613159179688
+   ],
+   "score": 0.5310711860656738,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0162666,
+   "latency_s": 3.675427200010745,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0009",
+   "box": [
+    2357.5576171875,
+    298.37347412109375,
+    2420.62158203125,
+    384.2064514160156
+   ],
+   "score": 0.7023985385894775,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.6,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0228666,
+   "latency_s": 6.868816799978958,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0009",
+   "box": [
+    58.49337387084961,
+    1426.9249877929688,
+    142.33892822265625,
+    1457.3635864257812
+   ],
+   "score": 0.6406044960021973,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.017366600000000003,
+   "latency_s": 4.3153080999909434,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0009",
+   "box": [
+    91.88494873046875,
+    1386.591064453125,
+    167.40447998046875,
+    1421.4239501953125
+   ],
+   "score": 0.530716598033905,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.7,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0174066,
+   "latency_s": 4.441986799996812,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0009",
+   "box": [
+    2108.06640625,
+    382.839599609375,
+    2182.5400390625,
+    482.73773193359375
+   ],
+   "score": 0.49809765815734863,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.96,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0158066,
+   "latency_s": 3.537281400000211,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0009",
+   "box": [
+    1756.4246826171875,
+    0.0,
+    1924.8592529296875,
+    181.57684326171875
+   ],
+   "score": 0.46255674958229065,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.97,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016366600000000002,
+   "latency_s": 4.035377200023504,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    1849.993408203125,
+    2152.0948028564453,
+    1885.5333251953125,
+    2180.2479553222656
+   ],
+   "score": 0.7903004884719849,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0228666,
+   "latency_s": 6.740984799980652,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    1758.7918395996094,
+    2159.677017211914,
+    1787.6255187988281,
+    2200.9249725341797
+   ],
+   "score": 0.787307858467102,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.7,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.018906600000000003,
+   "latency_s": 5.179778799996711,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    1813.0586547851562,
+    2148.4912109375,
+    1835.6185302734375,
+    2176.0
+   ],
+   "score": 0.7507614493370056,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.5,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.019586600000000003,
+   "latency_s": 5.444524699996691,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    3616.326904296875,
+    762.3302612304688,
+    3779.3974609375,
+    927.951416015625
+   ],
+   "score": 0.7410693168640137,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.95,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0159066,
+   "latency_s": 3.4458960999909323,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    1814.8042602539062,
+    2225.8399963378906,
+    1856.2688598632812,
+    2268.7486267089844
+   ],
+   "score": 0.7120262384414673,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.023446599999999998,
+   "latency_s": 7.550055200001225,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    1959.1405029296875,
+    2195.111114501953,
+    1987.2166748046875,
+    2229.512481689453
+   ],
+   "score": 0.6955403089523315,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.7,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.0236066,
+   "latency_s": 8.64383970000199,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    1786.4655303955078,
+    2122.2568969726562,
+    1816.7760620117188,
+    2158.354690551758
+   ],
+   "score": 0.6781229972839355,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.62,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0187866,
+   "latency_s": 5.102250800002366,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    1993.4624633789062,
+    2150.5005645751953,
+    2018.4029541015625,
+    2194.4727783203125
+   ],
+   "score": 0.5589045286178589,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.022426599999999998,
+   "latency_s": 6.988341900025262,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0010",
+   "box": [
+    1743.9856567382812,
+    2130.679977416992,
+    1770.0819702148438,
+    2163.412826538086
+   ],
+   "score": 0.436308890581131,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.5,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0268066,
+   "latency_s": 9.404420700011542,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0011",
+   "box": [
+    826.2208862304688,
+    759.5725250244141,
+    883.7506713867188,
+    805.3707275390625
+   ],
+   "score": 0.7734785079956055,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0206666,
+   "latency_s": 6.186388200003421,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0011",
+   "box": [
+    1655.9130554199219,
+    2638.7608642578125,
+    1738.6494750976562,
+    2687.3604736328125
+   ],
+   "score": 0.4623964726924896,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.015826600000000003,
+   "latency_s": 3.421891300007701,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0012",
+   "box": [
+    1741.7362518310547,
+    2048.032730102539,
+    1791.6263580322266,
+    2084.2112884521484
+   ],
+   "score": 0.800019383430481,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.7,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0166266,
+   "latency_s": 4.324017200007802,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0012",
+   "box": [
+    1107.8211669921875,
+    403.56640625,
+    1149.121353149414,
+    466.78082275390625
+   ],
+   "score": 0.7772672772407532,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0159266,
+   "latency_s": 3.367997399996966,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0012",
+   "box": [
+    512.0,
+    2660.4752807617188,
+    584.9919662475586,
+    2727.5226440429688
+   ],
+   "score": 0.768627405166626,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.016166600000000003,
+   "latency_s": 3.7597737000032794,
+   "error": null
+  },
+  {
+   "stem": "test_BRA_0012",
+   "box": [
+    1834.8367309570312,
+    1648.5953903198242,
+    1880.0225219726562,
+    1695.5596923828125
+   ],
+   "score": 0.453631192445755,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0162866,
+   "latency_s": 4.131412199989427,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0001",
+   "box": [
+    2073.1227951049805,
+    2010.6719360351562,
+    2112.8343200683594,
+    2063.3363037109375
+   ],
+   "score": 0.835373044013977,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 3.866451200010488,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0001",
+   "box": [
+    1009.525146484375,
+    2778.5985412597656,
+    1059.2647705078125,
+    2828.923553466797
+   ],
+   "score": 0.8304944634437561,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0175066,
+   "latency_s": 4.488626900012605,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0001",
+   "box": [
+    1282.4353637695312,
+    2360.010597229004,
+    1341.6355590820312,
+    2397.3088340759277
+   ],
+   "score": 0.7094233632087708,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.65,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.025826599999999998,
+   "latency_s": 9.172462100017583,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0002",
+   "box": [
+    2362.8512268066406,
+    2175.248878479004,
+    2411.484649658203,
+    2246.090606689453
+   ],
+   "score": 0.8189232349395752,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0222666,
+   "latency_s": 7.067285800003447,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0002",
+   "box": [
+    1830.701416015625,
+    2102.9507789611816,
+    1893.7100830078125,
+    2147.3092651367188
+   ],
+   "score": 0.7900527119636536,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0170066,
+   "latency_s": 4.47108489999664,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0003",
+   "box": [
+    2984.4959716796875,
+    2024.4994506835938,
+    3036.7421875,
+    2093.9920043945312
+   ],
+   "score": 0.8179956078529358,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.015986600000000004,
+   "latency_s": 4.455579900008161,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0003",
+   "box": [
+    2507.121337890625,
+    2065.0751953125,
+    2565.851318359375,
+    2116.334228515625
+   ],
+   "score": 0.5480126142501831,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.022806599999999996,
+   "latency_s": 7.368862299976172,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0004",
+   "box": [
+    2037.032470703125,
+    1999.333984375,
+    2076.43994140625,
+    2052.7469482421875
+   ],
+   "score": 0.8440890908241272,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0162666,
+   "latency_s": 3.6470985999912955,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0004",
+   "box": [
+    985.5394897460938,
+    2774.3375854492188,
+    1038.3152465820312,
+    2833.0562133789062
+   ],
+   "score": 0.8406020998954773,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0228666,
+   "latency_s": 7.22048660001019,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0004",
+   "box": [
+    1252.9886016845703,
+    2361.3313598632812,
+    1314.0717163085938,
+    2399.1752319335938
+   ],
+   "score": 0.681584358215332,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0202666,
+   "latency_s": 6.25231330000679,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0005",
+   "box": [
+    986.4608764648438,
+    2698.0277099609375,
+    1039.3668823242188,
+    2743.4642944335938
+   ],
+   "score": 0.8285002112388611,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.020746599999999997,
+   "latency_s": 6.3850784999958705,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0005",
+   "box": [
+    2112.839111328125,
+    1900.4357299804688,
+    2149.31640625,
+    1955.9561157226562
+   ],
+   "score": 0.8164770007133484,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0162466,
+   "latency_s": 3.7900546999881044,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0005",
+   "box": [
+    1351.5923156738281,
+    2254.1393432617188,
+    1409.2307434082031,
+    2290.2760009765625
+   ],
+   "score": 0.6470832824707031,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.6,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.025866599999999997,
+   "latency_s": 9.251394899998559,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0005",
+   "box": [
+    2155.0271606445312,
+    2043.0838317871094,
+    2176.0,
+    2073.4744873046875
+   ],
+   "score": 0.4551351070404053,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0235866,
+   "latency_s": 8.120795899973018,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0006",
+   "box": [
+    2118.9808959960938,
+    1988.4295654296875,
+    2155.1863403320312,
+    2045.8831787109375
+   ],
+   "score": 0.8296576738357544,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0159666,
+   "latency_s": 3.5588271000015084,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0006",
+   "box": [
+    1005.8451538085938,
+    2836.1494140625,
+    1053.2730102539062,
+    2882.4525146484375
+   ],
+   "score": 0.8053269982337952,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.020886599999999998,
+   "latency_s": 6.82557220000308,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0006",
+   "box": [
+    2157.4649047851562,
+    2129.5628662109375,
+    2176.0,
+    2174.8746337890625
+   ],
+   "score": 0.6565550565719604,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.0225066,
+   "latency_s": 7.654200199991465,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0006",
+   "box": [
+    1367.9083862304688,
+    2346.832977294922,
+    1425.2283325195312,
+    2383.383270263672
+   ],
+   "score": 0.6380538940429688,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.62,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0242666,
+   "latency_s": 8.162472899974091,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0007",
+   "box": [
+    1793.4572143554688,
+    2212.7208557128906,
+    1838.0238647460938,
+    2293.8690490722656
+   ],
+   "score": 0.7166077494621277,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0181066,
+   "latency_s": 6.94259309998597,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0008",
+   "box": [
+    1142.3478393554688,
+    680.7899475097656,
+    1181.4188537597656,
+    754.3660583496094
+   ],
+   "score": 0.8029822707176208,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.7,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.019246600000000003,
+   "latency_s": 5.3101072999998,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0008",
+   "box": [
+    2260.026611328125,
+    1252.1636962890625,
+    2345.47802734375,
+    1306.1573486328125
+   ],
+   "score": 0.7852558493614197,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0158666,
+   "latency_s": 3.7427049000107218,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0008",
+   "box": [
+    555.8788452148438,
+    1392.957763671875,
+    633.1959838867188,
+    1466.84619140625
+   ],
+   "score": 0.7655181884765625,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163266,
+   "latency_s": 4.023046800022712,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0008",
+   "box": [
+    1391.6199951171875,
+    142.5787353515625,
+    1437.4144287109375,
+    175.7020263671875
+   ],
+   "score": 0.6362623572349548,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 3.415171000000555,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0009",
+   "box": [
+    2961.4814453125,
+    1054.635009765625,
+    3055.08349609375,
+    1121.15673828125
+   ],
+   "score": 0.7761341333389282,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.016346600000000003,
+   "latency_s": 3.9966280999942683,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0010",
+   "box": [
+    1416.418701171875,
+    660.5138549804688,
+    1474.3502197265625,
+    734.3605346679688
+   ],
+   "score": 0.7903263568878174,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0187066,
+   "latency_s": 4.983397000003606,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0011",
+   "box": [
+    2037.1636047363281,
+    1957.2798461914062,
+    2082.23486328125,
+    2025.8505249023438
+   ],
+   "score": 0.8047369122505188,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.016366600000000002,
+   "latency_s": 3.8679705999966245,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0011",
+   "box": [
+    2613.97216796875,
+    1706.164794921875,
+    2666.0411376953125,
+    1791.8610229492188
+   ],
+   "score": 0.7942771315574646,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016506600000000003,
+   "latency_s": 4.423308499972336,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0012",
+   "box": [
+    3316.1726684570312,
+    2288.9765625,
+    3381.796142578125,
+    2337.56298828125
+   ],
+   "score": 0.845358669757843,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160666,
+   "latency_s": 3.7753348000114784,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0012",
+   "box": [
+    3316.0301666259766,
+    0.0,
+    3390.263671875,
+    37.2203369140625
+   ],
+   "score": 0.7712911367416382,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.55,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.0198066,
+   "latency_s": 6.128908200014848,
+   "error": null
+  },
+  {
+   "stem": "test_BRK_0012",
+   "box": [
+    2439.12646484375,
+    1830.448974609375,
+    2499.550048828125,
+    1882.748779296875
+   ],
+   "score": 0.6033817529678345,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0163866,
+   "latency_s": 4.173070100019686,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0001",
+   "box": [
+    1122.8727111816406,
+    2133.290802001953,
+    1182.3421936035156,
+    2169.7744140625
+   ],
+   "score": 0.8664199113845825,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.018386600000000003,
+   "latency_s": 5.353823899989948,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0001",
+   "box": [
+    2255.8214721679688,
+    2622.5519409179688,
+    2296.5988159179688,
+    2671.7932739257812
+   ],
+   "score": 0.8171170949935913,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.018206600000000003,
+   "latency_s": 5.257780899992213,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0001",
+   "box": [
+    1125.47021484375,
+    2031.8605346679688,
+    1151.9342041015625,
+    2068.7450561523438
+   ],
+   "score": 0.7028629779815674,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0192266,
+   "latency_s": 5.975019100005738,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0002",
+   "box": [
+    84.17095947265625,
+    1794.109619140625,
+    157.73980712890625,
+    1831.4549560546875
+   ],
+   "score": 0.8420371413230896,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0162466,
+   "latency_s": 4.000081400008639,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0002",
+   "box": [
+    1875.7906188964844,
+    2644.783447265625,
+    1913.6296691894531,
+    2688.0
+   ],
+   "score": 0.7699158787727356,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016366600000000002,
+   "latency_s": 3.9213905000069644,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0002",
+   "box": [
+    70.74176025390625,
+    1951.1112060546875,
+    165.827880859375,
+    1992.6392211914062
+   ],
+   "score": 0.7517631649971008,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.019706599999999998,
+   "latency_s": 5.7548543000011705,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0002",
+   "box": [
+    2029.0203857421875,
+    517.1031494140625,
+    2079.53955078125,
+    590.9913330078125
+   ],
+   "score": 0.7509329915046692,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0164866,
+   "latency_s": 4.068611599999713,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0003",
+   "box": [
+    361.73455810546875,
+    1458.8417358398438,
+    435.33343505859375,
+    1498.2684326171875
+   ],
+   "score": 0.8387199640274048,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163866,
+   "latency_s": 3.9171420999919064,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0003",
+   "box": [
+    1968.1920776367188,
+    2071.018974304199,
+    2003.6466674804688,
+    2106.312515258789
+   ],
+   "score": 0.7069901823997498,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.7,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0215066,
+   "latency_s": 6.612204000004567,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0003",
+   "box": [
+    2400.7470092773438,
+    1884.6522827148438,
+    2471.3493041992188,
+    1938.2050170898438
+   ],
+   "score": 0.6223783493041992,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0159466,
+   "latency_s": 3.773883800022304,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0003",
+   "box": [
+    2594.10595703125,
+    1405.80712890625,
+    2646.2220458984375,
+    1444.662109375
+   ],
+   "score": 0.6169649958610535,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0162466,
+   "latency_s": 3.818366999999853,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0003",
+   "box": [
+    1097.8449172973633,
+    1103.583984375,
+    1151.5993881225586,
+    1134.59130859375
+   ],
+   "score": 0.4912126362323761,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0164466,
+   "latency_s": 4.070340000005672,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0004",
+   "box": [
+    2075.023681640625,
+    618.3384475708008,
+    2102.472900390625,
+    669.9337768554688
+   ],
+   "score": 0.7927720546722412,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.015846600000000002,
+   "latency_s": 3.7969962999923155,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0004",
+   "box": [
+    2182.1026611328125,
+    2514.9624633789062,
+    2217.5012817382812,
+    2558.99072265625
+   ],
+   "score": 0.6078193187713623,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016366600000000002,
+   "latency_s": 3.9263551000040025,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0004",
+   "box": [
+    1294.6220397949219,
+    940.2119750976562,
+    1326.0574035644531,
+    984.1408081054688
+   ],
+   "score": 0.5527473092079163,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.7,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0184266,
+   "latency_s": 5.311427899985574,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0004",
+   "box": [
+    3954.7576293945312,
+    1046.9151611328125,
+    3992.4873657226562,
+    1084.8118133544922
+   ],
+   "score": 0.503780722618103,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0219666,
+   "latency_s": 6.970662900013849,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0004",
+   "box": [
+    2062.7738647460938,
+    2540.293426513672,
+    2118.4946899414062,
+    2591.3746032714844
+   ],
+   "score": 0.40778079628944397,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0164666,
+   "latency_s": 4.047331999987364,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0005",
+   "box": [
+    2177.472702026367,
+    2600.8295288085938,
+    2209.875015258789,
+    2665.96630859375
+   ],
+   "score": 0.7608368992805481,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0167266,
+   "latency_s": 4.142779200017685,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0005",
+   "box": [
+    15.101615905761719,
+    403.0201721191406,
+    59.95494079589844,
+    432.2387390136719
+   ],
+   "score": 0.5646539330482483,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.6,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.018206600000000003,
+   "latency_s": 5.036182900017593,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0005",
+   "box": [
+    2607.306007385254,
+    716.0167236328125,
+    2672.25528717041,
+    761.3809204101562
+   ],
+   "score": 0.4950180649757385,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0163066,
+   "latency_s": 4.052467100002104,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0006",
+   "box": [
+    2804.183319091797,
+    135.27487182617188,
+    2845.103057861328,
+    205.94717407226562
+   ],
+   "score": 0.8049822449684143,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160466,
+   "latency_s": 3.805832100013504,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0006",
+   "box": [
+    1880.49072265625,
+    1834.9664611816406,
+    1938.636474609375,
+    1873.0428771972656
+   ],
+   "score": 0.773398756980896,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0169066,
+   "latency_s": 4.4852564000175335,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0006",
+   "box": [
+    2225.2294311523438,
+    2644.13623046875,
+    2287.4595947265625,
+    2676.915771484375
+   ],
+   "score": 0.5417309403419495,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0207066,
+   "latency_s": 6.36959059999208,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0006",
+   "box": [
+    390.19830322265625,
+    1334.7327880859375,
+    455.20037841796875,
+    1399.099365234375
+   ],
+   "score": 0.4022538363933563,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0181266,
+   "latency_s": 5.2453046000155155,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0007",
+   "box": [
+    2778.0042724609375,
+    102.29676055908203,
+    2819.5245361328125,
+    176.93548583984375
+   ],
+   "score": 0.792498767375946,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0157666,
+   "latency_s": 4.073805399995763,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0007",
+   "box": [
+    2273.757537841797,
+    2641.6298828125,
+    2335.877716064453,
+    2673.90576171875
+   ],
+   "score": 0.5782586336135864,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016026600000000002,
+   "latency_s": 4.071927300014067,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0007",
+   "box": [
+    1562.592529296875,
+    1800.74658203125,
+    1616.4178466796875,
+    1848.068603515625
+   ],
+   "score": 0.5232160687446594,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0181666,
+   "latency_s": 5.303352099988842,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0008",
+   "box": [
+    2775.988037109375,
+    90.54098510742188,
+    2819.5406799316406,
+    168.37765502929688
+   ],
+   "score": 0.7855144143104553,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.016186600000000002,
+   "latency_s": 4.614043599984143,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0008",
+   "box": [
+    1953.3936157226562,
+    2080.432228088379,
+    1986.3026123046875,
+    2123.1969833374023
+   ],
+   "score": 0.6214887499809265,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.55,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0250066,
+   "latency_s": 11.236865600018064,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0008",
+   "box": [
+    386.12738037109375,
+    1384.4698486328125,
+    439.0167236328125,
+    1447.668701171875
+   ],
+   "score": 0.6144213676452637,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.7,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.018726600000000003,
+   "latency_s": 6.750291700009257,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0009",
+   "box": [
+    1960.1396484375,
+    1641.0830612182617,
+    1990.730712890625,
+    1690.87548828125
+   ],
+   "score": 0.816906213760376,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.016026600000000002,
+   "latency_s": 5.354790600016713,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0009",
+   "box": [
+    2793.7328491210938,
+    91.51219940185547,
+    2834.961395263672,
+    167.8212890625
+   ],
+   "score": 0.7926852703094482,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0161466,
+   "latency_s": 5.3921241000061855,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0009",
+   "box": [
+    387.99163818359375,
+    1371.9990234375,
+    438.991455078125,
+    1436.3505859375
+   ],
+   "score": 0.41360923647880554,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.022626599999999997,
+   "latency_s": 9.148760599986417,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0010",
+   "box": [
+    2787.5384826660156,
+    107.56935119628906,
+    2829.56640625,
+    184.58924865722656
+   ],
+   "score": 0.7360194325447083,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160666,
+   "latency_s": 4.776970500010066,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0010",
+   "box": [
+    2266.9222412109375,
+    1994.7418518066406,
+    2308.6195068359375,
+    2028.5158386230469
+   ],
+   "score": 0.7250277996063232,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.6,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0178266,
+   "latency_s": 4.765936600015266,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0010",
+   "box": [
+    0.0,
+    2335.8147583007812,
+    27.229875564575195,
+    2369.9898071289062
+   ],
+   "score": 0.44565874338150024,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0164666,
+   "latency_s": 4.3494793999998365,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0011",
+   "box": [
+    2845.6732177734375,
+    105.38847351074219,
+    2890.375732421875,
+    183.31199645996094
+   ],
+   "score": 0.7774971723556519,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.016026600000000002,
+   "latency_s": 3.849516999995103,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0011",
+   "box": [
+    2094.885009765625,
+    1867.4684448242188,
+    2133.263671875,
+    1905.3508911132812
+   ],
+   "score": 0.7128296494483948,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0161266,
+   "latency_s": 4.077386599994497,
+   "error": null
+  },
+  {
+   "stem": "test_BRS_0011",
+   "box": [
+    2082.931640625,
+    1629.0850219726562,
+    2108.08251953125,
+    1663.9580688476562
+   ],
+   "score": 0.5463440418243408,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0166466,
+   "latency_s": 4.333558599988464,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0001",
+   "box": [
+    2745.0431213378906,
+    1208.5037841796875,
+    2804.0511169433594,
+    1247.7374267578125
+   ],
+   "score": 0.8016231060028076,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0164866,
+   "latency_s": 4.1493333999824245,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0002",
+   "box": [
+    2396.680419921875,
+    824.2440185546875,
+    2467.4000244140625,
+    868.52734375
+   ],
+   "score": 0.7951628565788269,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160866,
+   "latency_s": 4.083937599993078,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0002",
+   "box": [
+    2864.9496459960938,
+    544.7899169921875,
+    2900.0911865234375,
+    592.6546630859375
+   ],
+   "score": 0.542871356010437,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0234066,
+   "latency_s": 8.25947229997837,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0003",
+   "box": [
+    2644.551513671875,
+    968.3392333984375,
+    2687.2998046875,
+    1045.7053833007812
+   ],
+   "score": 0.753365159034729,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0161266,
+   "latency_s": 4.091735800000606,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0004",
+   "box": [
+    3401.8106994628906,
+    1052.467529296875,
+    3449.445846557617,
+    1089.1826171875
+   ],
+   "score": 0.8186710476875305,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0176266,
+   "latency_s": 4.987643499975093,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0004",
+   "box": [
+    3601.347900390625,
+    2439.518295288086,
+    3650.43701171875,
+    2481.622116088867
+   ],
+   "score": 0.8063911199569702,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.020446600000000002,
+   "latency_s": 5.831858999998076,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0004",
+   "box": [
+    2013.84326171875,
+    1897.3436279296875,
+    2060.27197265625,
+    1947.431396484375
+   ],
+   "score": 0.742482602596283,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160666,
+   "latency_s": 3.9959618000139017,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0004",
+   "box": [
+    3072.7049560546875,
+    2250.8865661621094,
+    3145.2813720703125,
+    2343.6685485839844
+   ],
+   "score": 0.7105521559715271,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0188466,
+   "latency_s": 5.327720100001898,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0005",
+   "box": [
+    3131.31396484375,
+    1770.4113464355469,
+    3198.5166015625,
+    1829.0653381347656
+   ],
+   "score": 0.7696102857589722,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0161066,
+   "latency_s": 3.739661800005706,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0005",
+   "box": [
+    442.3558349609375,
+    852.6368408203125,
+    503.752197265625,
+    902.2008666992188
+   ],
+   "score": 0.5326520800590515,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0162466,
+   "latency_s": 3.879212899977574,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0006",
+   "box": [
+    2851.8728637695312,
+    1475.9028930664062,
+    2929.1282348632812,
+    1523.3643188476562
+   ],
+   "score": 0.7680425047874451,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.015846600000000002,
+   "latency_s": 3.4948082999908365,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0006",
+   "box": [
+    3647.2430419921875,
+    827.0148315429688,
+    3710.6593017578125,
+    888.8989868164062
+   ],
+   "score": 0.7399221062660217,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0161466,
+   "latency_s": 3.8001603000157047,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0006",
+   "box": [
+    2050.7350006103516,
+    1604.7050476074219,
+    2136.4239959716797,
+    1681.5210876464844
+   ],
+   "score": 0.7387495636940002,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0159266,
+   "latency_s": 3.780312499991851,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0006",
+   "box": [
+    428.8292236328125,
+    2651.1096801757812,
+    526.386962890625,
+    2700.5474853515625
+   ],
+   "score": 0.5907042026519775,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163266,
+   "latency_s": 4.056964799994603,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0006",
+   "box": [
+    3684.1975708007812,
+    829.4927978515625,
+    3759.987060546875,
+    891.4376831054688
+   ],
+   "score": 0.5442878007888794,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0161466,
+   "latency_s": 4.150413199997274,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0006",
+   "box": [
+    1870.1831665039062,
+    157.20584106445312,
+    1907.9843139648438,
+    197.75399780273438
+   ],
+   "score": 0.4748718738555908,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.016166600000000003,
+   "latency_s": 3.8190815999987535,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0007",
+   "box": [
+    2569.3287200927734,
+    347.1844787597656,
+    2612.816204071045,
+    391.1258850097656
+   ],
+   "score": 0.7783092856407166,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.016026600000000002,
+   "latency_s": 3.7825861000164878,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0007",
+   "box": [
+    1439.9299926757812,
+    699.8285827636719,
+    1489.894287109375,
+    740.6130676269531
+   ],
+   "score": 0.7740907669067383,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.016366600000000002,
+   "latency_s": 3.9873411000007764,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0007",
+   "box": [
+    1661.6064224243164,
+    1598.959228515625,
+    1728.3177795410156,
+    1642.95166015625
+   ],
+   "score": 0.7218674421310425,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0197666,
+   "latency_s": 5.756883900001412,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0008",
+   "box": [
+    2932.7427673339844,
+    287.011474609375,
+    2981.844757080078,
+    345.38421630859375
+   ],
+   "score": 0.798930823802948,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0163266,
+   "latency_s": 3.852289500006009,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0008",
+   "box": [
+    278.176025390625,
+    950.787109375,
+    329.2333984375,
+    1035.4879150390625
+   ],
+   "score": 0.7810757160186768,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016526600000000002,
+   "latency_s": 4.003338899987284,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0008",
+   "box": [
+    1667.6944580078125,
+    1531.4676513671875,
+    1767.43359375,
+    1602.4017333984375
+   ],
+   "score": 0.7480996251106262,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0164066,
+   "latency_s": 3.821541999990586,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0008",
+   "box": [
+    1796.0634155273438,
+    2086.8114624023438,
+    1861.6176147460938,
+    2149.6502075195312
+   ],
+   "score": 0.6938745975494385,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0164066,
+   "latency_s": 3.715558500000043,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0008",
+   "box": [
+    2317.12109375,
+    873.5374755859375,
+    2389.55615234375,
+    931.7584838867188
+   ],
+   "score": 0.6617918014526367,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0161066,
+   "latency_s": 3.778362899989588,
+   "error": null
+  },
+  {
+   "stem": "test_CAB_0008",
+   "box": [
+    2561.346435546875,
+    1311.486572265625,
+    2613.30419921875,
+    1378.187744140625
+   ],
+   "score": 0.5440444946289062,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.022466599999999996,
+   "latency_s": 7.345492499996908,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0001",
+   "box": [
+    1816.6215209960938,
+    1379.2689819335938,
+    1875.1215209960938,
+    1477.2483520507812
+   ],
+   "score": 0.8122841715812683,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0162666,
+   "latency_s": 4.185015900002327,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0001",
+   "box": [
+    2212.761245727539,
+    1109.640480041504,
+    2264.243911743164,
+    1223.7162170410156
+   ],
+   "score": 0.7907477021217346,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0159466,
+   "latency_s": 3.827884499973152,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0002",
+   "box": [
+    377.383544921875,
+    1844.9873046875,
+    450.29339599609375,
+    1886.43408203125
+   ],
+   "score": 0.8103291988372803,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.018406600000000002,
+   "latency_s": 5.6121049000066705,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0003",
+   "box": [
+    2560.0,
+    681.0665130615234,
+    2603.3638763427734,
+    755.8043670654297
+   ],
+   "score": 0.8116769790649414,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 3.563041000015801,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0003",
+   "box": [
+    2048.29443359375,
+    337.41778564453125,
+    2122.6038818359375,
+    428.54730224609375
+   ],
+   "score": 0.7741197943687439,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016186600000000002,
+   "latency_s": 3.521943600004306,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0003",
+   "box": [
+    2443.6495361328125,
+    341.81378173828125,
+    2484.3231201171875,
+    393.27325439453125
+   ],
+   "score": 0.5124141573905945,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.018666600000000002,
+   "latency_s": 5.422304700012319,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0004",
+   "box": [
+    1887.002197265625,
+    1249.046630859375,
+    1929.4754638671875,
+    1353.4476318359375
+   ],
+   "score": 0.8038519024848938,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.021806600000000002,
+   "latency_s": 7.256541399983689,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0004",
+   "box": [
+    2484.347412109375,
+    1301.8360595703125,
+    2538.0150146484375,
+    1397.7645263671875
+   ],
+   "score": 0.7988948225975037,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.7815115000121295,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0005",
+   "box": [
+    2989.6920166015625,
+    1436.7962341308594,
+    3039.3558349609375,
+    1484.3879089355469
+   ],
+   "score": 0.823006808757782,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0162866,
+   "latency_s": 3.911371299996972,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0005",
+   "box": [
+    2441.8756408691406,
+    345.407470703125,
+    2485.6756896972656,
+    389.07110595703125
+   ],
+   "score": 0.8222000002861023,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0210066,
+   "latency_s": 6.223552599985851,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0005",
+   "box": [
+    957.7327880859375,
+    1184.9217834472656,
+    1024.3131713867188,
+    1261.1281433105469
+   ],
+   "score": 0.8219860792160034,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160666,
+   "latency_s": 3.9237400999991223,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0005",
+   "box": [
+    1804.814697265625,
+    1259.607192993164,
+    1879.02099609375,
+    1302.43505859375
+   ],
+   "score": 0.7962822914123535,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160666,
+   "latency_s": 3.6235618999926373,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0005",
+   "box": [
+    2870.123779296875,
+    1690.8609619140625,
+    2966.50439453125,
+    1745.6739501953125
+   ],
+   "score": 0.7617318630218506,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0159066,
+   "latency_s": 3.7144486000179313,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0005",
+   "box": [
+    1384.1097412109375,
+    1867.96533203125,
+    1472.541748046875,
+    1922.2843017578125
+   ],
+   "score": 0.7475029230117798,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.8771694999886677,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0005",
+   "box": [
+    3278.167999267578,
+    2671.799072265625,
+    3334.7156677246094,
+    2707.6500244140625
+   ],
+   "score": 0.718108057975769,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.55,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.0257666,
+   "latency_s": 8.233790800004499,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0005",
+   "box": [
+    1221.6845397949219,
+    2330.052978515625,
+    1266.7730407714844,
+    2373.7861328125
+   ],
+   "score": 0.5001482963562012,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0180866,
+   "latency_s": 4.935353100008797,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0006",
+   "box": [
+    1594.7791595458984,
+    1648.0750122070312,
+    1660.2440338134766,
+    1694.8124389648438
+   ],
+   "score": 0.8400920629501343,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160466,
+   "latency_s": 3.7053813000093214,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0006",
+   "box": [
+    1158.9223937988281,
+    2405.3377075195312,
+    1219.7196960449219,
+    2468.4762573242188
+   ],
+   "score": 0.8275874257087708,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.722763500001747,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0006",
+   "box": [
+    274.6949462890625,
+    2360.0,
+    316.7413330078125,
+    2395.2522583007812
+   ],
+   "score": 0.8214845061302185,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.017046600000000002,
+   "latency_s": 4.252551499987021,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0006",
+   "box": [
+    941.3963012695312,
+    653.474609375,
+    981.2769775390625,
+    693.4933166503906
+   ],
+   "score": 0.8212642073631287,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0162666,
+   "latency_s": 3.8102665999904275,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0006",
+   "box": [
+    2564.316650390625,
+    1555.4993286132812,
+    2639.48388671875,
+    1597.0719604492188
+   ],
+   "score": 0.8160749077796936,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0162666,
+   "latency_s": 3.919362699991325,
+   "error": null
+  },
+  {
+   "stem": "test_CAP_0006",
+   "box": [
+    1111.4408874511719,
+    657.9745483398438,
+    1183.420654296875,
+    721.9262084960938
+   ],
+   "score": 0.577933132648468,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0198066,
+   "latency_s": 5.645302699995227,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0001",
+   "box": [
+    763.1301879882812,
+    1141.141357421875,
+    832.6029052734375,
+    1208.173583984375
+   ],
+   "score": 0.756171464920044,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.018566600000000003,
+   "latency_s": 5.348039000004064,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0001",
+   "box": [
+    1865.7611694335938,
+    1457.9865112304688,
+    1901.6005249023438,
+    1502.6875
+   ],
+   "score": 0.5072707533836365,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0165666,
+   "latency_s": 3.8508233000175096,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0002",
+   "box": [
+    2596.1058349609375,
+    1124.9199600219727,
+    2651.6827392578125,
+    1198.2439270019531
+   ],
+   "score": 0.7983325123786926,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0164266,
+   "latency_s": 4.111340800009202,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0002",
+   "box": [
+    1359.4348754882812,
+    622.3239059448242,
+    1418.6832275390625,
+    730.2462158203125
+   ],
+   "score": 0.7773779630661011,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0180866,
+   "latency_s": 4.845710499997949,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0003",
+   "box": [
+    1232.4206848144531,
+    1752.9589233398438,
+    1293.0923767089844,
+    1873.37109375
+   ],
+   "score": 0.791311502456665,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0203466,
+   "latency_s": 6.390046299988171,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0003",
+   "box": [
+    2506.369384765625,
+    2251.9296875,
+    2583.0126953125,
+    2387.22216796875
+   ],
+   "score": 0.7628300189971924,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0159266,
+   "latency_s": 3.8043286000029184,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0004",
+   "box": [
+    2638.3440551757812,
+    1667.5786437988281,
+    2687.6500854492188,
+    1727.3435363769531
+   ],
+   "score": 0.8246029019355774,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0163066,
+   "latency_s": 3.780728400015505,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0004",
+   "box": [
+    2989.7052307128906,
+    2424.4637451171875,
+    3049.568878173828,
+    2460.648193359375
+   ],
+   "score": 0.7886174917221069,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0217866,
+   "latency_s": 8.673023500014096,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0007",
+   "box": [
+    1127.3249282836914,
+    1246.1835327148438,
+    1210.6762390136719,
+    1308.5871887207031
+   ],
+   "score": 0.7975080013275146,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0163866,
+   "latency_s": 4.459974299999885,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0007",
+   "box": [
+    1896.5748291015625,
+    1474.7917175292969,
+    1939.799560546875,
+    1525.3059387207031
+   ],
+   "score": 0.7428483963012695,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0213866,
+   "latency_s": 6.620103299996117,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0008",
+   "box": [
+    2282.66650390625,
+    1034.973388671875,
+    2340.721435546875,
+    1094.1217041015625
+   ],
+   "score": 0.8016757369041443,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0163066,
+   "latency_s": 3.7875088999862783,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0008",
+   "box": [
+    1057.1181640625,
+    467.4727478027344,
+    1128.8455810546875,
+    541.7368774414062
+   ],
+   "score": 0.69482421875,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0157666,
+   "latency_s": 3.4814343999896664,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0009",
+   "box": [
+    1013.537353515625,
+    1894.7355346679688,
+    1073.4334716796875,
+    1941.7178344726562
+   ],
+   "score": 0.8158662915229797,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0158666,
+   "latency_s": 3.671482899982948,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0009",
+   "box": [
+    1357.6640014648438,
+    1462.42529296875,
+    1436.1947631835938,
+    1518.0926513671875
+   ],
+   "score": 0.7826600074768066,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0162666,
+   "latency_s": 3.825157199986279,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0010",
+   "box": [
+    1780.6192474365234,
+    2528.92578125,
+    1849.9539794921875,
+    2587.230224609375
+   ],
+   "score": 0.7683570981025696,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0218666,
+   "latency_s": 6.930083700019168,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0010",
+   "box": [
+    2376.88427734375,
+    2543.3519287109375,
+    2419.595947265625,
+    2613.067138671875
+   ],
+   "score": 0.7122058272361755,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0234266,
+   "latency_s": 7.622784900013357,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0011",
+   "box": [
+    2568.0346183776855,
+    1083.6280899047852,
+    2617.4433250427246,
+    1146.3352584838867
+   ],
+   "score": 0.8348683714866638,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.573650700011058,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0011",
+   "box": [
+    2725.1177978515625,
+    1589.6320419311523,
+    2777.4261474609375,
+    1640.9782333374023
+   ],
+   "score": 0.8328383564949036,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0238266,
+   "latency_s": 8.052163399988785,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0012",
+   "box": [
+    2606.101890563965,
+    1082.9372367858887,
+    2657.326484680176,
+    1137.112319946289
+   ],
+   "score": 0.831911027431488,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.016166600000000003,
+   "latency_s": 3.7695518000109587,
+   "error": null
+  },
+  {
+   "stem": "test_GRO_0012",
+   "box": [
+    2844.324462890625,
+    1680.864990234375,
+    2910.1181030273438,
+    1727.4267578125
+   ],
+   "score": 0.831424355506897,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.023986599999999997,
+   "latency_s": 8.171842000010656,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    2444.9277954101562,
+    662.9158935546875,
+    2501.4608764648438,
+    727.2496032714844
+   ],
+   "score": 0.8186744451522827,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0148666,
+   "latency_s": 3.707025799987605,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    1592.7102661132812,
+    1166.3981323242188,
+    1642.0877075195312,
+    1217.0515441894531
+   ],
+   "score": 0.815780758857727,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.015246599999999999,
+   "latency_s": 3.7118007999961264,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    2102.089515686035,
+    957.9873046875,
+    2159.8029708862305,
+    1017.9270629882812
+   ],
+   "score": 0.8003517985343933,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0154066,
+   "latency_s": 3.9827020000084303,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    2228.835479736328,
+    431.90509033203125,
+    2276.7679138183594,
+    494.33758544921875
+   ],
+   "score": 0.7982133626937866,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.015246599999999999,
+   "latency_s": 3.753309399995487,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    2502.644775390625,
+    274.43304443359375,
+    2573.6693115234375,
+    368.01397705078125
+   ],
+   "score": 0.7770012021064758,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0154666,
+   "latency_s": 4.197403700003633,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    1569.6954345703125,
+    1024.0,
+    1644.5394287109375,
+    1073.929801940918
+   ],
+   "score": 0.7611972093582153,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0145866,
+   "latency_s": 3.580547099991236,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    1830.2628173828125,
+    1038.6095123291016,
+    1897.9306030273438,
+    1115.2310485839844
+   ],
+   "score": 0.740813672542572,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0149666,
+   "latency_s": 3.891607900004601,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    2658.762191772461,
+    267.91229248046875,
+    2731.5828399658203,
+    346.22686767578125
+   ],
+   "score": 0.7311612963676453,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.014946599999999999,
+   "latency_s": 3.7960598999925423,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    1760.4089050292969,
+    1079.1624755859375,
+    1809.3948059082031,
+    1144.58740234375
+   ],
+   "score": 0.7259541153907776,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0150866,
+   "latency_s": 3.7765568000031635,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    3944.808349609375,
+    1.8773269653320312,
+    3999.557861328125,
+    68.29719543457031
+   ],
+   "score": 0.716774582862854,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0162666,
+   "latency_s": 4.737475700007053,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    3553.302734375,
+    283.6724853515625,
+    3661.97119140625,
+    344.60205078125
+   ],
+   "score": 0.6632174253463745,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0173066,
+   "latency_s": 5.202118000015616,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    659.0280609130859,
+    847.6848754882812,
+    722.0078887939453,
+    936.7574462890625
+   ],
+   "score": 0.6097314953804016,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0150066,
+   "latency_s": 4.0544951999909244,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    2074.75634765625,
+    483.7120666503906,
+    2122.57421875,
+    542.1693115234375
+   ],
+   "score": 0.5870055556297302,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0150866,
+   "latency_s": 3.7220129999914207,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    2093.879638671875,
+    874.3722229003906,
+    2140.47607421875,
+    935.3867492675781
+   ],
+   "score": 0.5196399092674255,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0150266,
+   "latency_s": 3.9771039999905042,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    932.0907592773438,
+    1638.4334716796875,
+    1019.8711547851562,
+    1704.1279296875
+   ],
+   "score": 0.4701067805290222,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0161666,
+   "latency_s": 4.584739300014917,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    1631.5340576171875,
+    1835.44580078125,
+    1663.8551025390625,
+    1865.9219970703125
+   ],
+   "score": 0.46512430906295776,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0154466,
+   "latency_s": 4.195094299997436,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    1835.738037109375,
+    830.8914794921875,
+    1884.958740234375,
+    883.5822143554688
+   ],
+   "score": 0.4433384835720062,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.015246599999999999,
+   "latency_s": 3.9452192000171635,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0001",
+   "box": [
+    1697.8515930175781,
+    671.8468933105469,
+    1749.9045715332031,
+    756.3615417480469
+   ],
+   "score": 0.4294883608818054,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0175866,
+   "latency_s": 5.391764800006058,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    2351.9398498535156,
+    512.0,
+    2419.215362548828,
+    555.6696319580078
+   ],
+   "score": 0.8067327737808228,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0151466,
+   "latency_s": 4.1889654000115115,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    2258.1257934570312,
+    644.3062744140625,
+    2313.7175903320312,
+    715.6067504882812
+   ],
+   "score": 0.7779858708381653,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0154466,
+   "latency_s": 4.123985299986089,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    2007.6261596679688,
+    1327.1412963867188,
+    2065.5062866210938,
+    1383.7966918945312
+   ],
+   "score": 0.773449718952179,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0150866,
+   "latency_s": 3.826961200014921,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    1788.7786712646484,
+    1133.613136291504,
+    1826.3369140625,
+    1188.8817443847656
+   ],
+   "score": 0.7644916772842407,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0166266,
+   "latency_s": 4.725037900003372,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    1549.0935134887695,
+    1307.15380859375,
+    1605.5977478027344,
+    1360.226318359375
+   ],
+   "score": 0.7550376057624817,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.015206599999999999,
+   "latency_s": 3.8793105999939144,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    1643.5989074707031,
+    1191.7116394042969,
+    1698.0521545410156,
+    1291.8251953125
+   ],
+   "score": 0.7531745433807373,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0151466,
+   "latency_s": 4.257737800013274,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    1440.8336791992188,
+    1326.4551391601562,
+    1508.0501098632812,
+    1378.61376953125
+   ],
+   "score": 0.7147780060768127,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0150466,
+   "latency_s": 4.149693999992451,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    1724.5960235595703,
+    1061.0821838378906,
+    1786.7129669189453,
+    1111.096420288086
+   ],
+   "score": 0.6741000413894653,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0149266,
+   "latency_s": 3.5985012000019196,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    2341.9194946289062,
+    1378.919677734375,
+    2418.4081420898438,
+    1472.1990966796875
+   ],
+   "score": 0.6236493587493896,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.014606599999999999,
+   "latency_s": 3.6065817999769934,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    1268.9362182617188,
+    1229.1382446289062,
+    1326.2719116210938,
+    1282.6685485839844
+   ],
+   "score": 0.6080557107925415,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0178066,
+   "latency_s": 5.549608800007263,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    2489.5841064453125,
+    787.3391723632812,
+    2576.2811889648438,
+    852.4480590820312
+   ],
+   "score": 0.6034537553787231,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.72,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.015506599999999999,
+   "latency_s": 3.9530846000125166,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    3892.861572265625,
+    258.9212646484375,
+    3950.9444580078125,
+    313.26922607421875
+   ],
+   "score": 0.5928026437759399,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0146466,
+   "latency_s": 3.5616589999990538,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    2490.9741821289062,
+    660.4224395751953,
+    2563.8541870117188,
+    727.3399810791016
+   ],
+   "score": 0.5488764643669128,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.82,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0146466,
+   "latency_s": 3.5500415000133216,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    3578.4309997558594,
+    332.9917297363281,
+    3634.6490478515625,
+    385.0144958496094
+   ],
+   "score": 0.4549388885498047,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0151466,
+   "latency_s": 4.1326956000120845,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0002",
+   "box": [
+    3691.4520263671875,
+    274.5704345703125,
+    3712.0,
+    325.1380615234375
+   ],
+   "score": 0.43650591373443604,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0149666,
+   "latency_s": 3.857905100012431,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0003",
+   "box": [
+    763.7608947753906,
+    1532.0597229003906,
+    844.9254455566406,
+    1608.3897705078125
+   ],
+   "score": 0.6578218340873718,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0162866,
+   "latency_s": 3.8006263000133913,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0003",
+   "box": [
+    2048.000228881836,
+    263.1142578125,
+    2086.601577758789,
+    309.594482421875
+   ],
+   "score": 0.5651854872703552,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.7,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016686600000000003,
+   "latency_s": 4.150164299993776,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0003",
+   "box": [
+    3072.0,
+    2003.5013427734375,
+    3145.8655014038086,
+    2043.9903564453125
+   ],
+   "score": 0.5143009424209595,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0174666,
+   "latency_s": 4.638078699994367,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0004",
+   "box": [
+    2485.6996154785156,
+    993.0357666015625,
+    2554.2442932128906,
+    1045.13525390625
+   ],
+   "score": 0.5372142195701599,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.75,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0174266,
+   "latency_s": 5.375603500026045,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0004",
+   "box": [
+    282.80352783203125,
+    1536.0,
+    354.59832763671875,
+    1566.2723083496094
+   ],
+   "score": 0.5196325182914734,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0150066,
+   "latency_s": 3.9349760999903083,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0004",
+   "box": [
+    3327.9981842041016,
+    386.44378662109375,
+    3413.4056396484375,
+    472.12542724609375
+   ],
+   "score": 0.447984904050827,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.021446599999999996,
+   "latency_s": 6.802452500007348,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0005",
+   "box": [
+    2181.146270751953,
+    1106.6318969726562,
+    2248.0428161621094,
+    1151.3224487304688
+   ],
+   "score": 0.737372100353241,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160466,
+   "latency_s": 3.7867171999823768,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0005",
+   "box": [
+    2027.0851440429688,
+    1284.3665161132812,
+    2103.8400268554688,
+    1382.3300170898438
+   ],
+   "score": 0.7253674864768982,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0161466,
+   "latency_s": 3.8628194000048097,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0005",
+   "box": [
+    1143.5995483398438,
+    2687.3636169433594,
+    1213.5342712402344,
+    2769.8265686035156
+   ],
+   "score": 0.6857185959815979,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0183066,
+   "latency_s": 5.139016299974173,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0005",
+   "box": [
+    573.8984375,
+    1563.836196899414,
+    640.0,
+    1644.4638214111328
+   ],
+   "score": 0.6634327173233032,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016366600000000002,
+   "latency_s": 3.9235688999760896,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0005",
+   "box": [
+    2560.003168106079,
+    183.48123168945312,
+    2585.89727973938,
+    244.41384887695312
+   ],
+   "score": 0.6145579218864441,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0162466,
+   "latency_s": 3.915700600016862,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0006",
+   "box": [
+    1709.9292297363281,
+    1536.0823059082031,
+    1746.1813049316406,
+    1578.1933135986328
+   ],
+   "score": 0.8288707733154297,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0149666,
+   "latency_s": 3.7599890000128653,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0006",
+   "box": [
+    1700.7938232421875,
+    2072.8300170898438,
+    1753.4893798828125,
+    2122.2708129882812
+   ],
+   "score": 0.8147733807563782,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0147466,
+   "latency_s": 3.8698788000037894,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0006",
+   "box": [
+    1785.7760925292969,
+    1809.8695068359375,
+    1849.3103942871094,
+    1880.4585876464844
+   ],
+   "score": 0.7642248272895813,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0149266,
+   "latency_s": 4.246755700005451,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0006",
+   "box": [
+    1763.0791015625,
+    1258.8431091308594,
+    1811.4259033203125,
+    1298.4459533691406
+   ],
+   "score": 0.7319605946540833,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0148866,
+   "latency_s": 4.137639199994737,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0006",
+   "box": [
+    1597.783447265625,
+    1471.4691162109375,
+    1656.894775390625,
+    1531.899169921875
+   ],
+   "score": 0.493672251701355,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0194666,
+   "latency_s": 5.782945899991319,
+   "error": null
+  },
+  {
+   "stem": "test_MED_0006",
+   "box": [
+    1607.8546752929688,
+    1610.0,
+    1664.0,
+    1660.9222984313965
+   ],
+   "score": 0.46377652883529663,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0161866,
+   "latency_s": 4.384512700024061,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0001",
+   "box": [
+    2647.774398803711,
+    2818.1717529296875,
+    2706.7822265625,
+    2886.2630615234375
+   ],
+   "score": 0.836567759513855,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0161466,
+   "latency_s": 3.3496948999818414,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0001",
+   "box": [
+    3473.214401245117,
+    1191.0665588378906,
+    3532.756881713867,
+    1276.0694885253906
+   ],
+   "score": 0.8335095047950745,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0161066,
+   "latency_s": 3.7056138000043575,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0001",
+   "box": [
+    355.5725402832031,
+    1751.7011413574219,
+    433.5091247558594,
+    1790.9507141113281
+   ],
+   "score": 0.8260207772254944,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0174066,
+   "latency_s": 4.413294899975881,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0001",
+   "box": [
+    992.2880859375,
+    1536.0249328613281,
+    1052.623779296875,
+    1568.89501953125
+   ],
+   "score": 0.8100296854972839,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.7,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0193666,
+   "latency_s": 5.314864700019825,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0002",
+   "box": [
+    2658.9600982666016,
+    2831.6553955078125,
+    2705.7074127197266,
+    2899.5286865234375
+   ],
+   "score": 0.8400624990463257,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163266,
+   "latency_s": 4.045805300003849,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0002",
+   "box": [
+    360.5677185058594,
+    1741.6554718017578,
+    413.7103576660156,
+    1784.3295135498047
+   ],
+   "score": 0.8350839018821716,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.024126599999999998,
+   "latency_s": 7.869297800003551,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0002",
+   "box": [
+    3479.972023010254,
+    1187.7754669189453,
+    3542.877899169922,
+    1275.0465240478516
+   ],
+   "score": 0.8139426112174988,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0159666,
+   "latency_s": 3.7183168999908958,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0002",
+   "box": [
+    984.52587890625,
+    1536.0,
+    1045.0286865234375,
+    1560.578176498413
+   ],
+   "score": 0.7738164067268372,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.025566600000000002,
+   "latency_s": 8.380697499989765,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0003",
+   "box": [
+    2676.473373413086,
+    2845.8126525878906,
+    2722.039505004883,
+    2914.8475341796875
+   ],
+   "score": 0.841749370098114,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0162066,
+   "latency_s": 4.036768999998458,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0003",
+   "box": [
+    3473.458694458008,
+    1207.1925354003906,
+    3529.8570098876953,
+    1280.3545837402344
+   ],
+   "score": 0.8325750827789307,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0204666,
+   "latency_s": 6.214250899996841,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0003",
+   "box": [
+    317.30938720703125,
+    1767.2083435058594,
+    396.73724365234375,
+    1809.5945739746094
+   ],
+   "score": 0.8284724950790405,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0164666,
+   "latency_s": 4.46798809999018,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0003",
+   "box": [
+    3360.0,
+    1394.7801513671875,
+    3398.0461921691895,
+    1447.0892333984375
+   ],
+   "score": 0.6771522760391235,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.017686600000000004,
+   "latency_s": 5.103433300013421,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0003",
+   "box": [
+    979.500244140625,
+    1541.7706565856934,
+    1039.2192993164062,
+    1578.8749542236328
+   ],
+   "score": 0.4729973375797272,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.6,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.018726600000000003,
+   "latency_s": 5.355846999998903,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0004",
+   "box": [
+    2654.4662170410156,
+    2774.2531127929688,
+    2698.8287963867188,
+    2836.9750366210938
+   ],
+   "score": 0.8345834016799927,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016506600000000003,
+   "latency_s": 4.013486000010744,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0004",
+   "box": [
+    3491.403793334961,
+    1183.266845703125,
+    3549.915969848633,
+    1267.4036865234375
+   ],
+   "score": 0.8324430584907532,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163066,
+   "latency_s": 3.992844899999909,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0004",
+   "box": [
+    337.95489501953125,
+    1757.9708557128906,
+    410.33953857421875,
+    1797.5658874511719
+   ],
+   "score": 0.8203531503677368,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0158666,
+   "latency_s": 3.772971200000029,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0004",
+   "box": [
+    996.8078002929688,
+    1519.1953125,
+    1054.0923461914062,
+    1555.502685546875
+   ],
+   "score": 0.6810809373855591,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0198266,
+   "latency_s": 6.005585100007011,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0005",
+   "box": [
+    1477.9237670898438,
+    2140.2806549072266,
+    1540.536376953125,
+    2227.3272247314453
+   ],
+   "score": 0.8098000884056091,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016166600000000003,
+   "latency_s": 4.063575799984392,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0005",
+   "box": [
+    1437.5982666015625,
+    244.256591796875,
+    1619.1234130859375,
+    446.0180358886719
+   ],
+   "score": 0.7128697633743286,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.97,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0166066,
+   "latency_s": 4.1849917999934405,
+   "error": null
+  },
+  {
+   "stem": "test_MOB_0005",
+   "box": [
+    2536.1871948242188,
+    1096.70556640625,
+    2590.0835571289062,
+    1135.5234375
+   ],
+   "score": 0.5237113237380981,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0161466,
+   "latency_s": 3.8827716000087094,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0001",
+   "box": [
+    1974.0222778320312,
+    2159.185272216797,
+    2037.2962036132812,
+    2202.468994140625
+   ],
+   "score": 0.8425759673118591,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160866,
+   "latency_s": 4.015507700009039,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0001",
+   "box": [
+    1378.137451171875,
+    1013.4342651367188,
+    1447.78271484375,
+    1059.7545776367188
+   ],
+   "score": 0.8067783713340759,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163066,
+   "latency_s": 3.688660500018159,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0001",
+   "box": [
+    2391.700225830078,
+    848.064697265625,
+    2470.071563720703,
+    917.591064453125
+   ],
+   "score": 0.7112652063369751,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0165666,
+   "latency_s": 4.331592900009127,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0001",
+   "box": [
+    2191.7447814941406,
+    1861.8602600097656,
+    2227.957305908203,
+    1904.3415222167969
+   ],
+   "score": 0.6366854906082153,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0185866,
+   "latency_s": 5.1049977999937255,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0002",
+   "box": [
+    2164.3783950805664,
+    1893.0448608398438,
+    2220.781768798828,
+    1968.5889892578125
+   ],
+   "score": 0.8395609259605408,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016026600000000002,
+   "latency_s": 3.9307111999951303,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0002",
+   "box": [
+    1030.2310791015625,
+    1229.6137084960938,
+    1108.5938720703125,
+    1264.9525451660156
+   ],
+   "score": 0.7884241938591003,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.5,
+   "posture": "lying",
+   "priority": "medium",
+   "cost_usd": 0.0193666,
+   "latency_s": 6.295466499985196,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0002",
+   "box": [
+    1116.32666015625,
+    1421.2219848632812,
+    1151.9393310546875,
+    1470.3908081054688
+   ],
+   "score": 0.5274903774261475,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0164466,
+   "latency_s": 4.602812400000403,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0002",
+   "box": [
+    1884.0846862792969,
+    1134.5411376953125,
+    1938.8677673339844,
+    1152.0
+   ],
+   "score": 0.4204115569591522,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.88,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0160466,
+   "latency_s": 4.059532199986279,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0003",
+   "box": [
+    1386.5836791992188,
+    1369.249755859375,
+    1433.248779296875,
+    1452.572021484375
+   ],
+   "score": 0.8114251494407654,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0183666,
+   "latency_s": 5.05340740000247,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0003",
+   "box": [
+    2688.5328979492188,
+    1171.6087646484375,
+    2753.6060485839844,
+    1231.5307006835938
+   ],
+   "score": 0.7856157422065735,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.55,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.023646599999999997,
+   "latency_s": 8.477657600014936,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0003",
+   "box": [
+    3160.18798828125,
+    2689.947998046875,
+    3200.0,
+    2753.5344848632812
+   ],
+   "score": 0.5916790962219238,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0177466,
+   "latency_s": 4.688449399982346,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0003",
+   "box": [
+    2525.8408203125,
+    1087.478759765625,
+    2562.0753173828125,
+    1129.58349609375
+   ],
+   "score": 0.5174798965454102,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0164266,
+   "latency_s": 4.360312399978284,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0005",
+   "box": [
+    787.4911804199219,
+    1035.9407653808594,
+    831.9388732910156,
+    1100.1879119873047
+   ],
+   "score": 0.8157258629798889,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0162666,
+   "latency_s": 4.027296299987938,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0005",
+   "box": [
+    1841.6595458984375,
+    1712.9747314453125,
+    1882.7664794921875,
+    1790.1597900390625
+   ],
+   "score": 0.7915840148925781,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160466,
+   "latency_s": 3.612887600000249,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0005",
+   "box": [
+    811.810546875,
+    1592.1822319030762,
+    867.5587158203125,
+    1636.7474822998047
+   ],
+   "score": 0.6396067142486572,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.017646600000000002,
+   "latency_s": 4.750052299990784,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0005",
+   "box": [
+    1493.5546264648438,
+    1024.0,
+    1556.5260009765625,
+    1072.0883293151855
+   ],
+   "score": 0.4520016312599182,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0160466,
+   "latency_s": 3.71039630001178,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0006",
+   "box": [
+    2226.945587158203,
+    1497.6128540039062,
+    2281.369842529297,
+    1557.6458129882812
+   ],
+   "score": 0.8204266428947449,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0163066,
+   "latency_s": 4.077600799995707,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0006",
+   "box": [
+    1226.950454711914,
+    1495.3927001953125,
+    1272.379898071289,
+    1550.4158935546875
+   ],
+   "score": 0.807621419429779,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016186600000000002,
+   "latency_s": 4.046658199978992,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0006",
+   "box": [
+    827.6119689941406,
+    1135.4415283203125,
+    888.5690002441406,
+    1151.9898681640625
+   ],
+   "score": 0.448432981967926,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0162466,
+   "latency_s": 4.127694099996006,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0007",
+   "box": [
+    2184.3724060058594,
+    1774.0192565917969,
+    2224.938201904297,
+    1803.5836486816406
+   ],
+   "score": 0.8520405292510986,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.023126599999999997,
+   "latency_s": 7.390661299985368,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0007",
+   "box": [
+    1766.5782470703125,
+    2324.4273071289062,
+    1793.7768249511719,
+    2373.2249145507812
+   ],
+   "score": 0.8120061159133911,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.024026600000000002,
+   "latency_s": 8.485508899990236,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0007",
+   "box": [
+    1963.1822509765625,
+    1964.0459594726562,
+    1997.7894287109375,
+    2021.0639038085938
+   ],
+   "score": 0.6211307644844055,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0242466,
+   "latency_s": 8.009014400013257,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0007",
+   "box": [
+    1769.1334533691406,
+    2158.5892181396484,
+    1806.4371337890625,
+    2208.705093383789
+   ],
+   "score": 0.5400403141975403,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0234866,
+   "latency_s": 7.356049499998335,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0008",
+   "box": [
+    2275.8304443359375,
+    2129.5902709960938,
+    2315.5359497070312,
+    2168.9723510742188
+   ],
+   "score": 0.853944718837738,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0241866,
+   "latency_s": 8.698969599994598,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0008",
+   "box": [
+    2205.9226989746094,
+    1563.9855117797852,
+    2243.5137634277344,
+    1592.69921875
+   ],
+   "score": 0.841555655002594,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.68,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.023446599999999998,
+   "latency_s": 7.528663899982348,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0008",
+   "box": [
+    2336.8977661132812,
+    2781.501220703125,
+    2372.1942749023438,
+    2848.205078125
+   ],
+   "score": 0.8071301579475403,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0171666,
+   "latency_s": 4.226171399990562,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0008",
+   "box": [
+    2232.842498779297,
+    1536.0,
+    2284.7286682128906,
+    1558.8128128051758
+   ],
+   "score": 0.46841809153556824,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0213866,
+   "latency_s": 6.745167699991725,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0008",
+   "box": [
+    2248.718231201172,
+    2654.752685546875,
+    2289.0093688964844,
+    2699.1126708984375
+   ],
+   "score": 0.44920119643211365,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.55,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.0208066,
+   "latency_s": 6.384528599999612,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0009",
+   "box": [
+    2181.176544189453,
+    1582.05810546875,
+    2218.5150451660156,
+    1607.754638671875
+   ],
+   "score": 0.8522558808326721,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0179266,
+   "latency_s": 5.297661999997217,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0009",
+   "box": [
+    1800.4583740234375,
+    2145.5969848632812,
+    1859.9744873046875,
+    2209.462371826172
+   ],
+   "score": 0.8388432860374451,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0161266,
+   "latency_s": 4.096602799982065,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0009",
+   "box": [
+    2324.01025390625,
+    2753.1803588867188,
+    2361.6004638671875,
+    2815.5086059570312
+   ],
+   "score": 0.8345575928688049,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160666,
+   "latency_s": 3.7507901999924798,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0009",
+   "box": [
+    3963.698486328125,
+    2966.83349609375,
+    4000.0,
+    3000.0
+   ],
+   "score": 0.6059935688972473,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.9,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 3.715406199975405,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0009",
+   "box": [
+    2220.5393676757812,
+    2654.5884399414062,
+    2260.6135864257812,
+    2704.1724243164062
+   ],
+   "score": 0.5283657312393188,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.65,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0180066,
+   "latency_s": 4.756723800004693,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0010",
+   "box": [
+    1756.632080078125,
+    2098.678176879883,
+    1813.2928466796875,
+    2137.387237548828
+   ],
+   "score": 0.8805868625640869,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0159466,
+   "latency_s": 3.6127250000135973,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0010",
+   "box": [
+    2316.388427734375,
+    1887.7520751953125,
+    2354.8603515625,
+    1917.6971435546875
+   ],
+   "score": 0.8575752377510071,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.022806599999999996,
+   "latency_s": 7.567994200013345,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0010",
+   "box": [
+    1988.5397338867188,
+    2706.0261840820312,
+    2019.1073608398438,
+    2753.9689331054688
+   ],
+   "score": 0.8450496196746826,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163266,
+   "latency_s": 4.202992100006668,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0011",
+   "box": [
+    1983.0044555664062,
+    2325.3049926757812,
+    2017.6829223632812,
+    2366.2684936523438
+   ],
+   "score": 0.8641225695610046,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "high",
+   "cost_usd": 0.0161066,
+   "latency_s": 4.03300609998405,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0011",
+   "box": [
+    2330.256072998047,
+    1407.92626953125,
+    2375.148223876953,
+    1442.9256591796875
+   ],
+   "score": 0.8613460063934326,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.019526599999999998,
+   "latency_s": 5.9380419999943115,
+   "error": null
+  },
+  {
+   "stem": "test_SB_0011",
+   "box": [
+    1717.0664825439453,
+    1657.6736526489258,
+    1777.2601470947266,
+    1696.6845703125
+   ],
+   "score": 0.8588980436325073,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0162066,
+   "latency_s": 3.7811726999934763,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0001",
+   "box": [
+    1383.1686401367188,
+    2486.1376342773438,
+    1421.4420166015625,
+    2539.1182250976562
+   ],
+   "score": 0.8608632683753967,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0201666,
+   "latency_s": 6.0643172999843955,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0001",
+   "box": [
+    1578.2098388671875,
+    1385.2393188476562,
+    1615.9154052734375,
+    1417.3641967773438
+   ],
+   "score": 0.8600866198539734,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.023446599999999998,
+   "latency_s": 7.425471299997298,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0001",
+   "box": [
+    2344.6124267578125,
+    2590.734344482422,
+    2387.4710693359375,
+    2639.6871032714844
+   ],
+   "score": 0.8413560390472412,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.68,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0228666,
+   "latency_s": 7.586184399988269,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0001",
+   "box": [
+    1647.8239440917969,
+    1372.2784118652344,
+    1685.5466918945312,
+    1400.5802917480469
+   ],
+   "score": 0.6549602746963501,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0197866,
+   "latency_s": 6.2298643000249285,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0001",
+   "box": [
+    1024.0,
+    2710.72509765625,
+    1053.3505668640137,
+    2743.3907470703125
+   ],
+   "score": 0.5945505499839783,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.75,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0160866,
+   "latency_s": 4.0127262999885716,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0002",
+   "box": [
+    1442.3082275390625,
+    2645.952423095703,
+    1481.57275390625,
+    2689.0787048339844
+   ],
+   "score": 0.8650715351104736,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.018566600000000003,
+   "latency_s": 5.33303939999314,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0002",
+   "box": [
+    1261.5664672851562,
+    1528.5250854492188,
+    1312.952392578125,
+    1561.7986450195312
+   ],
+   "score": 0.8630046248435974,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.021926599999999997,
+   "latency_s": 6.325324400007958,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0002",
+   "box": [
+    1119.1896209716797,
+    1622.9519805908203,
+    1182.8568878173828,
+    1663.018539428711
+   ],
+   "score": 0.8524336814880371,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0201066,
+   "latency_s": 5.806640199996764,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0002",
+   "box": [
+    1318.2029418945312,
+    1521.7365112304688,
+    1346.5371704101562,
+    1542.9774780273438
+   ],
+   "score": 0.5954090356826782,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.7,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0233866,
+   "latency_s": 7.489128399989568,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0003",
+   "box": [
+    1270.4051818847656,
+    1494.25927734375,
+    1318.5555725097656,
+    1526.8784790039062
+   ],
+   "score": 0.8687745928764343,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0219666,
+   "latency_s": 7.323269399988931,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0003",
+   "box": [
+    1451.9508056640625,
+    2608.1229248046875,
+    1490.69775390625,
+    2651.7476806640625
+   ],
+   "score": 0.8662433624267578,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 3.9286883999884594,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0003",
+   "box": [
+    2187.1970825195312,
+    2133.323974609375,
+    2226.6017456054688,
+    2174.859375
+   ],
+   "score": 0.8433703184127808,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0189866,
+   "latency_s": 5.967957400018349,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0003",
+   "box": [
+    1325.6931762695312,
+    1475.5497436523438,
+    1347.2011108398438,
+    1501.1052856445312
+   ],
+   "score": 0.6568160057067871,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.8,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.022426599999999998,
+   "latency_s": 6.470794799999567,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0004",
+   "box": [
+    1352.462646484375,
+    776.2470092773438,
+    1394.0400390625,
+    814.5101928710938
+   ],
+   "score": 0.8605381846427917,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0174866,
+   "latency_s": 5.038074799987953,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0004",
+   "box": [
+    987.7578735351562,
+    2482.7833251953125,
+    1036.2971801757812,
+    2536.5826416015625
+   ],
+   "score": 0.8435795903205872,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.691869800008135,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0005",
+   "box": [
+    1019.6296997070312,
+    473.196044921875,
+    1062.4481811523438,
+    530.7679443359375
+   ],
+   "score": 0.8552637100219727,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.016706600000000002,
+   "latency_s": 4.616079899977194,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0005",
+   "box": [
+    1133.7937316894531,
+    2411.0980377197266,
+    1175.6052856445312,
+    2453.1965942382812
+   ],
+   "score": 0.8545652031898499,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0187866,
+   "latency_s": 5.437725900002988,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0005",
+   "box": [
+    2826.1100463867188,
+    2488.0014038085938,
+    2871.2300415039062,
+    2547.8320922851562
+   ],
+   "score": 0.8424325585365295,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0170666,
+   "latency_s": 4.228570600011153,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0005",
+   "box": [
+    2828.134033203125,
+    2896.9398193359375,
+    2878.3701171875,
+    2955.5142822265625
+   ],
+   "score": 0.8311991095542908,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0159266,
+   "latency_s": 3.7929872999957297,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0006",
+   "box": [
+    1223.6600341796875,
+    245.45924377441406,
+    1261.1333923339844,
+    282.448486328125
+   ],
+   "score": 0.8521715402603149,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0159466,
+   "latency_s": 3.5550590000057127,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0006",
+   "box": [
+    953.1822509765625,
+    2175.767532348633,
+    1000.6981201171875,
+    2220.3143463134766
+   ],
+   "score": 0.8419309854507446,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.82,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0190266,
+   "latency_s": 5.538094099989394,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0006",
+   "box": [
+    2593.6051635742188,
+    2582.1921997070312,
+    2632.2301635742188,
+    2655.956787109375
+   ],
+   "score": 0.8415622115135193,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0187066,
+   "latency_s": 6.183885200007353,
+   "error": null
+  },
+  {
+   "stem": "test_TRS_0006",
+   "box": [
+    3781.997314453125,
+    2117.1473388671875,
+    3809.1552734375,
+    2145.4998779296875
+   ],
+   "score": 0.6778985261917114,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.016186600000000002,
+   "latency_s": 4.258198999974411,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0001",
+   "box": [
+    3052.505828857422,
+    621.6946716308594,
+    3101.330810546875,
+    672.5796813964844
+   ],
+   "score": 0.8572700619697571,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0162066,
+   "latency_s": 4.1628521000093315,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0001",
+   "box": [
+    3158.3173828125,
+    275.1095886230469,
+    3200.0,
+    340.2539367675781
+   ],
+   "score": 0.7995853424072266,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.021946599999999997,
+   "latency_s": 7.497735600016313,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0001",
+   "box": [
+    3185.7029876708984,
+    469.44580078125,
+    3256.668167114258,
+    533.9169921875
+   ],
+   "score": 0.7917038202285767,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160466,
+   "latency_s": 3.979616700002225,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0001",
+   "box": [
+    3209.1459045410156,
+    267.16204833984375,
+    3260.6885375976562,
+    341.04925537109375
+   ],
+   "score": 0.7601850032806396,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0183666,
+   "latency_s": 5.366378099977737,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0001",
+   "box": [
+    3023.4868774414062,
+    255.38653564453125,
+    3101.3280639648438,
+    347.396728515625
+   ],
+   "score": 0.7418614625930786,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0172666,
+   "latency_s": 4.935302400001092,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0001",
+   "box": [
+    2240.075439453125,
+    2048.361473083496,
+    2308.7738037109375,
+    2124.9460983276367
+   ],
+   "score": 0.5946995615959167,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0236666,
+   "latency_s": 8.01117380001233,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0001",
+   "box": [
+    1298.5855712890625,
+    599.4451904296875,
+    1356.0525512695312,
+    640.0
+   ],
+   "score": 0.5154278874397278,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0158666,
+   "latency_s": 3.7407222999900114,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0002",
+   "box": [
+    2785.121322631836,
+    1281.2012329101562,
+    2862.664306640625,
+    1339.2910766601562
+   ],
+   "score": 0.8140466809272766,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0163266,
+   "latency_s": 4.277078899991466,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0002",
+   "box": [
+    1930.7286376953125,
+    1463.4849853515625,
+    1968.248291015625,
+    1513.8189086914062
+   ],
+   "score": 0.7980924844741821,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0163066,
+   "latency_s": 3.8299066000035964,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0002",
+   "box": [
+    1661.4499816894531,
+    1772.6711120605469,
+    1713.239990234375,
+    1809.8215026855469
+   ],
+   "score": 0.7956172227859497,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0161266,
+   "latency_s": 4.189667799975723,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0002",
+   "box": [
+    2643.269821166992,
+    1207.570068359375,
+    2690.693115234375,
+    1246.6690979003906
+   ],
+   "score": 0.7660409212112427,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0233666,
+   "latency_s": 7.455052000004798,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0002",
+   "box": [
+    1980.7283325195312,
+    1405.5018005371094,
+    2016.3645629882812,
+    1460.7607116699219
+   ],
+   "score": 0.5156909823417664,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0163266,
+   "latency_s": 4.251800199999707,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0002",
+   "box": [
+    2156.4956817626953,
+    2464.6627349853516,
+    2204.939193725586,
+    2538.819534301758
+   ],
+   "score": 0.4776131510734558,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160466,
+   "latency_s": 4.59983399999328,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0003",
+   "box": [
+    1709.4722290039062,
+    1153.4216003417969,
+    1752.7110595703125,
+    1196.4715270996094
+   ],
+   "score": 0.8308614492416382,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0163866,
+   "latency_s": 4.203125,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0003",
+   "box": [
+    1624.3695678710938,
+    999.8707885742188,
+    1679.3966674804688,
+    1046.8591918945312
+   ],
+   "score": 0.7362491488456726,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0164066,
+   "latency_s": 3.9541367999918293,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0003",
+   "box": [
+    1781.9648895263672,
+    1136.2510986328125,
+    1810.7203979492188,
+    1166.865707397461
+   ],
+   "score": 0.7326889634132385,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 3.9484318000031635,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0003",
+   "box": [
+    1631.7022705078125,
+    1203.027847290039,
+    1663.7081298828125,
+    1240.3394622802734
+   ],
+   "score": 0.6989980936050415,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0171266,
+   "latency_s": 4.736203299980843,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    1232.3060607910156,
+    1043.1399230957031,
+    1282.5234680175781,
+    1110.2522430419922
+   ],
+   "score": 0.8311354517936707,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0222066,
+   "latency_s": 7.2085797999752685,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    1337.007080078125,
+    2452.7987060546875,
+    1405.8297119140625,
+    2527.6770629882812
+   ],
+   "score": 0.8162553310394287,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0253666,
+   "latency_s": 9.405755399988266,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    1855.1227416992188,
+    2080.361328125,
+    1901.211669921875,
+    2143.338134765625
+   ],
+   "score": 0.8147662281990051,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0170666,
+   "latency_s": 4.126088799996069,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    2591.928955078125,
+    1061.6270751953125,
+    2628.821044921875,
+    1100.4866943359375
+   ],
+   "score": 0.785705029964447,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.75,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0164866,
+   "latency_s": 3.978353899990907,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    1139.6470642089844,
+    1023.6002197265625,
+    1212.6574096679688,
+    1090.6827392578125
+   ],
+   "score": 0.7854181528091431,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0164266,
+   "latency_s": 4.305613600008655,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    3265.8060302734375,
+    1409.4740600585938,
+    3352.366455078125,
+    1488.5269165039062
+   ],
+   "score": 0.7809571027755737,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0162666,
+   "latency_s": 3.866580200003227,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    2600.7430419921875,
+    895.1049499511719,
+    2682.34716796875,
+    962.3192443847656
+   ],
+   "score": 0.7201006412506104,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.92,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.016526600000000002,
+   "latency_s": 3.8877096999785863,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    497.85113525390625,
+    2282.053253173828,
+    584.5132446289062,
+    2329.519256591797
+   ],
+   "score": 0.7179857492446899,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0173266,
+   "latency_s": 4.974564400006784,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    2507.3345336914062,
+    868.4127502441406,
+    2580.11328125,
+    913.4020080566406
+   ],
+   "score": 0.7151879072189331,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.016166600000000003,
+   "latency_s": 3.840106600022409,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    1970.4307861328125,
+    2372.486328125,
+    2140.896484375,
+    2446.859619140625
+   ],
+   "score": 0.6775345206260681,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0159266,
+   "latency_s": 3.756645799992839,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    3389.6179962158203,
+    1112.0437622070312,
+    3458.5968322753906,
+    1152.0
+   ],
+   "score": 0.6473747491836548,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.6,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0248666,
+   "latency_s": 8.927586400008295,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    2103.9051361083984,
+    2438.495346069336,
+    2148.085220336914,
+    2471.5716857910156
+   ],
+   "score": 0.6430231928825378,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.85,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0225066,
+   "latency_s": 6.318206600000849,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    2399.40966796875,
+    1939.7391967773438,
+    2454.6195068359375,
+    1983.59814453125
+   ],
+   "score": 0.5660600662231445,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.93,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0166266,
+   "latency_s": 3.9835959999763872,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0004",
+   "box": [
+    2794.1658325195312,
+    2339.221710205078,
+    2857.6644897460938,
+    2404.479522705078
+   ],
+   "score": 0.4057447612285614,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.5,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.023626599999999998,
+   "latency_s": 7.738166800001636,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    2414.9764709472656,
+    1081.2108764648438,
+    2463.4627990722656,
+    1151.5247192382812
+   ],
+   "score": 0.8135777115821838,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.88,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0159466,
+   "latency_s": 3.5899412000144366,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3266.8831176757812,
+    1118.851806640625,
+    3329.0542602539062,
+    1151.98486328125
+   ],
+   "score": 0.8045013546943665,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0177466,
+   "latency_s": 4.705742899997858,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3579.9848022460938,
+    1201.4720916748047,
+    3665.7992553710938,
+    1262.5897369384766
+   ],
+   "score": 0.7994416356086731,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0162066,
+   "latency_s": 3.8266193000017665,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    2070.1235065460205,
+    109.02311706542969,
+    2111.356948852539,
+    188.03709411621094
+   ],
+   "score": 0.798258364200592,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0160866,
+   "latency_s": 3.8961468000197783,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    1602.1431732177734,
+    2572.948272705078,
+    1656.3035888671875,
+    2631.3397216796875
+   ],
+   "score": 0.7936825752258301,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0197466,
+   "latency_s": 5.9786305000016,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3292.5166625976562,
+    2892.6573486328125,
+    3352.9508666992188,
+    2957.2943115234375
+   ],
+   "score": 0.7934362292289734,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016006600000000003,
+   "latency_s": 4.223983200005023,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3529.9932861328125,
+    2092.9833984375,
+    3600.5267944335938,
+    2175.317138671875
+   ],
+   "score": 0.7912148237228394,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0160666,
+   "latency_s": 4.368265700002667,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    2097.5626373291016,
+    2565.726104736328,
+    2165.6089782714844,
+    2659.399627685547
+   ],
+   "score": 0.7872068881988525,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.015986600000000004,
+   "latency_s": 4.114099200000055,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    2787.27783203125,
+    1906.7860412597656,
+    2855.6277465820312,
+    1958.4156799316406
+   ],
+   "score": 0.7809640765190125,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.95,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0201466,
+   "latency_s": 5.864971600007266,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    1754.3939208984375,
+    1337.5279541015625,
+    1861.81884765625,
+    1454.0115966796875
+   ],
+   "score": 0.7599496245384216,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.019426600000000002,
+   "latency_s": 6.293404700001702,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3466.5248413085938,
+    1685.3260192871094,
+    3558.1260375976562,
+    1729.6182556152344
+   ],
+   "score": 0.7503364086151123,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.93,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0164266,
+   "latency_s": 4.060688700003084,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3367.80810546875,
+    2811.273193359375,
+    3440.955810546875,
+    2897.82568359375
+   ],
+   "score": 0.7181481122970581,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "sitting",
+   "priority": "medium",
+   "cost_usd": 0.0161066,
+   "latency_s": 3.7734835000010207,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3475.88671875,
+    2966.3670654296875,
+    3543.4705810546875,
+    2999.9639892578125
+   ],
+   "score": 0.6861460208892822,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.55,
+   "posture": "unknown",
+   "priority": "medium",
+   "cost_usd": 0.019066600000000003,
+   "latency_s": 5.423363200010499,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3171.091552734375,
+    1817.9080810546875,
+    3236.99658203125,
+    1955.1693115234375
+   ],
+   "score": 0.6794010400772095,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.015986600000000004,
+   "latency_s": 3.7417000999848824,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    3931.48779296875,
+    2131.1143188476562,
+    4000.0,
+    2175.7437133789062
+   ],
+   "score": 0.6461456418037415,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.85,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.016186600000000002,
+   "latency_s": 3.6619064999977127,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    2075.8192138671875,
+    1635.4186096191406,
+    2133.7891845703125,
+    1744.3303527832031
+   ],
+   "score": 0.6099088191986084,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.9,
+   "posture": "lying",
+   "priority": "high",
+   "cost_usd": 0.0165666,
+   "latency_s": 4.2336310999817215,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0005",
+   "box": [
+    2048.0,
+    70.35455322265625,
+    2070.417802810669,
+    141.7786865234375
+   ],
+   "score": 0.5698881149291992,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0159066,
+   "latency_s": 3.9279187000065576,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0006",
+   "box": [
+    1848.4515380859375,
+    1692.8509216308594,
+    1900.74658203125,
+    1781.4607238769531
+   ],
+   "score": 0.8015962839126587,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0159466,
+   "latency_s": 3.7711865000019316,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0006",
+   "box": [
+    1902.2525634765625,
+    1712.8547973632812,
+    1963.4783935546875,
+    1804.9744873046875
+   ],
+   "score": 0.7453241944313049,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.97,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0161266,
+   "latency_s": 3.7354745999909937,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0006",
+   "box": [
+    1955.4287414550781,
+    1758.4963684082031,
+    1987.0166931152344,
+    1801.1045837402344
+   ],
+   "score": 0.7157946228981018,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.96,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0157066,
+   "latency_s": 3.711331300000893,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0006",
+   "box": [
+    768.3834228515625,
+    2583.131072998047,
+    831.722900390625,
+    2627.1380310058594
+   ],
+   "score": 0.6123520135879517,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.55,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0269466,
+   "latency_s": 9.906331899983343,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0006",
+   "box": [
+    2692.57470703125,
+    137.29513549804688,
+    2723.2844848632812,
+    197.335693359375
+   ],
+   "score": 0.5914528369903564,
+   "status": "cached",
+   "is_person": true,
+   "confidence": 0.8,
+   "posture": "standing",
+   "priority": "medium",
+   "cost_usd": 0.0161066,
+   "latency_s": 3.9348862000042573,
+   "error": null
+  },
+  {
+   "stem": "test_ZRI_0006",
+   "box": [
+    761.3799285888672,
+    469.017822265625,
+    818.1786499023438,
+    521.505859375
+   ],
+   "score": 0.4009605944156647,
+   "status": "cached",
+   "is_person": false,
+   "confidence": 0.75,
+   "posture": "unknown",
+   "priority": "low",
+   "cost_usd": 0.0192266,
+   "latency_s": 5.838781400001608,
+   "error": null
+  }
+ ]
+}

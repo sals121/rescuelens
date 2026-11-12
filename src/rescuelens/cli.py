@@ -171,5 +171,112 @@ def train(
     typer.echo(json.dumps(summary["test_tiles"], indent=1))
 
 
+eval_app = typer.Typer(no_args_is_help=True, help="Evaluate on the full-resolution test set.")
+app.add_typer(eval_app, name="eval")
+
+
+def _results_dir(out: Path | None) -> Path:
+    from datetime import date
+
+    return out or get_settings().results_dir / date.today().isoformat()
+
+
+def _test_dir() -> Path:
+    return get_settings().data_dir / "heridal"
+
+
+@eval_app.command("detector")
+def eval_detector(
+    weights: Annotated[list[Path], typer.Option(help="One or more checkpoints")],
+    conf: Annotated[float, typer.Option(help="Operating threshold for P/R/F1")] = 0.25,
+    device: Annotated[str | None, typer.Option(help="cpu | cuda:0")] = None,
+    out: Annotated[Path | None, typer.Option(help="Results directory")] = None,
+) -> None:
+    """Score each checkpoint on the 101 test frames, with and without SAHI."""
+    from rescuelens.data.heridal import ground_truth
+    from rescuelens.eval.detection import load_preds, predict_frames, save_preds, score_run
+
+    out = _results_dir(out)
+    gts = ground_truth(_test_dir())
+    frames = _test_dir() / "test_full" / "images"
+    rows: list[dict[str, object]] = []
+    for w in weights:
+        for sahi in (True, False):
+            tag = f"{w.stem}_{'sahi' if sahi else 'full'}"
+            path = out / "preds" / f"{tag}.json"
+            meta = load_preds(path)[1] if path.exists() else {}
+            if "s_per_frame" in meta:  # reuse finished predictions
+                preds = load_preds(path)[0]
+                sec = float(meta["s_per_frame"])
+            else:
+                preds, sec = predict_frames(
+                    w, frames, use_sahi=sahi, device=device or _default_device()
+                )
+                save_preds(path, preds, {"weights": w.name, "sahi": sahi, "s_per_frame": sec})
+            rows.append({"run": tag, "weights": w.name, "sahi": sahi, "s_per_frame": sec,
+                         **score_run(preds, gts, conf)})  # fmt: skip
+            typer.echo(f"{tag}: AP50={rows[-1]['ap50']:.3f} F1@{conf}={rows[-1]['f1']:.3f}")
+    (out / "detector.json").write_text(json.dumps(rows, indent=1), encoding="utf-8")
+    typer.echo(f"-> {out / 'detector.json'}")
+
+
+@eval_app.command("llm")
+def eval_llm(
+    preds: Annotated[Path, typer.Option(help="preds/<run>.json from `eval detector`")],
+    conf: Annotated[float, typer.Option(help="Detections >= conf are sent to Claude")] = 0.25,
+    model: Annotated[str, typer.Option(help="Claude model")] = "claude-opus-5-5",
+    concurrency: int = 6,
+    yes: Annotated[bool, typer.Option("--yes", help="Skip the cost confirmation")] = False,
+) -> None:
+    """Verify every candidate with Claude and compare YOLO vs YOLO + Claude."""
+    from rescuelens.data.heridal import ground_truth
+    from rescuelens.eval.detection import load_preds
+    from rescuelens.eval.llm_eval import (
+        ablation,
+        candidates,
+        estimate_cost,
+        save_verdicts,
+        summarize,
+        verify_candidates,
+    )
+
+    s = get_settings()
+    all_preds, meta = load_preds(preds)
+    cands = candidates(all_preds, conf)
+    n = sum(len(v) for v in cands.values())
+    est = estimate_cost(n, model)
+    typer.echo(f"{n} candidates >= {conf} on {len(cands)} frames; estimated ~${est:.2f} ({model})")
+    if est > s.llm_max_cost_usd:
+        typer.echo(f"warning: above the ${s.llm_max_cost_usd:.2f} cap; the run will stop there")
+    if not yes and not typer.confirm("Run the verification?"):
+        raise typer.Abort()
+
+    verdicts, tracker = asyncio.run(
+        verify_candidates(
+            cands, _test_dir() / "test_full" / "images", s, model=model, concurrency=concurrency
+        )
+    )
+    result = {
+        "preds": preds.name,
+        "detector": meta,
+        "conf": conf,
+        "model": model,
+        "summary": summarize(verdicts, tracker),
+        "metrics": ablation(verdicts, ground_truth(_test_dir()), conf),
+    }
+    out = preds.parent.parent
+    save_verdicts(out / "verdicts" / f"{preds.stem}_c{conf:g}_{model}.json", verdicts, result)
+    (out / f"llm_{preds.stem}_c{conf:g}_{model}.json").write_text(json.dumps(result, indent=1))
+    typer.echo(json.dumps({"summary": result["summary"], "metrics": result["metrics"]}, indent=1))
+
+
+@eval_app.command("report")
+def eval_report(out: Annotated[Path | None, typer.Option(help="Results directory")] = None) -> None:
+    """Write README.md and pr_curve.png from the JSON results."""
+    from rescuelens.eval.report import write_report
+
+    typer.echo(f"-> {write_report(_results_dir(out), _test_dir())}")
+
+
 if __name__ == "__main__":
     app()

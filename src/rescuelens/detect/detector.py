@@ -16,6 +16,17 @@ log = get_logger(__name__)
 PERSON_CLASS_NAMES = frozenset({"person", "human", "people", "pedestrian"})
 
 
+def person_class_ids(names: dict[int, str]) -> set[int]:
+    """Class ids that mean "person".
+
+    A single-class checkpoint is a person detector by construction (Ultralytics renames the
+    class to "item" when trained with ``single_cls=True``).
+    """
+    if len(names) == 1:
+        return set(names)
+    return {i for i, n in names.items() if n.lower() in PERSON_CLASS_NAMES}
+
+
 @dataclass(frozen=True, slots=True)
 class Detection:
     x: float  # top-left, pixels in the original frame
@@ -55,7 +66,7 @@ class PersonDetector:
             image_size=config.full_image_size,
         )
         names: dict[int, str] = self._model.model.names
-        self._person_ids = {i for i, n in names.items() if n.lower() in PERSON_CLASS_NAMES}
+        self._person_ids = person_class_ids(names)
         if not self._person_ids:
             raise ValueError(f"weights {config.weights} have no person class: {names}")
         log.info(

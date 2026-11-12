@@ -44,6 +44,9 @@ class VerifyResult:
     cost_usd: float
     latency_s: float
     model: str
+    # what the call cost when it was first made (equal to cost_usd/latency_s unless cached)
+    source_cost_usd: float = 0.0
+    source_latency_s: float = 0.0
 
 
 def load_prompt(prompts_dir: Path, name: str, version: str) -> str:
@@ -94,7 +97,13 @@ class Verifier:
         if (hit := self._cache.get(key)) is not None:
             self.tracker.record_cache_hit()
             return VerifyResult(
-                hit.verification, cached=True, cost_usd=0.0, latency_s=0.0, model=hit.model
+                hit.verification,
+                cached=True,
+                cost_usd=0.0,
+                latency_s=0.0,
+                model=hit.model,
+                source_cost_usd=hit.cost_usd,
+                source_latency_s=hit.latency_s,
             )
 
         async with self._sem:
@@ -146,4 +155,6 @@ class Verifier:
             cost_usd=response.cost_usd,
             latency_s=latency,
             model=response.model,
+            source_cost_usd=response.cost_usd,
+            source_latency_s=latency,
         )

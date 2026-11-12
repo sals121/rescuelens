@@ -49,7 +49,6 @@ def train_detector(cfg: TrainConfig) -> dict[str, Any]:
         project=str(cfg.project),
         name=cfg.name,
         exist_ok=False,
-        single_cls=True,
         flipud=cfg.flipud,
         fliplr=cfg.fliplr,
         plots=True,

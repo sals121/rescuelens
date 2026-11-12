@@ -1,0 +1,71 @@
+{
+ "preds": "rescuelens-yolo26s-heridal_sahi.json",
+ "detector": {
+  "weights": "rescuelens-yolo26s-heridal.pt",
+  "sahi": true,
+  "s_per_frame": 1.5665982829994756
+ },
+ "conf": 0.4,
+ "model": "claude-opus-5-5",
+ "summary": {
+  "candidates": 409,
+  "verified": 409,
+  "errors": 0,
+  "skipped": 0,
+  "said_person": 326,
+  "cost_usd": 7.3915518,
+  "cost_per_call_usd": 0.01807225378973105,
+  "spent_this_run_usd": 0.0,
+  "llm_calls": 0,
+  "cache_hits": 409,
+  "latency_p50_s": 4.195094299997436,
+  "latency_p90_s": 7.455052000004798
+ },
+ "metrics": {
+  "yolo": {
+   "images": 101,
+   "ground_truth": 337,
+   "conf": 0.4,
+   "detections": 409,
+   "tp": 273,
+   "fp": 136,
+   "fn": 64,
+   "precision": 0.6674816625916871,
+   "recall": 0.8100890207715133,
+   "f1": 0.7319034852546918,
+   "fp_per_image": 1.3465346534653466,
+   "ap50": 0.7502043638883488,
+   "ap50_95": 0.47469522266944936
+  },
+  "yolo+claude_filter": {
+   "images": 101,
+   "ground_truth": 337,
+   "conf": 0.4,
+   "detections": 326,
+   "tp": 270,
+   "fp": 56,
+   "fn": 67,
+   "precision": 0.8282208588957055,
+   "recall": 0.8011869436201781,
+   "f1": 0.8144796380090498,
+   "fp_per_image": 0.5544554455445545,
+   "ap50": 0.7608762400538385,
+   "ap50_95": 0.480653339027842
+  },
+  "yolo+claude_rescored": {
+   "images": 101,
+   "ground_truth": 337,
+   "conf": 0.5,
+   "detections": 326,
+   "tp": 270,
+   "fp": 56,
+   "fn": 67,
+   "precision": 0.8282208588957055,
+   "recall": 0.8011869436201781,
+   "f1": 0.8144796380090498,
+   "fp_per_image": 0.5544554455445545,
+   "ap50": 0.7523779115251243,
+   "ap50_95": 0.4530639522514674
+  }
+ }
+}

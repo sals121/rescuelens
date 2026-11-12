@@ -43,3 +43,11 @@ def test_make_crop_and_context_are_jpegs() -> None:
     assert ctx.size == (768, 576)
     # the thumbnail itself must not be modified by drawing the outline
     assert thumb.getpixel((350, 270)) == img.getpixel((0, 0))
+
+
+def test_person_class_ids() -> None:
+    from rescuelens.detect.detector import person_class_ids
+
+    assert person_class_ids({0: "person", 1: "bicycle", 2: "car"}) == {0}
+    assert person_class_ids({0: "item"}) == {0}  # single-class fine-tuned checkpoint
+    assert person_class_ids({0: "car", 1: "truck"}) == set()
