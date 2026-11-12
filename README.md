@@ -11,8 +11,8 @@ uv tool install rust-just   # task runner (works on Windows/macOS/Linux)
 just setup                  # auto-selects CUDA torch if an NVIDIA GPU is present
 cp .env.example .env        # add your ANTHROPIC_API_KEY
 just check                  # lint + types + tests
-just run                    # backend on :8000
-just ui                     # frontend on :5173
+just run                    # backend on :8731
+just ui                     # frontend on :5179
 ```
 
 ## License

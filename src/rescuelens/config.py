@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     )
 
     anthropic_api_key: SecretStr | None = Field(default=None)
-    anthropic_model: str = Field(default="claude-haiku-5-5")
+    anthropic_model: str = Field(default="claude-opus-5-5")
 
     data_dir: Path = Field(default=PROJECT_ROOT / "data", alias="RESCUELENS_DATA_DIR")
     runs_dir: Path = Field(default=PROJECT_ROOT / "runs", alias="RESCUELENS_RUNS_DIR")

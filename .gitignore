@@ -25,3 +25,4 @@ frontend/dist/
 .remember/
 .serena/
 .DS_Store
+.playwright-mcp/

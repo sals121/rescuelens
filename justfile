@@ -37,7 +37,7 @@ typecheck:
 test:
     {{uvr}} pytest -q
 
-# Run backend (port 8000) and frontend dev server (port 5173)
+# Run backend (port 8731) and frontend dev server (port 5179)
 run:
     {{uvr}} rescuelens serve
 
