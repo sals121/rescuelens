@@ -82,12 +82,17 @@ class CostTracker:
                 )
 
     def record(self, model: str, usage: TokenUsage) -> float:
+        """Record a call priced from our own table."""
         call_cost = cost_usd(model, usage)
+        self.record_cost(usage, call_cost)
+        return call_cost
+
+    def record_cost(self, usage: TokenUsage, call_cost: float) -> None:
+        """Record a call whose cost the backend already computed."""
         with self._lock:
             self.usage = self.usage + usage
             self.spent_usd += call_cost
             self.calls += 1
-        return call_cost
 
     def record_cache_hit(self) -> None:
         with self._lock:

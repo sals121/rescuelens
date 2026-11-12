@@ -36,7 +36,11 @@ export default function App() {
         <Stat label="verified" value={s.n_verified} />
         <Stat label="people" value={s.n_confirmed} />
         <Stat label="time" value={`${s.duration_s.toFixed(1)}s`} />
-        <Stat label="cost" value={`$${s.cost_usd.toFixed(3)}`} />
+        <Stat
+          label={run.config.llm_backend === 'claude-code' ? 'cost (API-equiv.)' : 'cost'}
+          value={`$${s.cost_usd.toFixed(3)}`}
+        />
+        {run.config.model && <Stat label="model" value={run.config.model} />}
         {simulated && (
           <span className="ml-auto rounded border border-amber-500/50 px-2 py-0.5 text-xs text-amber-400">
             SIMULATED GPS

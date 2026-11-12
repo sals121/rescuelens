@@ -66,6 +66,7 @@ export interface RunConfig {
   confidence: number
   llm_enabled: boolean
   model: string | null
+  llm_backend: string | null
   prompt_version: string | null
   geo_mode: GeoSource
 }

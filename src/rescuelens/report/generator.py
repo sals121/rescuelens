@@ -5,12 +5,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import anthropic
-
-from rescuelens.llm import FALLBACK_BETA, FALLBACK_MODELS
 from rescuelens.logging import get_logger
 from rescuelens.schemas import Candidate, Run
-from rescuelens.verify.cost import CostTracker, TokenUsage
+from rescuelens.verify.backends import BackendError, LLMBackend, RetryableBackendError
+from rescuelens.verify.cost import CostTracker
 
 log = get_logger(__name__)
 
@@ -92,46 +90,21 @@ def offline_report(run: Run) -> str:
 async def llm_report(
     run: Run,
     *,
-    client: anthropic.AsyncAnthropic,
-    model: str,
+    backend: LLMBackend,
     prompts_dir: Path,
     tracker: CostTracker,
     version: str = "v1",
 ) -> str:
     system = (prompts_dir / f"report_{version}.md").read_text(encoding="utf-8").strip()
     tracker.check_budget()
-    messages: list[anthropic.types.beta.BetaMessageParam] = [
-        {"role": "user", "content": f"Survey results:\n```json\n{run_digest(run)}\n```"}
-    ]
-    if model in FALLBACK_MODELS:
-        response = await client.beta.messages.create(
-            model=model,
-            max_tokens=8000,
+    try:
+        response = await backend.write(
             system=system,
-            messages=messages,
-            output_config={"effort": "low"},
-            betas=[FALLBACK_BETA],
-            fallbacks="default",
+            text=f"Survey results:\n```json\n{run_digest(run)}\n```",
+            effort="low",
         )
-    else:
-        response = await client.beta.messages.create(
-            model=model,
-            max_tokens=8000,
-            system=system,
-            messages=messages,
-            output_config={"effort": "low"},
-        )
-    tracker.record(
-        response.model,
-        TokenUsage(
-            input_tokens=response.usage.input_tokens,
-            output_tokens=response.usage.output_tokens,
-            cache_creation_input_tokens=response.usage.cache_creation_input_tokens or 0,
-            cache_read_input_tokens=response.usage.cache_read_input_tokens or 0,
-        ),
-    )
-    if response.stop_reason in ("refusal", "max_tokens"):
-        log.warning("report_incomplete", stop_reason=response.stop_reason)
+    except (BackendError, RetryableBackendError) as exc:
+        log.warning("report_failed", error=str(exc))
         return offline_report(run)
-    text = "".join(b.text for b in response.content if b.type == "text").strip()
-    return text or offline_report(run)
+    tracker.record_cost(response.usage, response.cost_usd)
+    return response.text.strip() or offline_report(run)

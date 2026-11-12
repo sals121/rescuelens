@@ -20,6 +20,8 @@ class CachedVerdict(BaseModel):
     prompt_version: str
     input_tokens: int
     output_tokens: int
+    cost_usd: float = 0.0
+    latency_s: float = 0.0
 
 
 def cache_key(*, model: str, prompt_version: str, images: list[bytes], text: str) -> str:

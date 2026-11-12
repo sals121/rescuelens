@@ -2,6 +2,7 @@
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -18,6 +19,10 @@ class Settings(BaseSettings):
 
     anthropic_api_key: SecretStr | None = Field(default=None)
     anthropic_model: str = Field(default="claude-opus-5-5")
+    # auto: API if ANTHROPIC_API_KEY is set, else the local Claude Code CLI (subscription).
+    llm_backend: Literal["auto", "api", "claude-code"] = Field(
+        default="auto", alias="RESCUELENS_LLM_BACKEND"
+    )
 
     data_dir: Path = Field(default=PROJECT_ROOT / "data", alias="RESCUELENS_DATA_DIR")
     runs_dir: Path = Field(default=PROJECT_ROOT / "runs", alias="RESCUELENS_RUNS_DIR")

@@ -24,7 +24,7 @@ from rescuelens.detect.crops import make_context, make_crop, make_thumbnail
 from rescuelens.detect.detector import Detection, DetectorConfig, PersonDetector
 from rescuelens.ingest.georef_simulated import pixel_to_latlon
 from rescuelens.ingest.loader import GeoMode, SourceFrame, list_images, load_frames
-from rescuelens.llm import make_client
+from rescuelens.llm import make_backend
 from rescuelens.logging import get_logger
 from rescuelens.report.generator import llm_report, offline_report
 from rescuelens.schemas import Candidate, Frame, Run, RunConfig
@@ -95,9 +95,10 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
     t_start = time.perf_counter()
     run_id = opts.run_id or new_run_id(opts.source_dir)
     run_dir = settings.runs_dir / run_id
-    llm_on = opts.llm_enabled and settings.anthropic_api_key is not None
+    backend = make_backend(settings) if opts.llm_enabled else None
+    llm_on = backend is not None
     if opts.llm_enabled and not llm_on:
-        log.warning("llm_disabled_no_api_key")
+        log.warning("llm_unavailable", hint="install Claude Code or set ANTHROPIC_API_KEY")
 
     paths = list_images(opts.source_dir, opts.limit)
     if not paths:
@@ -113,7 +114,8 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
             use_sahi=opts.use_sahi,
             confidence=opts.confidence,
             llm_enabled=llm_on,
-            model=settings.anthropic_model if llm_on else None,
+            model=backend.model if backend else None,
+            llm_backend=backend.name if backend else None,
             prompt_version=opts.prompt_version if llm_on else None,
             geo_mode=frames_src[0].geo_source,
         ),
@@ -135,18 +137,16 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
     )
 
     tracker = CostTracker(max_cost_usd=settings.llm_max_cost_usd)
-    client = make_client(settings) if llm_on else None
     verifier = (
         Verifier(
-            client=client,
-            model=settings.anthropic_model,
-            system_prompt=load_prompt(settings.prompts_dir, opts.prompt_version),
+            backend=backend,
+            system_prompt=load_prompt(settings.prompts_dir, "verify", opts.prompt_version),
             prompt_version=opts.prompt_version,
             cache=VerdictCache(settings.runs_dir / ".cache" / "llm"),
             tracker=tracker,
             max_concurrency=settings.llm_max_concurrency,
         )
-        if client is not None
+        if backend is not None
         else None
     )
 
@@ -278,17 +278,12 @@ async def run_analysis(opts: AnalysisOptions, settings: Settings) -> AsyncIterat
     s.n_errors = sum(c.verify_status == "error" for c in run.candidates)
     s.detect_s = round(s.detect_s, 2)
 
-    if client is not None and s.n_verified and not budget_hit.is_set():
+    if backend is not None and s.n_verified and not budget_hit.is_set():
         try:
             run.report_markdown = await llm_report(
-                run,
-                client=client,
-                model=settings.anthropic_model,
-                prompts_dir=settings.prompts_dir,
-                tracker=tracker,
+                run, backend=backend, prompts_dir=settings.prompts_dir, tracker=tracker
             )
-        except Exception as exc:
-            log.error("report_failed", error=str(exc))
+        except BudgetExceededError:
             run.report_markdown = offline_report(run)
     else:
         run.report_markdown = offline_report(run)

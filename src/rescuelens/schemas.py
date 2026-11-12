@@ -51,7 +51,7 @@ class RunStats(BaseModel):
     n_errors: int = 0
     duration_s: float = 0.0
     detect_s: float = 0.0
-    cost_usd: float = 0.0
+    cost_usd: float = 0.0  # API list-price equivalent (not billed on the claude-code backend)
     input_tokens: int = 0
     output_tokens: int = 0
     llm_calls: int = 0
@@ -65,6 +65,7 @@ class RunConfig(BaseModel):
     confidence: float
     llm_enabled: bool
     model: str | None
+    llm_backend: str | None = None  # "claude-code" (subscription) or "api"
     prompt_version: str | None
     geo_mode: GeoSource
 
