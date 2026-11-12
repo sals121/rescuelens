@@ -8,6 +8,7 @@ what a search coordinator plans with. EXIF has the lens but not the height above
 from __future__ import annotations
 
 import math
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -63,3 +64,23 @@ def read_camera(path: Path) -> CameraInfo:
         return CameraInfo(model, w, h, float(f35), f35_assumed=False)
     known = KNOWN_F35_MM.get(model or "")
     return CameraInfo(model, w, h, known or DEFAULT_F35_MM, f35_assumed=known is None)
+
+
+_REL_ALT = (
+    re.compile(rb'drone-dji:RelativeAltitude="([-+0-9.]+)"'),
+    re.compile(rb"<drone-dji:RelativeAltitude>([-+0-9.]+)<"),
+)
+
+
+def read_relative_altitude(path: Path, head_bytes: int = 256_000) -> float | None:
+    """DJI XMP ``RelativeAltitude``: metres above the *take-off point*, not above ground.
+
+    Over flat ground it is the height above ground; over a slope it is not. Non-DJI
+    cameras (and DJI photos whose XMP was stripped) return None.
+    """
+    with path.open("rb") as f:
+        head = f.read(head_bytes)
+    for pat in _REL_ALT:
+        if m := pat.search(head):
+            return float(m.group(1))
+    return None

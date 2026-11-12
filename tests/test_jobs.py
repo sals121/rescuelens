@@ -1,6 +1,6 @@
 import asyncio
 import json
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Iterator
 from pathlib import Path
 
 import pytest
@@ -19,7 +19,7 @@ def _opts(run_id: str) -> AnalysisOptions:
 
 async def _fake_run(opts: AnalysisOptions) -> AsyncIterator[Event]:
     yield Event(type="run_started", data={"run_id": opts.run_id})
-    await asyncio.sleep(0.01)
+    await asyncio.sleep(0.1)  # long enough to outlive a per-request event loop
     yield Event(type="run_finished", data={"run_id": opts.run_id})
 
 
@@ -49,7 +49,7 @@ async def test_failure_becomes_error_event() -> None:
 
 
 @pytest.fixture
-def client(tmp_path: Path) -> TestClient:
+def client(tmp_path: Path) -> Iterator[TestClient]:
     folder = tmp_path / "data" / "samples" / "flight-a"
     folder.mkdir(parents=True)
     Image.new("RGB", (8, 8)).save(folder / "a.jpg")
@@ -59,7 +59,10 @@ def client(tmp_path: Path) -> TestClient:
         RESCUELENS_RUNS_DIR=tmp_path / "runs",
         RESCUELENS_DATA_DIR=tmp_path / "data",
     )
-    return TestClient(create_app(settings, runner=_fake_run))
+    # One event loop for the whole client, as under uvicorn. Without `with`, every request
+    # gets its own loop and the job task started by POST dies when that request returns.
+    with TestClient(create_app(settings, runner=_fake_run)) as c:
+        yield c
 
 
 def test_sources_lists_only_folders_with_images(client: TestClient) -> None:

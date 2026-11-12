@@ -1,0 +1,463 @@
+{
+ "tag": "rescuelens-yolo26s-heridal_sahi",
+ "conf": 0.4,
+ "val": {
+  "iou50/size": [
+   {
+    "stratum": "< 30 px",
+    "people": 1,
+    "photos": 1,
+    "conf 0.40": {
+     "found": 1,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 1,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "30-40 px",
+    "people": 16,
+    "photos": 11,
+    "conf 0.40": {
+     "found": 11,
+     "recall": 0.6875,
+     "ci": [
+      0.35,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 12,
+     "recall": 0.75,
+     "ci": [
+      0.3998484848484849,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "40-50 px",
+    "people": 42,
+    "photos": 28,
+    "conf 0.40": {
+     "found": 34,
+     "recall": 0.8095238095238095,
+     "ci": [
+      0.6428571428571429,
+      0.9629629629629629
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 35,
+     "recall": 0.8333333333333334,
+     "ci": [
+      0.7073065601345668,
+      0.9629629629629629
+     ]
+    }
+   },
+   {
+    "stratum": "50-60 px",
+    "people": 57,
+    "photos": 39,
+    "conf 0.40": {
+     "found": 47,
+     "recall": 0.8245614035087719,
+     "ci": [
+      0.6935483870967742,
+      0.9473684210526315
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 48,
+     "recall": 0.8421052631578947,
+     "ci": [
+      0.7124905303030303,
+      0.9629629629629629
+     ]
+    }
+   },
+   {
+    "stratum": "60-80 px",
+    "people": 116,
+    "photos": 50,
+    "conf 0.40": {
+     "found": 104,
+     "recall": 0.896551724137931,
+     "ci": [
+      0.837184242181235,
+      0.9553621031746032
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 106,
+     "recall": 0.9137931034482759,
+     "ci": [
+      0.8571171634121274,
+      0.969708276797829
+     ]
+    }
+   },
+   {
+    "stratum": "80-120 px",
+    "people": 43,
+    "photos": 29,
+    "conf 0.40": {
+     "found": 35,
+     "recall": 0.813953488372093,
+     "ci": [
+      0.6842105263157895,
+      0.9268728222996514
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 35,
+     "recall": 0.813953488372093,
+     "ci": [
+      0.6842105263157895,
+      0.9268728222996514
+     ]
+    }
+   }
+  ],
+  "found/size": [
+   {
+    "stratum": "< 30 px",
+    "people": 1,
+    "photos": 1,
+    "conf 0.40": {
+     "found": 1,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 1,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "30-40 px",
+    "people": 16,
+    "photos": 11,
+    "conf 0.40": {
+     "found": 13,
+     "recall": 0.8125,
+     "ci": [
+      0.625,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 15,
+     "recall": 0.9375,
+     "ci": [
+      0.8499621212121212,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "40-50 px",
+    "people": 42,
+    "photos": 28,
+    "conf 0.40": {
+     "found": 37,
+     "recall": 0.8809523809523809,
+     "ci": [
+      0.75,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 39,
+     "recall": 0.9285714285714286,
+     "ci": [
+      0.8571428571428571,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "50-60 px",
+    "people": 57,
+    "photos": 39,
+    "conf 0.40": {
+     "found": 53,
+     "recall": 0.9298245614035088,
+     "ci": [
+      0.8596422697368421,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 56,
+     "recall": 0.9824561403508771,
+     "ci": [
+      0.9473684210526315,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "60-80 px",
+    "people": 116,
+    "photos": 50,
+    "conf 0.40": {
+     "found": 113,
+     "recall": 0.9741379310344828,
+     "ci": [
+      0.9406684796357198,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 115,
+     "recall": 0.9913793103448276,
+     "ci": [
+      0.9722157320872274,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "80-120 px",
+    "people": 43,
+    "photos": 29,
+    "conf 0.40": {
+     "found": 40,
+     "recall": 0.9302325581395349,
+     "ci": [
+      0.8518321513002364,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 40,
+     "recall": 0.9302325581395349,
+     "ci": [
+      0.8518321513002364,
+      1.0
+     ]
+    }
+   }
+  ],
+  "found/gsd": [
+   {
+    "stratum": "< 1.25 cm/px",
+    "people": 6,
+    "photos": 5,
+    "conf 0.40": {
+     "found": 6,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 6,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "1.25-1.5 cm/px",
+    "people": 55,
+    "photos": 36,
+    "conf 0.40": {
+     "found": 54,
+     "recall": 0.9818181818181818,
+     "ci": [
+      0.9473684210526315,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 55,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "1.5-1.75 cm/px",
+    "people": 36,
+    "photos": 16,
+    "conf 0.40": {
+     "found": 34,
+     "recall": 0.9444444444444444,
+     "ci": [
+      0.875,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 35,
+     "recall": 0.9722222222222222,
+     "ci": [
+      0.92852787456446,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "2-2.5 cm/px",
+    "people": 31,
+    "photos": 14,
+    "conf 0.40": {
+     "found": 31,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 31,
+     "recall": 1.0,
+     "ci": [
+      1.0,
+      1.0
+     ]
+    }
+   }
+  ],
+  "found/camera": [
+   {
+    "stratum": "Canon PowerShot S110",
+    "people": 122,
+    "photos": 13,
+    "conf 0.40": {
+     "found": 111,
+     "recall": 0.9098360655737705,
+     "ci": [
+      0.8355893367497783,
+      0.9717014350252458
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 116,
+     "recall": 0.9508196721311475,
+     "ci": [
+      0.9019607843137255,
+      0.9855124223602485
+     ]
+    }
+   },
+   {
+    "stratum": "FC220",
+    "people": 97,
+    "photos": 57,
+    "conf 0.40": {
+     "found": 94,
+     "recall": 0.9690721649484536,
+     "ci": [
+      0.9375,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 96,
+     "recall": 0.9896907216494846,
+     "ci": [
+      0.968503937007874,
+      1.0
+     ]
+    }
+   },
+   {
+    "stratum": "FC300X",
+    "people": 56,
+    "photos": 24,
+    "conf 0.40": {
+     "found": 52,
+     "recall": 0.9285714285714286,
+     "ci": [
+      0.8648534127347687,
+      1.0
+     ]
+    },
+    "any box (conf 0.05)": {
+     "found": 54,
+     "recall": 0.9642857142857143,
+     "ci": [
+      0.918918918918919,
+      1.0
+     ]
+    }
+   }
+  ]
+ },
+ "test_described": [
+  {
+   "camera": "Canon PowerShot S100",
+   "people": 7,
+   "size_px_median": 52.86775955154521,
+   "share_below_40px": 0.14285714285714285,
+   "rel_alt_m_median": null,
+   "recall_expected_from_size": 0.9180918737731026
+  },
+  {
+   "camera": "Canon PowerShot S110",
+   "people": 115,
+   "size_px_median": 64.62197768561404,
+   "share_below_40px": 0.05217391304347826,
+   "rel_alt_m_median": null,
+   "recall_expected_from_size": 0.9407013707694151
+  },
+  {
+   "camera": "FC220",
+   "people": 33,
+   "size_px_median": 60.21627686929839,
+   "share_below_40px": 0.0,
+   "rel_alt_m_median": 45.0,
+   "recall_expected_from_size": 0.9424363440739586
+  },
+  {
+   "camera": "FC300X",
+   "people": 106,
+   "size_px_median": 50.67537636224608,
+   "share_below_40px": 0.19811320754716982,
+   "rel_alt_m_median": 51.1,
+   "recall_expected_from_size": 0.9003316855331501
+  },
+  {
+   "camera": "FC550",
+   "people": 42,
+   "size_px_median": 53.450830204363314,
+   "share_below_40px": 0.023809523809523808,
+   "rel_alt_m_median": 101.2,
+   "recall_expected_from_size": 0.9172085597629083
+  },
+  {
+   "camera": "no EXIF",
+   "people": 34,
+   "size_px_median": 52.966970630028776,
+   "share_below_40px": 0.14705882352941177,
+   "rel_alt_m_median": null,
+   "recall_expected_from_size": 0.9156115765852197
+  }
+ ]
+}

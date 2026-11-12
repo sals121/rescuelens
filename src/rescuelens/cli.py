@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import dataclasses
 import json
+import math
 from pathlib import Path
 from typing import Annotated
 
@@ -441,6 +442,92 @@ def bench_run(
     (out / f"{tag}.md").write_text(md, encoding="utf-8")
     plot_curves(res, out / f"{tag}_recall_fp.png")
     typer.echo(f"-> {out / f'{tag}.md'} (+ .json, _recall_fp.png)")
+
+
+@bench_app.command("strata")
+def bench_strata(
+    tag: Annotated[str, typer.Option(help="Configuration (cached val predictions)")] = (
+        "rescuelens-yolo26s-heridal_sahi"
+    ),
+    conf: float = 0.4,
+    out: Annotated[Path | None, typer.Option(help="Results directory")] = None,
+) -> None:
+    """Recall on val by person size, ground resolution and camera.
+
+    Test is only *described* (annotation sizes, EXIF), never scored here: val's recall per
+    size bin, weighted by a test group's sizes, is what scale alone would predict.
+    """
+    import numpy as np
+
+    from rescuelens.data.heridal import ground_truth
+    from rescuelens.eval.bench import CRITERIA, label_split
+    from rescuelens.eval.detection import SCORE_FLOOR, load_preds
+    from rescuelens.eval.strata import (
+        GSD_BINS_CM,
+        SIZE_BINS_PX,
+        PhotoMeta,
+        binner,
+        found_flags,
+        people,
+        recall_by,
+        strata_markdown,
+    )
+
+    out = out or get_settings().results_dir / "bench"
+    root = _test_dir()
+    size_bin = binner(SIZE_BINS_PX, "px")
+    gsd_bin = binner(GSD_BINS_CM, "cm/px")
+
+    gts = ground_truth(root, "val")
+    meta = {s: PhotoMeta.read(root / "val_full" / "images" / f"{s}.jpg") for s in gts}
+    preds, _ = load_preds(out / "preds" / f"{tag}_val.json")
+    tables: dict[str, list[dict[str, object]]] = {}
+    for crit in CRITERIA:
+        lab = label_split(preds, gts, crit)
+        ps = people(lab, gts, meta)
+        flags = {
+            f"conf {conf:.2f}": found_flags(lab, gts, conf),
+            "any box (conf 0.05)": found_flags(lab, gts, SCORE_FLOOR),
+        }
+        n = lab.n_images
+        tables[f"{crit}/size"] = recall_by(ps, flags, lambda p: size_bin(p.size_px), n_images=n)
+        if crit == "found":
+            tables["found/gsd"] = recall_by(ps, flags, lambda p: gsd_bin(p.gsd_cm), n_images=n)
+            tables["found/camera"] = recall_by(ps, flags, lambda p: p.camera, n_images=n)
+
+    # test: annotations and EXIF only
+    tgts = ground_truth(root, "test")
+    tmeta = {s: PhotoMeta.read(root / "test_full" / "images" / f"{s}.jpg") for s in tgts}
+    val_by_size = {
+        r["stratum"]: r[f"conf {conf:.2f}"]["recall"]  # type: ignore[index]
+        for r in tables["found/size"]
+    }
+    groups: dict[str, list[float]] = {}
+    alts: dict[str, list[float]] = {}
+    for stem, boxes in tgts.items():
+        cam = tmeta[stem].camera
+        groups.setdefault(cam, []).extend(math.sqrt(b.w * b.h) for b in boxes)
+        if (alt := tmeta[stem].rel_alt_m) is not None:
+            alts.setdefault(cam, []).append(alt)
+    described = []
+    for cam, sizes in sorted(groups.items()):
+        bins = [size_bin(x) for x in sizes]
+        expected = sum(val_by_size.get(b, float("nan")) for b in bins if b) / max(len(bins), 1)
+        described.append(
+            {
+                "camera": cam,
+                "people": len(sizes),
+                "size_px_median": float(np.median(sizes)) if sizes else None,
+                "share_below_40px": float(np.mean([x < 40 for x in sizes])) if sizes else None,
+                "rel_alt_m_median": float(np.median(alts[cam])) if cam in alts else None,
+                "recall_expected_from_size": expected,
+            }
+        )
+    res = {"tag": tag, "conf": conf, "val": tables, "test_described": described}
+    out.mkdir(parents=True, exist_ok=True)
+    (out / f"strata_{tag}.json").write_text(json.dumps(res, indent=1), encoding="utf-8")
+    (out / f"strata_{tag}.md").write_text(strata_markdown(res), encoding="utf-8")
+    typer.echo(f"-> {out / f'strata_{tag}.md'}")
 
 
 @bench_app.command("score")
