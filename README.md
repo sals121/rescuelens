@@ -10,6 +10,9 @@
 uv tool install rust-just   # task runner (works on Windows/macOS/Linux)
 just setup                  # auto-selects CUDA torch if an NVIDIA GPU is present
 just check                  # lint + types + tests
+just download-data          # HERIDAL, 8.3 GB (see DATASET.md)
+just prepare-data           # 640 px YOLO tiles + full-resolution test frames
+uv run rescuelens train     # fine-tune YOLO26 on the tiles (GPU recommended)
 uv run rescuelens analyze path/to/drone/images   # writes runs/<run_id>/run.json
 just run                    # backend on :8731
 just ui                     # frontend on :5179

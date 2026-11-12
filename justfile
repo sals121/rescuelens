@@ -37,6 +37,14 @@ typecheck:
 test:
     {{uvr}} pytest -q
 
+# Download HERIDAL (8.3 GB from Zenodo, resumable, md5-verified)
+download-data:
+    {{uvr}} rescuelens data download
+
+# Extract HERIDAL and build 640 px YOLO tiles + full-resolution test frames
+prepare-data:
+    {{uvr}} rescuelens data prepare
+
 # Run backend (port 8731) and frontend dev server (port 5179)
 run:
     {{uvr}} rescuelens serve

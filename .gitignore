@@ -11,8 +11,8 @@ __pycache__/
 .env
 
 # Data & artefacts (large, reproducible via `just download-data` / `just train`)
-data/
-runs/
+/data/
+/runs/
 weights/*.pt
 *.pt
 !tests/fixtures/**
@@ -26,3 +26,6 @@ frontend/dist/
 .serena/
 .DS_Store
 .playwright-mcp/
+
+# LinkedIn post material (local only)
+/post_output/
