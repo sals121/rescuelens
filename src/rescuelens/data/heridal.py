@@ -188,7 +188,36 @@ def _summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def ground_truth(out_dir: Path) -> dict[str, list[Box]]:
-    """Full-resolution test-set boxes written by :func:`prepare_heridal`."""
-    data = json.loads((out_dir / "test_full" / "boxes.json").read_text(encoding="utf-8"))
+def export_full_split(raw_dir: Path, out_dir: Path, split: str) -> int:
+    """Full-resolution frames + ``boxes.json`` for one split, under ``<split>_full/``.
+
+    ``prepare_heridal`` already does this for test. Val needs it too: operating thresholds
+    are chosen on val frames, never on test. Images are hard-linked when possible.
+    """
+    if split not in SPLITS:
+        raise ValueError(f"unknown split {split!r}")
+    voc_root = find_voc_root(raw_dir)
+    img_dir = out_dir / f"{split}_full" / "images"
+    img_dir.mkdir(parents=True, exist_ok=True)
+    boxes: dict[str, dict[str, Any]] = {}
+    for stem in read_split(voc_root, split):
+        src = voc_root / "JPEGImages" / f"{stem}.jpg"
+        dst = img_dir / src.name
+        if not dst.exists():
+            try:
+                os.link(src, dst)
+            except OSError:
+                shutil.copy2(src, dst)
+        with Image.open(src) as im:
+            size = list(im.size)
+        b = parse_voc(voc_root / "Annotations" / f"{stem}.xml")
+        boxes[stem] = {"size": size, "boxes": [[x.xmin, x.ymin, x.xmax, x.ymax] for x in b]}
+    (img_dir.parent / "boxes.json").write_text(json.dumps(boxes, indent=1), encoding="utf-8")
+    return len(boxes)
+
+
+def ground_truth(out_dir: Path, split: str = "test") -> dict[str, list[Box]]:
+    """Full-resolution boxes of a split (``prepare_heridal`` / :func:`export_full_split`)."""
+    path = out_dir / f"{split}_full" / "boxes.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
     return {stem: [Box(*b) for b in v["boxes"]] for stem, v in data.items()}

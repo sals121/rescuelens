@@ -46,6 +46,11 @@ download-data:
 prepare-data:
     {{uvr}} rescuelens data prepare
 
+# Person-level benchmark: thresholds chosen on val, applied once to test (results/bench)
+bench *args:
+    {{uvr}} rescuelens data full --split val
+    {{uvr}} rescuelens bench run --out results/bench {{args}}
+
 # Copy one real HERIDAL flight (12 frames, EXIF GPS) to data/samples/heridal-bra
 samples:
     {{uvr}} rescuelens data samples

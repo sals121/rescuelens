@@ -22,7 +22,9 @@ things about that:
 
 Official HERIDAL test set: 101 full-resolution photos, 337 annotated people. A detection
 counts when it overlaps an annotated person with IoU ≥ 0.5. Full tables and the PR curve
-are in [`results/2026-11-12`](results/2026-11-12/README.md).
+are in [`results/2026-11-12`](results/2026-11-12/README.md); the person-level benchmark
+(thresholds chosen on val, bootstrap intervals, recall vs. false alarms) is in
+[`docs/evaluation.md`](docs/evaluation.md).
 
 | Detector (conf ≥ 0.25) | AP50 | Recall | Precision | False alarms / photo |
 | --- | ---: | ---: | ---: | ---: |
@@ -87,7 +89,7 @@ Requirements: [uv](https://docs.astral.sh/uv/), Node 24, and an NVIDIA GPU for t
 ```bash
 uv tool install rust-just   # task runner (Windows, macOS, Linux)
 just setup                  # Python + frontend deps; CUDA torch if a GPU is present
-just check                  # lint, types, 96 backend + 10 frontend tests
+just check                  # lint, types, 106 backend + 10 frontend tests
 
 just download-data          # HERIDAL, 8.3 GB from Zenodo, md5-checked (see DATASET.md)
 just prepare-data           # 640 px tiles + full-resolution test photos

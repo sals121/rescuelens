@@ -143,6 +143,18 @@ def data_prepare(
     typer.echo(json.dumps(manifest["splits"], indent=1))
 
 
+@data_app.command("full")
+def data_full(
+    split: Annotated[str, typer.Option(help="train | val | test")] = "val",
+) -> None:
+    """Full-resolution frames + boxes.json for one split (val is used to pick thresholds)."""
+    from rescuelens.data.heridal import export_full_split
+
+    out = get_settings().data_dir / "heridal"
+    n = export_full_split(out / "raw", out, split)
+    typer.echo(f"{n} frames -> {out / f'{split}_full'}")
+
+
 @data_app.command("samples")
 def data_samples(
     prefix: Annotated[str, typer.Option(help="HERIDAL test series to copy")] = "test_BRA_",
@@ -349,6 +361,130 @@ def eval_report(out: Annotated[Path | None, typer.Option(help="Results directory
     from rescuelens.eval.report import write_report
 
     typer.echo(f"-> {write_report(_results_dir(out), _test_dir())}")
+
+
+bench_app = typer.Typer(
+    no_args_is_help=True, help="Person-level benchmark: thresholds on val, test used once."
+)
+app.add_typer(bench_app, name="bench")
+
+
+def _split_areas(frames: Path, agl_m: float) -> dict[str, float]:
+    from rescuelens.ingest.camera import read_camera
+
+    return {p.stem: read_camera(p).footprint_m2(agl_m) / 1e6 for p in sorted(frames.glob("*.jpg"))}
+
+
+@bench_app.command("run")
+def bench_run(
+    weights: Annotated[Path | None, typer.Option(help="Checkpoint (default: fine-tuned)")] = None,
+    sahi: Annotated[bool, typer.Option(help="Sliced inference")] = True,
+    tag: Annotated[str | None, typer.Option(help="Name of this configuration")] = None,
+    agl: Annotated[float, typer.Option(help="Assumed height above ground, m")] = 50.0,
+    target: Annotated[list[float] | None, typer.Option(help="Recall targets (found)")] = None,
+    claude: Annotated[
+        list[Path] | None, typer.Option(help="Verdict files (test) for YOLO + Claude arms")
+    ] = None,
+    device: Annotated[str | None, typer.Option(help="cpu | cuda:0")] = None,
+    boot: Annotated[int, typer.Option(help="Bootstrap replicates")] = 2000,
+    out: Annotated[Path | None, typer.Option(help="Results directory")] = None,
+) -> None:
+    """Predict val + test (cached), choose thresholds on val, report test once."""
+    from rescuelens.data.heridal import ground_truth
+    from rescuelens.eval.bench_run import (
+        Split,
+        load_claude_arm,
+        plot_curves,
+        run_protocol,
+        to_markdown,
+    )
+    from rescuelens.eval.detection import load_preds, predict_frames_timed, save_preds
+
+    s = get_settings()
+    weights = weights or s.default_weights
+    tag = tag or f"{weights.stem}_{'sahi' if sahi else 'full'}"
+    out = out or s.results_dir / "bench"
+    root = _test_dir()
+    splits: dict[str, Split] = {}
+    for name in ("val", "test"):
+        frames = root / f"{name}_full" / "images"
+        if not frames.exists():
+            raise typer.BadParameter(f"{frames} missing; run `rescuelens data full --split {name}`")
+        path = out / "preds" / f"{tag}_{name}.json"
+        if path.exists():
+            preds, meta = load_preds(path)
+        else:
+            preds, timings = predict_frames_timed(
+                weights, frames, use_sahi=sahi, device=device or _default_device()
+            )
+            meta = {"weights": weights.name, "sahi": sahi, "split": name, "timings": timings}
+            save_preds(path, preds, meta)
+        splits[name] = Split(
+            name,
+            preds,
+            ground_truth(root, name),
+            meta.get("timings", {}),
+            _split_areas(frames, agl),
+        )
+    arms = [load_claude_arm(p, p.stem.rsplit("_", 1)[-1]) for p in claude or []]
+    res = run_protocol(
+        splits["val"],
+        splits["test"],
+        targets=target or [0.90, 0.95, 0.98],
+        claude=arms,
+        n_boot=boot,
+    )
+    res = {"tag": tag, "weights": weights.name, "sahi": sahi, "assumed_agl_m": agl, **res}
+    out.mkdir(parents=True, exist_ok=True)
+    (out / f"{tag}.json").write_text(json.dumps(res, indent=1), encoding="utf-8")
+    md = to_markdown(res, f"Benchmark · {tag}")
+    (out / f"{tag}.md").write_text(md, encoding="utf-8")
+    plot_curves(res, out / f"{tag}_recall_fp.png")
+    typer.echo(f"-> {out / f'{tag}.md'} (+ .json, _recall_fp.png)")
+
+
+@bench_app.command("score")
+def bench_score(
+    preds: Annotated[Path, typer.Option(help="Predictions (save_preds format)")],
+    gt: Annotated[Path, typer.Option(help="boxes.json (prepare format)")],
+    conf: float = 0.4,
+    boot: int = 200,
+    check: Annotated[Path | None, typer.Option(help="Fail if results differ from this")] = None,
+    write: Annotated[Path | None, typer.Option(help="Write the results here")] = None,
+) -> None:
+    """Score one prediction file at one threshold. CI runs this on a small fixture."""
+    from rescuelens.data.voc import Box
+    from rescuelens.eval.bench import CRITERIA, label_split, operating_point, threshold_for_recall
+    from rescuelens.eval.detection import load_preds
+
+    p, _ = load_preds(preds)
+    raw = json.loads(gt.read_text(encoding="utf-8"))
+    gts = {k: [Box(*b) for b in v["boxes"]] for k, v in raw.items()}
+    res: dict[str, object] = {}
+    for c in CRITERIA:
+        lab = label_split(p, gts, c)
+        res[c] = operating_point(lab, conf, n_boot=boot)
+        res[f"{c}_conf_for_recall_0.9"] = threshold_for_recall(lab, 0.9)
+    text = json.dumps(res, indent=1, sort_keys=True)
+    if write:
+        write.write_text(text + "\n", encoding="utf-8")
+    typer.echo(text)
+    if check:
+        expected = json.loads(check.read_text(encoding="utf-8"))
+        if not _close(expected, json.loads(text)):
+            typer.echo(f"MISMATCH against {check}", err=True)
+            raise typer.Exit(1)
+        typer.echo(f"OK, matches {check}")
+
+
+def _close(a: object, b: object, tol: float = 1e-9) -> bool:
+    if isinstance(a, dict) and isinstance(b, dict):
+        return a.keys() == b.keys() and all(_close(a[k], b[k], tol) for k in a)
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) == len(b) and all(_close(x, y, tol) for x, y in zip(a, b, strict=True))
+    if isinstance(a, float) or isinstance(b, float):
+        return isinstance(a, int | float) and isinstance(b, int | float) and abs(a - b) <= tol
+    return a == b
 
 
 if __name__ == "__main__":

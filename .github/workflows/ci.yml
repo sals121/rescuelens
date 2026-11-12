@@ -19,6 +19,22 @@ jobs:
       - run: uv run mypy
       - run: uv run pytest -q
 
+  bench-smoke:
+    # Scores real predictions on 12 HERIDAL test photos (fixture, no images, no GPU) and
+    # fails if any person-level metric or bootstrap interval moves.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --extra cpu --locked
+      - run: >-
+          uv run rescuelens bench score
+          --preds tests/fixtures/bench_small/preds.json
+          --gt tests/fixtures/bench_small/gt.json
+          --check tests/fixtures/bench_small/expected.json
+
   frontend:
     runs-on: ubuntu-latest
     defaults:
