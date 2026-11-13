@@ -83,7 +83,7 @@ def _ops(split: Split, labs: Mapping[str, Labelled], conf: float, n_boot: int) -
     }
 
 
-def _latency(timings: Mapping[str, Mapping[str, float]]) -> dict[str, Any] | None:
+def latency_summary(timings: Mapping[str, Mapping[str, float]]) -> dict[str, Any] | None:
     if not timings:
         return None
     det = [t["detect_s"] for t in timings.values()]
@@ -160,7 +160,10 @@ def run_protocol(
             s.name: {c: recall_fp_curve(lab) for c, lab in labs.items()}
             for s, labs in ((val, val_labs), (test, test_labs))
         },
-        "latency": {val.name: _latency(val.timings), test.name: _latency(test.timings)},
+        "latency": {
+            val.name: latency_summary(val.timings),
+            test.name: latency_summary(test.timings),
+        },
         "bootstrap": {"replicates": n_boot, "interval": "95 % percentile", "unit": "image"},
     }
 

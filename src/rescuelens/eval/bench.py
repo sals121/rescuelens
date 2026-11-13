@@ -260,3 +260,57 @@ def recall_fp_curve(lab: Labelled, *, step: float = 0.01) -> list[dict[str, floa
 
 def percentile(values: Sequence[float], q: float) -> float | None:
     return float(np.percentile(np.asarray(values, dtype=np.float64), q)) if values else None
+
+
+def threshold_for_fp_budget(lab: Labelled, fp_per_image: float) -> float | None:
+    """Lowest threshold whose false alarms per image stay within the budget.
+
+    That is the threshold with the highest recall under the budget. Ties in score are kept
+    together (a threshold cannot split them). None if even the top score exceeds it.
+    """
+    order = np.argsort(-lab.score, kind="stable")
+    s = lab.score[order]
+    bad = lab.label[order] == FP
+    if lab.criterion == "iou50":
+        bad |= lab.label[order] == DUP
+    cum_fa = np.cumsum(bad)
+    last_of_tie = np.r_[s[1:] != s[:-1], True] if s.size else np.array([], dtype=bool)
+    ok = (cum_fa <= fp_per_image * lab.n_images + 1e-9) & last_of_tie
+    idx = np.nonzero(ok)[0]
+    return float(s[idx[-1]]) if idx.size else None
+
+
+def paired_difference(
+    a: Labelled,
+    conf_a: float,
+    b: Labelled,
+    conf_b: float,
+    metric: str = "recall",
+    *,
+    n_boot: int = 2000,
+    seed: int = 0,
+) -> dict[str, Any]:
+    """``metric(b) - metric(a)`` on the same photos, with a paired 95 % bootstrap interval.
+
+    Both configurations are resampled with the same photos in every replicate, so photo
+    difficulty cancels out. ``share_above_zero`` is the fraction of replicates where b wins.
+    """
+    if a.stems != b.stems or a.criterion != b.criterion:
+        raise ValueError("paired comparison needs the same photos and criterion")
+    ca, cb = a.counts(conf_a), b.counts(conf_b)
+    rng = np.random.default_rng(seed)
+    idx = rng.integers(0, a.n_images, size=(n_boot, a.n_images))
+    ra = _rates(ca[idx].sum(axis=1), a.criterion, a.n_images, None)[metric]
+    rb = _rates(cb[idx].sum(axis=1), b.criterion, b.n_images, None)[metric]
+    d = rb - ra
+    d = d[np.isfinite(d)]
+    point = float(
+        _rates(cb.sum(axis=0), b.criterion, b.n_images, None)[metric]
+        - _rates(ca.sum(axis=0), a.criterion, a.n_images, None)[metric]
+    )
+    lo, hi = np.percentile(d, [2.5, 97.5]) if d.size else (math.nan, math.nan)
+    return {
+        "difference": _finite(point),
+        "ci": [_finite(float(lo)), _finite(float(hi))],
+        "share_above_zero": float((d > 0).mean()) if d.size else None,
+    }

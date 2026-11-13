@@ -55,6 +55,11 @@ class DetectorConfig:
     slice_size: int = 640
     overlap: float = 0.2
     full_image_size: int = 1280  # inference size when SAHI is off
+    # Network input size for each SAHI tile. None keeps the historical behaviour: tiles run
+    # at full_image_size, i.e. a 640 px tile is upscaled 2x (found while benchmarking).
+    tile_image_size: int | None = None
+    # SAHI also runs the detector once on the whole (downscaled) frame and merges the boxes.
+    standard_pred: bool = True
 
 
 class PersonDetector:
@@ -82,24 +87,33 @@ class PersonDetector:
             sahi=config.use_sahi,
         )
 
-    def detect(self, image: NDArray[np.uint8]) -> list[Detection]:
-        """Detect people in an RGB HxWx3 image."""
+    def detect(self, image: NDArray[np.uint8], *, slice_size: int | None = None) -> list[Detection]:
+        """Detect people in an RGB HxWx3 image.
+
+        ``slice_size`` overrides the configured tile size for this image only. With a fixed
+        ``tile_image_size`` that rescales the image, e.g. to a common ground resolution.
+        """
         from sahi.predict import get_prediction, get_sliced_prediction
 
-        if self.config.use_sahi:
+        cfg = self.config
+        if cfg.use_sahi:
+            tile = slice_size or cfg.slice_size
+            self._model.image_size = cfg.tile_image_size or cfg.full_image_size
             result = get_sliced_prediction(
                 image,
                 self._model,
-                slice_height=self.config.slice_size,
-                slice_width=self.config.slice_size,
-                overlap_height_ratio=self.config.overlap,
-                overlap_width_ratio=self.config.overlap,
+                slice_height=tile,
+                slice_width=tile,
+                overlap_height_ratio=cfg.overlap,
+                overlap_width_ratio=cfg.overlap,
+                perform_standard_pred=cfg.standard_pred,
                 postprocess_type="NMS",
                 postprocess_match_metric="IOS",
                 postprocess_match_threshold=0.5,
                 verbose=0,
             )
         else:
+            self._model.image_size = cfg.full_image_size
             result = get_prediction(image, self._model)
 
         detections: list[Detection] = []

@@ -141,3 +141,32 @@ def test_fixture_matches_expected_scores() -> None:
     args = ["bench", "score", "--preds", str(d / "preds.json"), "--gt", str(d / "gt.json")]
     result = CliRunner().invoke(app, [*args, "--check", str(d / "expected.json")])
     assert result.exit_code == 0, result.output
+
+
+def test_threshold_for_fp_budget() -> None:
+    from rescuelens.eval.bench import threshold_for_fp_budget
+
+    gts = {"a": [PERSON], "b": []}
+    preds = {
+        "a": [Pred(PERSON, 0.9), Pred(Box(0, 0, 9, 9), 0.5), Pred(Box(300, 0, 309, 9), 0.5)],
+        "b": [Pred(Box(0, 0, 9, 9), 0.7), Pred(Box(50, 50, 60, 60), 0.2)],
+    }
+    lab = label_split(preds, gts, "found")
+    assert threshold_for_fp_budget(lab, 0.5) == 0.7  # 1 false alarm over 2 photos
+    assert threshold_for_fp_budget(lab, 1.0) == 0.7  # the 0.5 tie would add two
+    assert threshold_for_fp_budget(lab, 1.5) == 0.5
+    assert threshold_for_fp_budget(lab, 0.0) == 0.9
+
+
+def test_paired_difference_cancels_photo_difficulty() -> None:
+    from rescuelens.eval.bench import paired_difference
+
+    # b finds exactly one more person than a, in one of 40 photos
+    gts = {f"i{i}": [Box(0, 0, 10, 10)] for i in range(40)}
+    pa = {k: [Pred(Box(0, 0, 10, 10), 0.9)] for k in list(gts)[:20]}
+    pb = {k: [Pred(Box(0, 0, 10, 10), 0.9)] for k in list(gts)[:21]}
+    la, lb = label_split(pa, gts, "found"), label_split(pb, gts, "found")
+    d = paired_difference(la, 0.5, lb, 0.5, n_boot=500)
+    assert d["difference"] == pytest.approx(1 / 40)
+    lo, hi = d["ci"]
+    assert lo >= 0 and hi > 0  # never negative: b is never worse on any photo

@@ -191,8 +191,10 @@ def train(
     batch: int = 32,
     device: str = "0",
     name: str = "heridal-yolo26s",
+    scale: Annotated[float, typer.Option(help="Random zoom range: 1 +/- scale")] = 0.5,
+    eval_split: Annotated[str, typer.Option(help="Split scored after training")] = "val",
 ) -> None:
-    """Fine-tune YOLO on HERIDAL tiles, then score the best checkpoint on the test tiles."""
+    """Fine-tune YOLO on HERIDAL tiles, then score the best checkpoint on val tiles."""
     from rescuelens.train import TrainConfig, train_detector
 
     s = get_settings()
@@ -205,9 +207,11 @@ def train(
         epochs=epochs,
         batch=batch,
         device=device,
+        scale=scale,
+        eval_split=eval_split,
     )
     summary = train_detector(cfg)
-    typer.echo(json.dumps(summary["test_tiles"], indent=1))
+    typer.echo(json.dumps(summary["tiles"], indent=1))
 
 
 DEMO_ATTRIBUTION = """# Demo data
@@ -528,6 +532,199 @@ def bench_strata(
     (out / f"strata_{tag}.json").write_text(json.dumps(res, indent=1), encoding="utf-8")
     (out / f"strata_{tag}.md").write_text(strata_markdown(res), encoding="utf-8")
     typer.echo(f"-> {out / f'strata_{tag}.md'}")
+
+
+@bench_app.command("val")
+def bench_val(
+    tag: Annotated[str, typer.Option(help="Name of this configuration")],
+    weights: Annotated[Path | None, typer.Option(help="Checkpoint (default: fine-tuned)")] = None,
+    slice_size: Annotated[int, typer.Option("--slice", help="SAHI tile size, px")] = 640,
+    tile_imgsz: Annotated[int, typer.Option(help="Network input size per tile")] = 1280,
+    overlap: float = 0.2,
+    standard_pred: Annotated[bool, typer.Option(help="Extra whole-frame pass")] = True,
+    gsd_target: Annotated[
+        float | None,
+        typer.Option(help="Rescale photos with DJI altitude to this cm/px (others unchanged)"),
+    ] = None,
+    order: Annotated[int, typer.Option(help="Row order in the table")] = 0,
+    device: Annotated[str | None, typer.Option(help="cpu | cuda:0")] = None,
+    out: Annotated[Path | None, typer.Option(help="Results directory")] = None,
+) -> None:
+    """Ablation on val only: predict (cached), score at false-alarm budgets, update the table."""
+    from rescuelens.data.heridal import ground_truth
+    from rescuelens.eval.ablation import collect, score_val, table
+    from rescuelens.eval.bench_run import Split
+    from rescuelens.eval.detection import load_preds, predict_frames_timed, save_preds
+    from rescuelens.eval.strata import PhotoMeta
+
+    s = get_settings()
+    weights = weights or s.default_weights
+    out = out or s.results_dir / "bench"
+    frames = _test_dir() / "val_full" / "images"
+    detector = {
+        "slice_size": slice_size,
+        "tile_image_size": tile_imgsz,
+        "overlap": overlap,
+        "standard_pred": standard_pred,
+    }
+
+    def slice_for(p: Path) -> int | None:
+        gsd = PhotoMeta.read(p).gsd_cm
+        if gsd_target is None or gsd is None:
+            return None
+        # rescale by gsd / target: a smaller tile, resized to tile_imgsz, magnifies
+        return max(256, min(2048, round(slice_size * gsd_target / gsd)))
+
+    path = out / "preds" / f"{tag}_val.json"
+    if path.exists():
+        preds, meta = load_preds(path)
+    else:
+        preds, timings = predict_frames_timed(
+            weights,
+            frames,
+            use_sahi=True,
+            device=device or _default_device(),
+            detector=detector,
+            slice_for=slice_for if gsd_target else None,
+        )
+        meta = {"weights": weights.name, "split": "val", "detector": detector,
+                "gsd_target": gsd_target, "timings": timings}  # fmt: skip
+        save_preds(path, preds, meta)
+    split = Split("val", preds, ground_truth(_test_dir(), "val"), meta.get("timings", {}))
+    upscale = f"{tile_imgsz / slice_size:.2f}x" + (
+        f", GSD {gsd_target} cm/px" if gsd_target else ""
+    )
+    score = score_val(split)
+    row = {"tag": tag, "order": order, "upscale": upscale, "weights": weights.name,
+           "detector": detector, "gsd_target": gsd_target, "score": score}  # fmt: skip
+    (out / "ablation").mkdir(parents=True, exist_ok=True)
+    (out / "ablation" / f"{tag}.json").write_text(json.dumps(row, indent=1), encoding="utf-8")
+    (out / "ablation_val.md").write_text(table(collect(out / "ablation")), encoding="utf-8")
+    b = score["budgets"]["found"]["1"]
+    typer.echo(f"{tag}: recall@<=1FA/photo (found) = {b and b['recall']}")
+
+
+@bench_app.command("compare")
+def bench_compare(
+    pair: Annotated[list[str], typer.Option(help="BASE:CANDIDATE tags (cached val preds)")],
+    budget: Annotated[float, typer.Option(help="False alarms per photo allowed")] = 1.0,
+    out: Annotated[Path | None, typer.Option(help="Results directory")] = None,
+) -> None:
+    """Paired bootstrap of recall differences on val, each config at its own budget threshold."""
+    from rescuelens.data.heridal import ground_truth
+    from rescuelens.eval.bench import (
+        CRITERIA,
+        label_split,
+        paired_difference,
+        threshold_for_fp_budget,
+    )
+    from rescuelens.eval.detection import load_preds
+
+    out = out or get_settings().results_dir / "bench"
+    gts = ground_truth(_test_dir(), "val")
+    lines = [
+        f"# Paired comparisons · val · recall at ≤ {budget:g} false alarms per photo",
+        "",
+        "Candidate minus base, same photos in every bootstrap replicate (2,000).",
+        "",
+        "| Base | Candidate | Criterion | Δ recall (points) [95 % CI] | "
+        "Replicates where candidate wins |",
+        "|---|---|---|---:|---:|",
+    ]
+    for item in pair:
+        a_tag, b_tag = item.split(":")
+        pa, _ = load_preds(out / "preds" / f"{a_tag}_val.json")
+        pb, _ = load_preds(out / "preds" / f"{b_tag}_val.json")
+        for c in CRITERIA:
+            la, lb = label_split(pa, gts, c), label_split(pb, gts, c)
+            ta, tb = threshold_for_fp_budget(la, budget), threshold_for_fp_budget(lb, budget)
+            if ta is None or tb is None:
+                continue
+            d = paired_difference(la, ta, lb, tb)
+            lo, hi = d["ci"]
+            crit = "found" if c == "found" else "IoU ≥ 0.5"
+            lines.append(
+                f"| {a_tag} | {b_tag} | {crit} | {100 * d['difference']:+.1f} "
+                f"[{100 * lo:+.1f}, {100 * hi:+.1f}] | {100 * d['share_above_zero']:.0f} % |"
+            )
+    path = out / f"ablation_pairs_fa{budget:g}.md"
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    typer.echo(f"-> {path}")
+
+
+@bench_app.command("latency")
+def bench_latency(
+    tag: Annotated[list[str], typer.Option(help="Ablation tags (results/bench/ablation/*.json)")],
+    photos: Annotated[int, typer.Option(help="Val photos to time")] = 40,
+    rounds: Annotated[int, typer.Option(help="Passes over the photos")] = 2,
+    device: Annotated[str | None, typer.Option(help="cpu | cuda:0")] = None,
+    out: Annotated[Path | None, typer.Option(help="Results directory")] = None,
+) -> None:
+    """Time configurations interleaved photo by photo, so drift (heat, other load) hits all."""
+    import time
+
+    import numpy as np
+    from PIL import Image
+
+    from rescuelens.detect.detector import DetectorConfig, PersonDetector
+    from rescuelens.eval.detection import SCORE_FLOOR
+    from rescuelens.eval.strata import PhotoMeta
+
+    s = get_settings()
+    out = out or s.results_dir / "bench"
+    dev = device or _default_device()
+    cfgs = {t: json.loads((out / "ablation" / f"{t}.json").read_text("utf-8")) for t in tag}
+    dets = {
+        t: PersonDetector(
+            DetectorConfig(
+                weights=PROJECT_ROOT / "weights" / c["weights"],
+                confidence=SCORE_FLOOR,
+                device=dev,
+                **c["detector"],
+            )
+        )
+        for t, c in cfgs.items()
+    }
+    paths = sorted((_test_dir() / "val_full" / "images").glob("*.jpg"))[:: max(1, 155 // photos)]
+    paths = paths[:photos]
+    arrays = []
+    for p in paths:
+        with Image.open(p) as im:
+            arrays.append((p, np.asarray(im.convert("RGB"))))
+
+    def tile_for(t: str, p: Path) -> int | None:
+        target = cfgs[t]["gsd_target"] and float(cfgs[t]["gsd_target"])
+        gsd = PhotoMeta.read(p).gsd_cm if target else None
+        if not target or gsd is None:
+            return None
+        size = int(cfgs[t]["detector"]["slice_size"])
+        return max(256, min(2048, round(size * target / gsd)))
+
+    tiles = {(t, p): tile_for(t, p) for t in dets for p, _ in arrays}  # EXIF read untimed
+    for t, d in dets.items():  # warm-up
+        d.detect(arrays[0][1], slice_size=tiles[t, arrays[0][0]])
+    times: dict[str, list[float]] = {t: [] for t in dets}
+    for _ in range(rounds):
+        for p, arr in arrays:
+            for t, d in dets.items():
+                t0 = time.perf_counter()
+                d.detect(arr, slice_size=tiles[t, p])
+                times[t].append(time.perf_counter() - t0)
+    lines = [
+        f"# Detector latency · {len(paths)} val photos, {rounds} rounds, interleaved",
+        "",
+        f"Device: {dev}. Detector only (tiling, inference, merging); JPEG decoding excluded.",
+        "",
+        "| Configuration | p50 | p95 | mean |",
+        "|---|---:|---:|---:|",
+    ]
+    for t, v in times.items():
+        a = np.asarray(v)
+        p50, p95 = np.percentile(a, [50, 95])
+        lines.append(f"| {t} | {p50:.2f} s | {p95:.2f} s | {a.mean():.2f} s |")
+    path = out / "ablation_latency.md"
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    typer.echo(f"-> {path}")
 
 
 @bench_app.command("score")

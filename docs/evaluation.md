@@ -97,6 +97,47 @@ What this says:
    0.38 per photo) and loses 3 people, at $0.07 and several seconds per photo. It cannot
    recover a person the detector never boxed. Haiku is 33× cheaper but loses 37 people.
 
+## Phase 1.1: who gets missed? (val)
+
+Full tables: [`results/bench/strata_rescuelens-yolo26s-heridal_sahi.md`](../results/bench/strata_rescuelens-yolo26s-heridal_sahi.md).
+Person size is √(w·h) of the annotated box. Ground resolution (GSD) comes from DJI's XMP
+`RelativeAltitude`, which is height above the **take-off point**; Canon photos have none.
+
+**Val, criterion: person found, conf 0.40**
+
+| Person size | People | Recall % [95 % CI] |
+|---|---:|---:|
+| 30–40 px | 16 | 81.2 [62.5, 100] |
+| 40–50 px | 42 | 88.1 [75.0, 100] |
+| 50–60 px | 57 | 93.0 [86.0, 100] |
+| 60–80 px | 116 | 97.4 [94.1, 100] |
+| 80–120 px | 43 | 93.0 [85.2, 100] |
+
+With IoU ≥ 0.5 the same bins read 68.8, 81.0, 82.5, 89.7 and 81.4 %. Small people are
+missed more often. Within val's GSD range (1.25–2.5 cm/px) recall shows no trend (94–100 %
+per bin, criterion: found).
+
+**Is the FC550 drop a camera effect or a scale effect?** Val has no FC550 photo, so val
+alone cannot answer "camera"; it can answer "scale". Test was only *described* for this
+(annotation sizes and EXIF; no new predictions were scored):
+
+| Test group | People | Median size | Share < 40 px | Recall expected from size alone (val curve) | Recall observed (phase 0, found, conf 0.40) |
+|---|---:|---:|---:|---:|---:|
+| DJI FC550 | 42 | 53 px | 2 % | 91.7 % | 66.7 % |
+| no EXIF | 34 | 53 px | 15 % | 91.6 % | 67.6 % |
+| FC300X | 106 | 51 px | 20 % | 90.0 % | 98.1 % |
+
+FC550 people are as large in pixels as everyone else, so pixel scale explains at most a
+few points of the 25-point drop. The FC550 photos were flown much higher than anything in
+train (82–124 m above take-off, train ≤ 77 m), but the people still measure ~53 px; with
+their GSD from EXIF they would be 1.5 m across, against ~1.0 m for FC220 and FC300X, so
+the ground under these photos must sit well above the take-off point and EXIF altitude
+overstates the real one. What differs is therefore not size but something else about these
+photos: camera and lens (Zenmuse X5, 16:9), terrain, light, or pose. With 4 photos (and 8
+without EXIF) this cannot be narrowed down further, and doing so would mean studying test.
+**Consequence:** normalising scale will not fix this group; more varied training data
+(other cameras and terrain) is the lever.
+
 ## Limitations
 
 - **One dataset, small test set.** 101 test photos; recall intervals are about ±5 points

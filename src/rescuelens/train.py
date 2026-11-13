@@ -30,6 +30,10 @@ class TrainConfig:
     # Nadir drone views have no "up": vertical flips are as plausible as horizontal ones.
     flipud: float = 0.5
     fliplr: float = 0.5
+    # Random zoom range is [1 - scale, 1 + scale]; Ultralytics' default is 0.5.
+    scale: float = 0.5
+    # Split scored after training. Val by default: test is reserved for final configurations.
+    eval_split: str = "val"
 
 
 def train_detector(cfg: TrainConfig) -> dict[str, Any]:
@@ -51,6 +55,7 @@ def train_detector(cfg: TrainConfig) -> dict[str, Any]:
         exist_ok=False,
         flipud=cfg.flipud,
         fliplr=cfg.fliplr,
+        scale=cfg.scale,
         plots=True,
     )
     trainer = model.trainer
@@ -62,17 +67,19 @@ def train_detector(cfg: TrainConfig) -> dict[str, Any]:
     cfg.out_weights.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(best, cfg.out_weights)
 
-    # Tile-level metrics on the official HERIDAL test split (full-frame SAHI eval is separate).
+    # Tile-level metrics (full-frame SAHI evaluation is `rescuelens bench`).
     best_model = YOLO(str(best))
     m = best_model.val(
-        data=str(cfg.data), split="test", imgsz=cfg.imgsz, batch=cfg.batch, device=cfg.device,
-        project=str(cfg.project), name=f"{cfg.name}-test", plots=True,
+        data=str(cfg.data), split=cfg.eval_split, imgsz=cfg.imgsz, batch=cfg.batch,
+        device=cfg.device, project=str(cfg.project), name=f"{cfg.name}-{cfg.eval_split}",
+        plots=True,
     )  # fmt: skip
     summary: dict[str, Any] = {
         "config": {k: str(v) if isinstance(v, Path) else v for k, v in asdict(cfg).items()},
         "run_dir": str(run_dir),
         "best": str(best),
-        "test_tiles": {
+        "eval_split": cfg.eval_split,
+        "tiles": {
             "precision": float(m.box.mp),
             "recall": float(m.box.mr),
             "mAP50": float(m.box.map50),
@@ -80,5 +87,5 @@ def train_detector(cfg: TrainConfig) -> dict[str, Any]:
         },
     }
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
-    log.info("training_done", **summary["test_tiles"], weights=str(cfg.out_weights))
+    log.info("training_done", **summary["tiles"], weights=str(cfg.out_weights))
     return summary
