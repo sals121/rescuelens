@@ -26,3 +26,5 @@ Candidate minus base, same photos in every bootstrap replicate (2,000).
 | A5-s1024-i1280 | E1-wbf-A5+B1 | found | +0.7 [+0.0, +1.8] | 86 % |
 | A5-s1024-i1280 | E2-wbf-A5+A1 | IoU ≥ 0.5 | +1.8 [+0.0, +4.2] | 95 % |
 | A5-s1024-i1280 | E2-wbf-A5+A1 | found | +1.1 [+0.0, +2.3] | 95 % |
+| A5-s1024-i1280 | C1-hardneg-s1024-i1280 | IoU ≥ 0.5 | +0.4 [-2.3, +3.0] | 55 % |
+| A5-s1024-i1280 | C1-hardneg-s1024-i1280 | found | -0.4 [-1.6, +0.9] | 17 % |
