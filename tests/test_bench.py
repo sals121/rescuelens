@@ -119,6 +119,8 @@ def test_protocol_picks_thresholds_on_val_only() -> None:
     rule = next(r for r in res["thresholds"] if r["rule"].startswith("recall >= 0.90"))
     assert rule["conf"] == pytest.approx(0.2)  # 9 of 10 val people at conf >= 0.2
     assert rule["test"]["found"]["recall"] == 0.0  # test is scored, never tuned on
+    fa = next(r for r in res["thresholds"] if r["rule"].startswith("<= 1 false alarms"))
+    assert fa["chosen_on"] == "val" and fa["conf"] == pytest.approx(0.1)  # no val false alarms
 
 
 def test_camera_footprint() -> None:

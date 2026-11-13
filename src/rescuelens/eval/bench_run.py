@@ -23,6 +23,7 @@ from rescuelens.eval.bench import (
     operating_point,
     percentile,
     recall_fp_curve,
+    threshold_for_fp_budget,
     threshold_for_recall,
     threshold_max_f1,
 )
@@ -102,6 +103,7 @@ def run_protocol(
     test: Split,
     *,
     targets: Sequence[float] = (0.90, 0.95, 0.98),
+    fa_budgets: Sequence[float] = (0.5, 1.0),
     claude: Sequence[ClaudeArm] = (),
     n_boot: int = 2000,
 ) -> dict[str, Any]:
@@ -115,6 +117,9 @@ def run_protocol(
         rules.append(
             (f"recall >= {t:.2f} (found)", "val", threshold_for_recall(val_labs["found"], t))
         )
+    for b in fa_budgets:
+        conf_b = threshold_for_fp_budget(val_labs["found"], b)
+        rules.append((f"<= {b:g} false alarms/photo (found)", "val", conf_b))
 
     rows: list[dict[str, Any]] = []
     for name, source, conf in rules:
