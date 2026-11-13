@@ -193,6 +193,8 @@ def train(
     name: str = "heridal-yolo26s",
     scale: Annotated[float, typer.Option(help="Random zoom range: 1 +/- scale")] = 0.5,
     eval_split: Annotated[str, typer.Option(help="Split scored after training")] = "val",
+    workers: Annotated[int, typer.Option(help="Data-loading processes (RAM grows with it)")] = 8,
+    resume: Annotated[bool, typer.Option(help="Continue run NAME from its last.pt")] = False,
 ) -> None:
     """Fine-tune YOLO on HERIDAL tiles, then score the best checkpoint on val tiles."""
     from rescuelens.train import TrainConfig, train_detector
@@ -209,6 +211,8 @@ def train(
         device=device,
         scale=scale,
         eval_split=eval_split,
+        workers=workers,
+        resume=resume,
     )
     summary = train_detector(cfg)
     typer.echo(json.dumps(summary["tiles"], indent=1))

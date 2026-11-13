@@ -34,12 +34,29 @@ class TrainConfig:
     scale: float = 0.5
     # Split scored after training. Val by default: test is reserved for final configurations.
     eval_split: str = "val"
+    # Continue an interrupted run from <project>/<name>/weights/last.pt (saved every epoch).
+    resume: bool = False
 
 
 def train_detector(cfg: TrainConfig) -> dict[str, Any]:
     from ultralytics.models import YOLO  # heavy import, keep it lazy
 
-    model = YOLO(str(cfg.weights))
+    if cfg.resume:
+        last = cfg.project / cfg.name / "weights" / "last.pt"
+        if not last.exists():
+            raise FileNotFoundError(f"nothing to resume: {last}")
+        model = YOLO(str(last))
+        model.train(resume=True)  # every other setting comes from the checkpoint
+    else:
+        model = YOLO(str(cfg.weights))
+        _train_fresh(model, cfg)
+    trainer = model.trainer
+    if trainer is None:
+        raise RuntimeError("Ultralytics did not return a trainer")
+    return _finish(cfg, Path(trainer.best), Path(trainer.save_dir))
+
+
+def _train_fresh(model: Any, cfg: TrainConfig) -> None:  # noqa: ANN401 - Ultralytics model
     model.train(
         data=str(cfg.data),
         epochs=cfg.epochs,
@@ -58,11 +75,10 @@ def train_detector(cfg: TrainConfig) -> dict[str, Any]:
         scale=cfg.scale,
         plots=True,
     )
-    trainer = model.trainer
-    if trainer is None:
-        raise RuntimeError("Ultralytics did not return a trainer")
-    best = Path(trainer.best)
-    run_dir = Path(trainer.save_dir)
+
+
+def _finish(cfg: TrainConfig, best: Path, run_dir: Path) -> dict[str, Any]:
+    from ultralytics.models import YOLO
 
     cfg.out_weights.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(best, cfg.out_weights)
