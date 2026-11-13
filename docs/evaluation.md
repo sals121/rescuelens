@@ -243,6 +243,40 @@ of tilings or models, hard negatives) beats it on the found criterion with an in
 that excludes zero, and A5 is the fastest configuration measured. It is the only
 configuration scored on test.
 
+## Phase 1: final test run (A5)
+
+One run, after the configuration and the operating rules were fixed in commit
+`82b08ff`. Full report: [`A5-s1024-i1280.md`](../results/bench/A5-s1024-i1280.md).
+Thresholds are chosen on val; test is scored once.
+
+**Test, person found (operational), 101 photos, 337 people:**
+
+| Rule (chosen on val) | Conf | Recall % [95 % CI] | False alarms / photo | False alarms / km² |
+|---|---:|---:|---:|---:|
+| Product default | 0.40 | 89.0 [84.8, 93.4] | 0.49 [0.32, 0.66] | 106 [70, 146] |
+| ≤ 1 false alarm per photo on val | 0.165 | 89.9 [85.8, 94.0] | 1.13 [0.88, 1.41] | 247 [191, 307] |
+| Recall ≥ 0.95 on val | 0.468 | 87.5 [83.0, 92.0] | 0.41 [0.26, 0.56] | 89 [56, 125] |
+| Every box (ceiling) | 0.052 | 92.6 [89.2, 95.9] | 2.39 [1.91, 2.91] | 522 [422, 634] |
+
+**Against the phase 0 detector, same test photos** (paired bootstrap by photo, 2,000
+replicates; [`final_vs_phase0.txt`](../results/bench/final_vs_phase0.txt)):
+
+| Comparison | Δ recall, found | Δ recall, IoU ≥ 0.5 |
+|---|---:|---:|
+| Both at conf 0.40 | +3.0 [+1.0, +4.8] | +6.2 [+3.4, +8.8] |
+| Each at its own ≤ 1 FA/photo threshold from val | +3.3 [+0.9, +5.7] | +7.1 [+3.8, +10.2] |
+
+At conf 0.40 the false alarms also fall from 1.17 to 0.49 per photo.
+
+- **The camera gap is still there.** Found recall at conf 0.40 on cameras seen in training
+  is 93.9 [89.7, 97.8] % (89 photos, 261 people); on the FC550 and EXIF-less photos it is
+  72.4 [59.6, 80.0] % (12 photos, 76 people), up from 91.6 and 67.1 % in phase 0. The
+  remaining val → test drop is mostly these 12 photos.
+- **Latency, alone on an idle GPU:** detection p50 0.52 s, p95 0.57 s per 4000 × 3000
+  photo; 0.61 / 0.77 s including JPEG decoding (RTX 5090 Laptop, plugged in). Phase 0's
+  configuration measured 1.17 s p50 in the phase 0 run, under different load.
+- **Claude arms were not re-run.** Their numbers above use phase 0's candidates.
+
 ## Limitations
 
 - **One dataset, small test set.** 101 test photos; recall intervals are about ±5 points

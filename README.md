@@ -46,6 +46,14 @@ more false alarms for 3 % of the price, but drops 34 real people, and in a searc
 missed person is the expensive mistake. Opus is the default; Haiku is one setting away
 for a cheap first pass. Costs are API list-price equivalents.
 
+**Detector update.** A benchmark on a held-out validation split found that sliced
+inference upscaled every tile 2×, outside the scale the detector was trained on. The
+detector now runs 1024 px tiles at network size 1280. On the same 101 test photos, at
+conf 0.40, recall goes from 86.1 % to 89.0 % [84.8, 93.4] (person found: IoU ≥ 0.1 or a
+centre inside the box; paired difference +3.0 points [+1.0, +4.8]) and false alarms
+drop from 1.17 to 0.49 per photo. The Claude rows above use the earlier detector.
+Protocol, ablations and limits: [docs/evaluation.md](docs/evaluation.md).
+
 ## How it works
 
 ```mermaid
@@ -89,7 +97,7 @@ Requirements: [uv](https://docs.astral.sh/uv/), Node 24, and an NVIDIA GPU for t
 ```bash
 uv tool install rust-just   # task runner (Windows, macOS, Linux)
 just setup                  # Python + frontend deps; CUDA torch if a GPU is present
-just check                  # lint, types, 113 backend + 10 frontend tests
+just check                  # lint, types, 121 backend + 10 frontend tests
 
 just download-data          # HERIDAL, 8.3 GB from Zenodo, md5-checked (see DATASET.md)
 just prepare-data           # 640 px tiles + full-resolution test photos

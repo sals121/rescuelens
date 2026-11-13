@@ -1,0 +1,8 @@
+conf 0.40 both, found: +3.0 [+1.0, +4.8]
+<=1 FA/photo on val (0.381 vs 0.165), found: +3.3 [+0.9, +5.7]
+conf 0.40 both, iou50: +6.2 [+3.4, +8.8]
+<=1 FA/photo on val (0.381 vs 0.165), iou50: +7.1 [+3.8, +10.2]
+phase0, seen cameras, found @ conf 0.40: 91.6 [87.1, 95.8] (89 photos, 261 people)
+phase0, unseen cameras, found @ conf 0.40: 67.1 [57.4, 74.2] (12 photos, 76 people)
+A5, seen cameras, found @ conf 0.40: 93.9 [89.7, 97.8] (89 photos, 261 people)
+A5, unseen cameras, found @ conf 0.40: 72.4 [59.6, 80.0] (12 photos, 76 people)

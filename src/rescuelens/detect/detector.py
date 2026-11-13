@@ -52,12 +52,15 @@ class DetectorConfig:
     confidence: float = 0.25
     device: str = "cpu"
     use_sahi: bool = True
-    slice_size: int = 640
+    # 1024 px tiles at network size 1280 (1.25x): best recall on val and the fastest of the
+    # tilings tried; see docs/evaluation.md, phase 1.2-1.3.
+    slice_size: int = 1024
     overlap: float = 0.2
     full_image_size: int = 1280  # inference size when SAHI is off
-    # Network input size for each SAHI tile. None keeps the historical behaviour: tiles run
-    # at full_image_size, i.e. a 640 px tile is upscaled 2x (found while benchmarking).
-    tile_image_size: int | None = None
+    # Network input size for each SAHI tile. None runs tiles at full_image_size, which
+    # upscaled phase 0's 640 px tiles 2x, outside the training scale (found while
+    # benchmarking).
+    tile_image_size: int | None = 1280
     # SAHI also runs the detector once on the whole (downscaled) frame and merges the boxes.
     standard_pred: bool = True
     # Mirror the photo left-right before detecting and mirror the boxes back. One view of a
