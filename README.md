@@ -89,7 +89,7 @@ Requirements: [uv](https://docs.astral.sh/uv/), Node 24, and an NVIDIA GPU for t
 ```bash
 uv tool install rust-just   # task runner (Windows, macOS, Linux)
 just setup                  # Python + frontend deps; CUDA torch if a GPU is present
-just check                  # lint, types, 106 backend + 10 frontend tests
+just check                  # lint, types, 113 backend + 10 frontend tests
 
 just download-data          # HERIDAL, 8.3 GB from Zenodo, md5-checked (see DATASET.md)
 just prepare-data           # 640 px tiles + full-resolution test photos

@@ -178,6 +178,27 @@ test is paired ([`ablation_pairs_fa1.md`](../results/bench/ablation_pairs_fa1.md
   p50; interleaved run 1.75 vs 2.99 s). The absolute values differ 3× between the two
   runs on the same machine, so the final latency is measured again, alone, on test.
 
+### Stronger scale augmentation (val)
+
+The detector was retrained for 100 epochs with random zoom 0.25–1.75× (`--scale 0.75`)
+instead of 0.5–1.5×, everything else unchanged, and scored with the two best tilings.
+
+| Change (val, ≤ 1 FA/photo) | Δ recall, found | Δ recall, IoU ≥ 0.5 |
+|---|---:|---:|
+| Zoom 0.25–1.75×, tiles 1024 → 1280 (A5 → B1) | −1.1 [−2.7, +0.0] | −0.7 [−2.7, +1.1] |
+| Zoom 0.25–1.75×, tiles 640 → 640 (A1 → B2) | +0.4 [−0.8, +1.7] | +1.5 [−1.3, +4.2] |
+
+- **No recall gain.** B2 reaches 97.5 [95.3, 99.5] % (found) and 94.5 [91.2, 97.6] %
+  (IoU ≥ 0.5), within noise of A1 and A5. B1 is never better than A5 in any bootstrap
+  replicate (found).
+- **Fewer low-score false alarms.** At the ceiling (every box down to 0.05) the retrained
+  model gives 1.4–1.8 false alarms per photo against 2.1–2.2, for the same ceiling recall.
+  That does not move recall at 1 FA/photo.
+- **A5 stays.** The reason to try wider zoom was the unseen FC550 camera in test, whose
+  people look larger than in train. Val has no FC550 photo, so val cannot show that
+  benefit, and test is not used to choose. This stays an open question for a dataset with
+  more cameras.
+
 ## Limitations
 
 - **One dataset, small test set.** 101 test photos; recall intervals are about ±5 points
