@@ -427,6 +427,10 @@ def _split_areas(frames: Path, agl_m: float) -> dict[str, float]:
 def bench_run(
     weights: Annotated[Path | None, typer.Option(help="Checkpoint (default: fine-tuned)")] = None,
     sahi: Annotated[bool, typer.Option(help="Sliced inference")] = True,
+    slice_size: Annotated[
+        int | None, typer.Option("--slice", help="SAHI tile size, px (default: detector's)")
+    ] = None,
+    tile_imgsz: Annotated[int | None, typer.Option(help="Network input size per tile")] = None,
     tag: Annotated[str | None, typer.Option(help="Name of this configuration")] = None,
     agl: Annotated[float, typer.Option(help="Assumed height above ground, m")] = 50.0,
     target: Annotated[list[float] | None, typer.Option(help="Recall targets (found)")] = None,
@@ -462,10 +466,20 @@ def bench_run(
         if path.exists():
             preds, meta = load_preds(path)
         else:
+            detector: dict[str, int] = {}
+            if slice_size:
+                detector["slice_size"] = slice_size
+            if tile_imgsz:
+                detector["tile_image_size"] = tile_imgsz
             preds, timings = predict_frames_timed(
-                weights, frames, use_sahi=sahi, device=device or _default_device()
+                weights,
+                frames,
+                use_sahi=sahi,
+                device=device or _default_device(),
+                detector=detector,
             )
-            meta = {"weights": weights.name, "sahi": sahi, "split": name, "timings": timings}
+            meta = {"weights": weights.name, "sahi": sahi, "split": name,
+                    "detector": detector, "timings": timings}  # fmt: skip
             save_preds(path, preds, meta)
         splits[name] = Split(
             name,

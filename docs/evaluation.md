@@ -217,6 +217,32 @@ with both flips. Two tilings reach 98.5 [96.8, 100.0] % (found), about three mor
 of 275, at 2.7× the detection time; the lower bound is zero and val has now been used for
 many comparisons, so this is a candidate for a slower "thorough" mode, not the default.
 
+### Hard negative mining (val)
+
+The training tiles keep only 5 % of person-free tiles, chosen at random. A5 was run over
+the 1,391 full train photos; its 1,913 false alarms with score ≥ 0.10 became 1,601 extra
+640 px tiles centred on them (`rescuelens data hardneg`; at most 8 per photo; 323 of them
+also contain a labelled person). The detector was retrained from the COCO checkpoint with
+the same settings as A5's weights, only the data changed (C1, scored with A5's tiling).
+
+| Change (val) | Δ recall, found | Δ recall, IoU ≥ 0.5 |
+|---|---:|---:|
+| Hard negatives, ≤ 1 FA/photo (A5 → C1) | −0.4 [−1.6, +0.9] | +0.4 [−2.3, +3.0] |
+| Hard negatives, ≤ 0.5 FA/photo (A5 → C1) | −0.4 [−2.4, +1.7] | +0.7 [−2.6, +3.9] |
+
+- **False alarms halve at the low end, recall does not move.** With every box down to
+  0.05, C1 gives 1.0 false alarm per photo against A5's 2.1, but its ceiling recall is
+  also lower (97.1 vs 98.2 %, found). At the budgets an operator would use, the two are
+  within noise ([`ablation_pairs_fa0.5.md`](../results/bench/ablation_pairs_fa0.5.md)).
+
+### Final configuration
+
+**A5: original weights, 1024 px tiles at network size 1280, 20 % overlap, plus the
+whole-frame pass.** Nothing tried after it (stronger zoom augmentation, flip TTA, fusion
+of tilings or models, hard negatives) beats it on the found criterion with an interval
+that excludes zero, and A5 is the fastest configuration measured. It is the only
+configuration scored on test.
+
 ## Limitations
 
 - **One dataset, small test set.** 101 test photos; recall intervals are about ±5 points
