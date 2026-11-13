@@ -46,7 +46,9 @@ def train_detector(cfg: TrainConfig) -> dict[str, Any]:
         if not last.exists():
             raise FileNotFoundError(f"nothing to resume: {last}")
         model = YOLO(str(last))
-        model.train(resume=True)  # every other setting comes from the checkpoint
+        # Ultralytics restores every setting from the checkpoint except a few memory knobs,
+        # so the batch can be lowered when resuming after running out of VRAM.
+        model.train(resume=True, batch=cfg.batch)
     else:
         model = YOLO(str(cfg.weights))
         _train_fresh(model, cfg)
