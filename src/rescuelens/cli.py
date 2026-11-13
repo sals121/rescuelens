@@ -7,7 +7,7 @@ import dataclasses
 import json
 import math
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Any
 
 import typer
 import uvicorn
@@ -154,6 +154,45 @@ def data_full(
     out = get_settings().data_dir / "heridal"
     n = export_full_split(out / "raw", out, split)
     typer.echo(f"{n} frames -> {out / f'{split}_full'}")
+
+
+@data_app.command("hardneg")
+def data_hardneg(
+    weights: Annotated[Path | None, typer.Option(help="Detector that mines (default)")] = None,
+    slice_size: Annotated[int, typer.Option("--slice", help="SAHI tile size, px")] = 1024,
+    tile_imgsz: Annotated[int, typer.Option(help="Network input size per tile")] = 1280,
+    min_score: Annotated[float, typer.Option(help="Lowest false-alarm score mined")] = 0.10,
+    max_per_photo: Annotated[int, typer.Option(help="Hard tiles per photo, at most")] = 8,
+    device: Annotated[str | None, typer.Option(help="cpu | cuda:0")] = None,
+) -> None:
+    """Mine the detector's false alarms on the full *train* photos into extra training tiles.
+
+    Writes data/heridal/tiles_hn/ (tiles, labels, dataset.yaml listing both tile trees).
+    Detections on train are cached in train_full/preds_<weights>.json.
+    """
+    from rescuelens.data.hardneg import HardNegConfig, export_hard_negatives
+    from rescuelens.data.heridal import export_full_split, ground_truth
+    from rescuelens.eval.detection import load_preds, predict_frames_timed, save_preds
+
+    s = get_settings()
+    weights = weights or s.default_weights
+    out = s.data_dir / "heridal"
+    if not (out / "train_full" / "boxes.json").exists():
+        export_full_split(out / "raw", out, "train")
+    frames = out / "train_full" / "images"
+    cache = out / "train_full" / f"preds_{weights.stem}_s{slice_size}_i{tile_imgsz}.json"
+    detector = {"slice_size": slice_size, "tile_image_size": tile_imgsz}
+    if cache.exists():
+        preds, _ = load_preds(cache)
+    else:
+        preds, timings = predict_frames_timed(
+            weights, frames, use_sahi=True, device=device or _default_device(), detector=detector
+        )
+        save_preds(cache, preds, {"weights": weights.name, "split": "train",
+                                  "detector": detector, "timings": timings})  # fmt: skip
+    cfg = HardNegConfig(min_score=min_score, max_per_photo=max_per_photo)
+    summary = export_hard_negatives(preds, ground_truth(out, "train"), frames, out, cfg)
+    typer.echo(json.dumps(summary, indent=1))
 
 
 @data_app.command("samples")
@@ -546,6 +585,9 @@ def bench_val(
     tile_imgsz: Annotated[int, typer.Option(help="Network input size per tile")] = 1280,
     overlap: float = 0.2,
     standard_pred: Annotated[bool, typer.Option(help="Extra whole-frame pass")] = True,
+    hflip: Annotated[
+        bool, typer.Option(help="Detect on the mirrored photo (one TTA view)")
+    ] = False,
     gsd_target: Annotated[
         float | None,
         typer.Option(help="Rescale photos with DJI altitude to this cm/px (others unchanged)"),
@@ -555,9 +597,6 @@ def bench_val(
     out: Annotated[Path | None, typer.Option(help="Results directory")] = None,
 ) -> None:
     """Ablation on val only: predict (cached), score at false-alarm budgets, update the table."""
-    from rescuelens.data.heridal import ground_truth
-    from rescuelens.eval.ablation import collect, score_val, table
-    from rescuelens.eval.bench_run import Split
     from rescuelens.eval.detection import load_preds, predict_frames_timed, save_preds
     from rescuelens.eval.strata import PhotoMeta
 
@@ -570,6 +609,7 @@ def bench_val(
         "tile_image_size": tile_imgsz,
         "overlap": overlap,
         "standard_pred": standard_pred,
+        "hflip": hflip,
     }
 
     def slice_for(p: Path) -> int | None:
@@ -594,18 +634,70 @@ def bench_val(
         meta = {"weights": weights.name, "split": "val", "detector": detector,
                 "gsd_target": gsd_target, "timings": timings}  # fmt: skip
         save_preds(path, preds, meta)
-    split = Split("val", preds, ground_truth(_test_dir(), "val"), meta.get("timings", {}))
-    upscale = f"{tile_imgsz / slice_size:.2f}x" + (
-        f", GSD {gsd_target} cm/px" if gsd_target else ""
+    upscale = (
+        f"{tile_imgsz / slice_size:.2f}x"
+        + (f", GSD {gsd_target} cm/px" if gsd_target else "")
+        + (", mirrored" if hflip else "")
     )
-    score = score_val(split)
     row = {"tag": tag, "order": order, "upscale": upscale, "weights": weights.name,
-           "detector": detector, "gsd_target": gsd_target, "score": score}  # fmt: skip
+           "detector": detector, "gsd_target": gsd_target}  # fmt: skip
+    _ablation_row(out, row, preds, meta.get("timings", {}))
+
+
+def _ablation_row(
+    out: Path, row: dict[str, Any], preds: dict[str, Any], timings: dict[str, Any]
+) -> None:
+    """Score cached val predictions, save the row and rebuild the ablation table."""
+    from rescuelens.data.heridal import ground_truth
+    from rescuelens.eval.ablation import collect, score_val, table
+    from rescuelens.eval.bench_run import Split
+
+    row["score"] = score_val(Split("val", preds, ground_truth(_test_dir(), "val"), timings))
     (out / "ablation").mkdir(parents=True, exist_ok=True)
-    (out / "ablation" / f"{tag}.json").write_text(json.dumps(row, indent=1), encoding="utf-8")
+    path = out / "ablation" / f"{row['tag']}.json"
+    path.write_text(json.dumps(row, indent=1), encoding="utf-8")
     (out / "ablation_val.md").write_text(table(collect(out / "ablation")), encoding="utf-8")
-    b = score["budgets"]["found"]["1"]
-    typer.echo(f"{tag}: recall@<=1FA/photo (found) = {b and b['recall']}")
+    b = row["score"]["budgets"]["found"]["1"]
+    typer.echo(f"{row['tag']}: recall@<=1FA/photo (found) = {b and b['recall']}")
+
+
+@bench_app.command("fuse")
+def bench_fuse(
+    tag: Annotated[str, typer.Option(help="Name of the fused configuration")],
+    member: Annotated[list[str], typer.Option(help="Tags whose cached val preds are merged")],
+    iou_thr: Annotated[float, typer.Option("--iou", help="Fusion IoU")] = 0.55,
+    order: Annotated[int, typer.Option(help="Row order in the table")] = 0,
+    out: Annotated[Path | None, typer.Option(help="Results directory")] = None,
+) -> None:
+    """Weighted box fusion of several cached val runs (flip TTA, model ensembles).
+
+    Detect time per photo is the sum of the members' times: the views run one after another.
+    """
+    from rescuelens.data.voc import Box
+    from rescuelens.detect.fusion import fuse_views
+    from rescuelens.eval.detection import load_preds, save_preds
+    from rescuelens.eval.metrics import Pred
+
+    out = out or get_settings().results_dir / "bench"
+    runs = [load_preds(out / "preds" / f"{m}_val.json") for m in member]
+    stems = sorted(set().union(*(p.keys() for p, _ in runs)))
+    preds: dict[str, list[Pred]] = {}
+    timings: dict[str, dict[str, float]] = {}
+    for st in stems:
+        views = [
+            [(q.box.xmin, q.box.ymin, q.box.xmax, q.box.ymax, q.score) for q in p.get(st, [])]
+            for p, _ in runs
+        ]
+        preds[st] = [Pred(Box(*f[:4]), f[4]) for f in fuse_views(views, iou_thr)]
+        ts = [m.get("timings", {}).get(st) for _, m in runs]
+        if all(ts):
+            timings[st] = {k: sum(t[k] for t in ts if t) for k in ("load_s", "detect_s")}
+    meta = {"split": "val", "fused": member, "iou": iou_thr, "timings": timings}
+    save_preds(out / "preds" / f"{tag}_val.json", preds, meta)
+    weights = sorted({str(m.get("weights")) for _, m in runs})
+    row = {"tag": tag, "order": order, "upscale": f"WBF of {len(member)} runs",
+           "weights": ", ".join(weights), "fused": member, "iou": iou_thr}  # fmt: skip
+    _ablation_row(out, row, preds, timings)
 
 
 @bench_app.command("compare")
@@ -652,7 +744,16 @@ def bench_compare(
                 f"[{100 * lo:+.1f}, {100 * hi:+.1f}] | {100 * d['share_above_zero']:.0f} % |"
             )
     path = out / f"ablation_pairs_fa{budget:g}.md"
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # Keep earlier pairs: replace rows with the same (base, candidate, criterion), add the rest.
+    head = lines[:6]
+
+    def key(row: str) -> tuple[str, ...]:
+        return tuple(c.strip() for c in row.split("|")[1:4])
+
+    new = {key(r): r for r in lines[6:]}
+    old = path.read_text(encoding="utf-8").splitlines()[6:] if path.exists() else []
+    kept = [r for r in old if r.startswith("|") and key(r) not in new]
+    path.write_text("\n".join(head + kept + list(new.values())) + "\n", encoding="utf-8")
     typer.echo(f"-> {path}")
 
 

@@ -60,6 +60,9 @@ class DetectorConfig:
     tile_image_size: int | None = None
     # SAHI also runs the detector once on the whole (downscaled) frame and merges the boxes.
     standard_pred: bool = True
+    # Mirror the photo left-right before detecting and mirror the boxes back. One view of a
+    # flip test-time augmentation; the views are merged with rescuelens.detect.fusion.
+    hflip: bool = False
 
 
 class PersonDetector:
@@ -96,6 +99,9 @@ class PersonDetector:
         from sahi.predict import get_prediction, get_sliced_prediction
 
         cfg = self.config
+        width = image.shape[1]
+        if cfg.hflip:
+            image = np.ascontiguousarray(image[:, ::-1])
         if cfg.use_sahi:
             tile = slice_size or cfg.slice_size
             self._model.image_size = cfg.tile_image_size or cfg.full_image_size
@@ -121,6 +127,8 @@ class PersonDetector:
             if pred.category.id not in self._person_ids:
                 continue
             x, y, w, h = (float(v) for v in pred.bbox.to_xywh())
+            if cfg.hflip:
+                x = width - x - w
             detections.append(Detection(x, y, w, h, float(pred.score.value)))
         detections.sort(key=lambda d: d.score, reverse=True)
         return detections

@@ -199,6 +199,24 @@ instead of 0.5–1.5×, everything else unchanged, and scored with the two best 
   benefit, and test is not used to choose. This stays an open question for a dataset with
   more cameras.
 
+### Test-time augmentation and ensembles (val)
+
+YOLO26 is end-to-end (no NMS) and Ultralytics' built-in `augment=True` silently falls back
+to a single pass for it, so views are merged here with weighted box fusion
+(`rescuelens.detect.fusion`, IoU 0.55): the fused score is the mean over views, so a box
+seen in only one of two views loses half its score. `bench fuse` merges cached runs.
+
+| Change (val, ≤ 1 FA/photo) | Δ recall, found | Δ recall, IoU ≥ 0.5 | Detect p50 |
+|---|---:|---:|---:|
+| A5 + mirrored A5 (flip TTA) | +0.0 [−1.0, +1.0] | +0.4 [+0.0, +1.2] | 1.40 s |
+| A5 + A5 weights at 640 → 640 (two tilings) | +1.1 [+0.0, +2.3] | +1.8 [+0.0, +4.2] | 1.78 s |
+| A5 + scale-augmented weights (two models) | +0.7 [+0.0, +1.8] | +1.1 [+0.0, +2.2] | 1.20 s |
+
+A5 alone: 0.67 s p50 in the same table. Flip TTA adds nothing: the detector was trained
+with both flips. Two tilings reach 98.5 [96.8, 100.0] % (found), about three more people
+of 275, at 2.7× the detection time; the lower bound is zero and val has now been used for
+many comparisons, so this is a candidate for a slower "thorough" mode, not the default.
+
 ## Limitations
 
 - **One dataset, small test set.** 101 test photos; recall intervals are about ±5 points
