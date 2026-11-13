@@ -138,6 +138,46 @@ without EXIF) this cannot be narrowed down further, and doing so would mean stud
 **Consequence:** normalising scale will not fix this group; more varied training data
 (other cameras and terrain) is the lever.
 
+## Phase 1.2–1.3: scale and tiling (val)
+
+Every configuration is scored on val only, by **recall at the threshold that allows at
+most one false alarm per photo** (chosen on val). Full table:
+[`results/bench/ablation_val.md`](../results/bench/ablation_val.md).
+
+**A hidden 2× upscale.** The detector was trained on 640 px tiles at network size 640, but
+SAHI ran each 640 px tile at network size 1280 (the full-frame setting leaked into the
+tiled path). A 60 px person reached the network at ~120 px, outside the training range
+(random zoom 0.5–1.5×). Removing it is the largest gain of the phase.
+
+| Configuration | Tile → network | Recall @ ≤ 1 FA/photo, found | Recall @ ≤ 1 FA/photo, IoU ≥ 0.5 | AP50, IoU ≥ 0.5 |
+|---|---|---:|---:|---:|
+| A0 baseline (phase 0) | 640 → 1280 (2×) | 93.5 [90.1, 96.7] | 84.0 [78.7, 89.6] | 0.722 |
+| A1 | 640 → 640 (1×) | 97.1 [94.9, 99.0] | 93.1 [90.3, 96.1] | 0.878 |
+| A2 | 640 → 960 (1.5×) | 96.4 [94.2, 98.4] | 90.9 [86.8, 95.0] | 0.854 |
+| A3 = A0 without whole-frame pass | 640 → 1280 (2×) | 92.4 [88.8, 95.9] | 83.6 [78.7, 88.6] | 0.728 |
+| A4 | 800 → 1280 (1.6×) | 95.6 [92.5, 98.3] | 90.9 [85.7, 95.6] | 0.867 |
+| **A5** | **1024 → 1280 (1.25×)** | **97.5 [95.5, 99.2]** | **93.1 [88.6, 97.4]** | **0.891** |
+| A6 GSD-normalised to 1.35 cm/px | per photo → 640 | 97.1 [94.9, 99.1] | 93.5 [90.7, 96.2] | 0.894 |
+
+Intervals of different rows overlap, but all rows are the same 155 photos, so the right
+test is paired ([`ablation_pairs_fa1.md`](../results/bench/ablation_pairs_fa1.md)):
+
+| Change (val, ≤ 1 FA/photo) | Δ recall, found | Δ recall, IoU ≥ 0.5 |
+|---|---:|---:|
+| Remove the 2× upscale (A0 → A1) | **+3.6 [+1.7, +5.8]** | **+9.1 [+4.8, +13.1]** |
+| Bigger tiles at 1.25× (A1 → A5) | +0.4 [−0.8, +1.6] | +0.0 [−2.9, +2.9] |
+| GSD normalisation (A1 → A6) | +0.0 [−1.0, +1.0] | +0.4 [−1.3, +2.5] |
+| 1.5× instead of 1× (A1 → A2) | −0.7 [−2.3, +1.0] | −2.2 [−4.6, +0.4] |
+| Drop the whole-frame pass (A0 → A3) | −1.1 [−2.8, +0.4] | −0.4 [−2.9, +1.9] |
+
+- **GSD normalisation does not help on HERIDAL.** People are already ~1 m across at every
+  altitude in train and val, and only DJI photos carry an altitude (123 of 155 val photos;
+  no Canon photo does). Matching the network's training scale (A1) already gets the gain.
+- **A5 is kept.** It ties A1 on recall and needs ~20 tiles per photo instead of 48, so it
+  is the fastest: 0.6× A1's time in both latency measurements (grid run 0.67 vs 1.08 s
+  p50; interleaved run 1.75 vs 2.99 s). The absolute values differ 3× between the two
+  runs on the same machine, so the final latency is measured again, alone, on test.
+
 ## Limitations
 
 - **One dataset, small test set.** 101 test photos; recall intervals are about ±5 points
