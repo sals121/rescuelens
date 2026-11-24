@@ -4,6 +4,23 @@ How RescueLens is measured, what the numbers are, and what they do not say. Ever
 here is reproducible with `just bench` (see [Reproduce](#reproduce)); raw outputs are in
 [`results/bench`](../results/bench).
 
+## Main finding: unseen cameras
+
+With the final detector (phase 1, test, conf 0.40, criterion «found»: IoU ≥ 0.1 or a
+centre inside the box), recall depends far more on the camera than on anything we tuned:
+
+| Test photos | Photos | People | Recall % [95 % CI] |
+|---|---:|---:|---:|
+| Cameras seen in training (FC220, FC300X, Canon S100/S110) | 89 | 261 | **93.9 [89.7, 97.8]** |
+| Cameras never seen (FC550, photos without EXIF) | 12 | 76 | **72.4 [59.6, 80.0]** |
+
+The intervals do not overlap. Every phase 1 change moved recall by at most a few points;
+the camera moves it by about 20. The unseen group is small (12 photos), so its value is
+uncertain, but the gap is the largest effect measured in this benchmark. Val contains no
+photo from those cameras, so no threshold or ablation could account for it. Details:
+[final test run](#phase-1-final-test-run-a5) and
+[`final_vs_phase0.txt`](../results/bench/final_vs_phase0.txt).
+
 ## Protocol
 
 **Splits.** HERIDAL's official splits, never reshuffled: train (1,391 photos) for

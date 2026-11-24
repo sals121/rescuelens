@@ -11,8 +11,8 @@ A drone photo of a hillside is 4000 × 3000 pixels. A person lying in it covers 
 the ones they find come with a lot of rocks, bags and shadows. RescueLens does three
 things about that:
 
-1. **Slices** each photo into 48 overlapping 640 px tiles (SAHI) so a small person is
-   no longer small to the detector.
+1. **Slices** each photo into 20 overlapping 1024 px tiles (SAHI), each run at network
+   size 1280, so a small person is no longer small to the detector.
 2. **Detects** with YOLO26s fine-tuned on HERIDAL, a dataset of SAR drone photos.
 3. **Verifies** every candidate with Claude vision. Claude gets a close-up and the whole
    frame, answers in a strict JSON schema (person or not, confidence, posture, priority,
@@ -20,20 +20,41 @@ things about that:
 
 ## Results
 
-Official HERIDAL test set: 101 full-resolution photos, 337 annotated people. A detection
-counts when it overlaps an annotated person with IoU ≥ 0.5. Full tables and the PR curve
-are in [`results/2026-11-12`](results/2026-11-12/README.md); the person-level benchmark
-(thresholds chosen on val, bootstrap intervals, recall vs. false alarms) is in
-[`docs/evaluation.md`](docs/evaluation.md).
+Official HERIDAL test set: 101 full-resolution photos, 337 annotated people. Every choice
+(tiling, thresholds) was made on the validation split; test was scored once. A person
+counts as **found** when a box overlaps them with IoU ≥ 0.1 or a box centre falls inside
+them (would a rescuer checking this box see the person?). Intervals are 95 % bootstrap
+intervals over photos. Protocol, ablations and limits: [docs/evaluation.md](docs/evaluation.md).
 
-| Detector (conf ≥ 0.25) | AP50 | Recall | Precision | False alarms / photo |
-| --- | ---: | ---: | ---: | ---: |
-| YOLO26s (COCO), whole photo | 0.310 | 0.187 | 0.708 | 0.26 |
-| YOLO26s (COCO) + SAHI | 0.443 | 0.377 | 0.718 | 0.50 |
-| **Fine-tuned + SAHI** | **0.782** | **0.846** | 0.561 | 2.21 |
+| Detector alone, conf ≥ 0.40 | Photos | People | Recall, found [95 % CI] |
+| --- | ---: | ---: | ---: |
+| **All test photos** | 101 | 337 | **89.0 % [84.8, 93.4]** |
+| Cameras seen in training (DJI FC220, FC300X, Canon S100/S110) | 89 | 261 | 93.9 % [89.7, 97.8] |
+| Cameras never seen (DJI FC550, photos without EXIF) | 12 | 76 | 72.4 % [59.6, 80.0] |
 
-Fine-tuning finds 2.2× more people, but leaves about two false alarms per photo. That is
-what Claude is for. Same 409 candidates (detector conf ≥ 0.4), with and without Claude:
+At that threshold the detector raises 0.49 [0.32, 0.66] false alarms per photo. Keeping
+every box down to conf 0.05 finds 92.6 % [89.2, 95.9] at 2.39 false alarms per photo.
+
+**The camera is the biggest effect measured.** Photos from the two cameras that appear
+in neither training nor validation lose about 20 points of recall. Nothing tuned on
+HERIDAL's own cameras can show or fix that; it needs data from other cameras.
+
+Detection takes 0.52 s per 4000 × 3000 photo (median, RTX 5090 Laptop GPU). With the
+stricter literature criterion (IoU ≥ 0.5, duplicates count as false positives) recall at
+conf 0.40 is 87.2 % [82.8, 91.8].
+
+**How it got there.** The first version reached 86.1 % (found, conf 0.40) with 1.17 false
+alarms per photo. A benchmark on the validation split showed that sliced inference was
+upscaling every 640 px tile 2×, outside the scale the detector was trained on. Fixing the
+tiling gave +3.0 points [+1.0, +4.8] on the same test photos and halved the false alarms.
+Stronger zoom augmentation, flip test-time augmentation, model ensembles and hard
+negative mining were each tried on validation and none gave a gain whose interval
+excluded zero, so none was kept.
+
+### Claude as a verifier
+
+Measured with the first detector (640 px tiles), on its 409 candidates at conf ≥ 0.4,
+criterion IoU ≥ 0.5. It has not been re-run with the current detector.
 
 | | Recall | Precision | F1 | False alarms / photo | Cost for 101 photos |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -44,21 +65,15 @@ what Claude is for. Same 409 candidates (detector conf ≥ 0.4), with and withou
 Opus removes 80 of the 136 false alarms and loses 3 of the 273 people. Haiku removes
 more false alarms for 3 % of the price, but drops 34 real people, and in a search a
 missed person is the expensive mistake. Opus is the default; Haiku is one setting away
-for a cheap first pass. Costs are API list-price equivalents.
-
-**Detector update.** A benchmark on a held-out validation split found that sliced
-inference upscaled every tile 2×, outside the scale the detector was trained on. The
-detector now runs 1024 px tiles at network size 1280. On the same 101 test photos, at
-conf 0.40, recall goes from 86.1 % to 89.0 % [84.8, 93.4] (person found: IoU ≥ 0.1 or a
-centre inside the box; paired difference +3.0 points [+1.0, +4.8]) and false alarms
-drop from 1.17 to 0.49 per photo. The Claude rows above use the earlier detector.
-Protocol, ablations and limits: [docs/evaluation.md](docs/evaluation.md).
+for a cheap first pass. Costs are API list-price equivalents. Detector-level tables from
+that first run (COCO vs fine-tuned, AP50, PR curve) are in
+[`results/2026-11-12`](results/2026-11-12/README.md).
 
 ## How it works
 
 ```mermaid
 flowchart LR
-    A[Drone photos<br/>+ EXIF GPS] --> B[SAHI<br/>48 tiles / photo]
+    A[Drone photos<br/>+ EXIF GPS] --> B[SAHI<br/>20 tiles / photo]
     B --> C[YOLO26s<br/>fine-tuned on HERIDAL]
     C -->|candidates| D[Close-up + whole frame]
     D --> E[Claude vision<br/>strict JSON verdict]
@@ -87,12 +102,16 @@ runs `claude -p` headless with your Claude subscription: no tools, no MCP server
 user settings, and the same JSON schema enforced with `--json-schema`. With
 `ANTHROPIC_API_KEY` set, the `api` backend calls the Messages API through the official
 SDK instead. Choose with `RESCUELENS_LLM_BACKEND=claude-code|api` (see `.env.example`).
-All the numbers above were produced with the `claude-code` backend.
+All the Claude numbers above were produced with the `claude-code` backend.
 
 ## Run it
 
 Requirements: [uv](https://docs.astral.sh/uv/), Node 24, and an NVIDIA GPU for training
 (inference runs on CPU, slowly).
+
+**The fine-tuned weights are not published.** To detect people you train them yourself
+from the public COCO checkpoint (about 2 h on an RTX 5090 laptop GPU). The static demo
+replays a recorded run and needs no weights.
 
 ```bash
 uv tool install rust-just   # task runner (Windows, macOS, Linux)
@@ -100,22 +119,31 @@ just setup                  # Python + frontend deps; CUDA torch if a GPU is pre
 just check                  # lint, types, 121 backend + 10 frontend tests
 
 just download-data          # HERIDAL, 8.3 GB from Zenodo, md5-checked (see DATASET.md)
-just prepare-data           # 640 px tiles + full-resolution test photos
-uv run rescuelens train     # fine-tune YOLO26s (1.8 h on an RTX 5090 laptop)
+just prepare-data           # 640 px training tiles + full-resolution test photos
+just cli train              # fine-tune YOLO26s on the tiles
 just samples                # copy one real flight (12 photos, GPS) to data/samples
 
 just run                    # API on :8731
 just ui                     # UI on :5179, then press "Analyse photos"
 ```
 
-Or from the command line: `uv run rescuelens analyze data/samples/heridal-bra`.
+Or from the command line: `just cli analyze data/samples/heridal-bra`. Use `just cli ...`
+rather than a bare `uv run`: `just` passes the CUDA extra, and a bare `uv run` re-syncs
+the environment to the CPU build of PyTorch.
 
-Reproduce the evaluation (the Claude step reads from the cache when it can):
+Reproduce the person-level benchmark (thresholds chosen on val, test scored once):
 
 ```bash
-uv run rescuelens eval detector --weights weights/yolo26s.pt --weights weights/rescuelens-yolo26s-heridal.pt
-uv run rescuelens eval llm --preds results/<date>/preds/rescuelens-yolo26s-heridal_sahi.json --conf 0.4
-uv run rescuelens eval report
+just bench                  # results/bench/A5-s1024-i1280.md
+just cli bench --help       # ablations on val: bench val, compare, fuse, latency
+```
+
+Reproduce the Claude verification run (it reads verdicts from the cache when it can):
+
+```bash
+just cli eval detector --weights weights/yolo26s.pt --weights weights/rescuelens-yolo26s-heridal.pt
+just cli eval llm --preds results/<date>/preds/rescuelens-yolo26s-heridal_sahi.json --conf 0.4
+just cli eval report
 ```
 
 Build the static demo from any finished run: `just demo <run_id>` (output in
@@ -123,6 +151,9 @@ Build the static demo from any finished run: `just demo <run_id>` (output in
 
 ## Limitations
 
+- **New cameras.** Recall drops from 93.9 % to 72.4 % on test photos from cameras not
+  seen in training (12 photos, so the second number is uncertain: 59.6–80.0 %). Expect a
+  similar drop on any drone not in HERIDAL until it is evaluated on that camera.
 - **One dataset.** Trained and tested on HERIDAL: Mediterranean karst in summer, 30–80 m
   altitude. Snow, forest canopy, night or thermal imagery are untested.
 - **101 test photos.** Differences of a couple of points between rows are within noise.
@@ -138,11 +169,11 @@ Build the static demo from any finished run: `just demo <run_id>` (output in
 
 ```text
 src/rescuelens/
-  data/       HERIDAL download (md5), VOC parsing, SAHI-identical tiling
-  detect/     YOLO + SAHI wrapper, crops sent to Claude
+  data/       HERIDAL download (md5), VOC parsing, SAHI-identical tiling, hard negatives
+  detect/     YOLO + SAHI wrapper, box fusion, crops sent to Claude
   verify/     backends (API, Claude Code CLI), schema, cache, cost cap
   ingest/     EXIF GPS, simulated flight paths
-  eval/       metrics (AP, PR), detector and Claude ablations, report
+  eval/       person-level benchmark (bootstrap, val/test protocol), ablations, report
   api/        FastAPI app, SSE job runner
   pipeline.py the analysis, as a stream of events
 prompts/      versioned prompts (verify_v1, report_v1)
