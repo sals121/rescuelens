@@ -52,9 +52,20 @@ class DetectorConfig:
     confidence: float = 0.25
     device: str = "cpu"
     use_sahi: bool = True
-    slice_size: int = 640
+    # 1024 px tiles at network size 1280 (1.25x): best recall on val and the fastest of the
+    # tilings tried; see docs/evaluation.md, phase 1.2-1.3.
+    slice_size: int = 1024
     overlap: float = 0.2
     full_image_size: int = 1280  # inference size when SAHI is off
+    # Network input size for each SAHI tile. None runs tiles at full_image_size, which
+    # upscaled phase 0's 640 px tiles 2x, outside the training scale (found while
+    # benchmarking).
+    tile_image_size: int | None = 1280
+    # SAHI also runs the detector once on the whole (downscaled) frame and merges the boxes.
+    standard_pred: bool = True
+    # Mirror the photo left-right before detecting and mirror the boxes back. One view of a
+    # flip test-time augmentation; the views are merged with rescuelens.detect.fusion.
+    hflip: bool = False
 
 
 class PersonDetector:
@@ -82,24 +93,36 @@ class PersonDetector:
             sahi=config.use_sahi,
         )
 
-    def detect(self, image: NDArray[np.uint8]) -> list[Detection]:
-        """Detect people in an RGB HxWx3 image."""
+    def detect(self, image: NDArray[np.uint8], *, slice_size: int | None = None) -> list[Detection]:
+        """Detect people in an RGB HxWx3 image.
+
+        ``slice_size`` overrides the configured tile size for this image only. With a fixed
+        ``tile_image_size`` that rescales the image, e.g. to a common ground resolution.
+        """
         from sahi.predict import get_prediction, get_sliced_prediction
 
-        if self.config.use_sahi:
+        cfg = self.config
+        width = image.shape[1]
+        if cfg.hflip:
+            image = np.ascontiguousarray(image[:, ::-1])
+        if cfg.use_sahi:
+            tile = slice_size or cfg.slice_size
+            self._model.image_size = cfg.tile_image_size or cfg.full_image_size
             result = get_sliced_prediction(
                 image,
                 self._model,
-                slice_height=self.config.slice_size,
-                slice_width=self.config.slice_size,
-                overlap_height_ratio=self.config.overlap,
-                overlap_width_ratio=self.config.overlap,
+                slice_height=tile,
+                slice_width=tile,
+                overlap_height_ratio=cfg.overlap,
+                overlap_width_ratio=cfg.overlap,
+                perform_standard_pred=cfg.standard_pred,
                 postprocess_type="NMS",
                 postprocess_match_metric="IOS",
                 postprocess_match_threshold=0.5,
                 verbose=0,
             )
         else:
+            self._model.image_size = cfg.full_image_size
             result = get_prediction(image, self._model)
 
         detections: list[Detection] = []
@@ -107,6 +130,8 @@ class PersonDetector:
             if pred.category.id not in self._person_ids:
                 continue
             x, y, w, h = (float(v) for v in pred.bbox.to_xywh())
+            if cfg.hflip:
+                x = width - x - w
             detections.append(Detection(x, y, w, h, float(pred.score.value)))
         detections.sort(key=lambda d: d.score, reverse=True)
         return detections

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import time
+from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import Any
 
@@ -22,23 +23,54 @@ def predict_frames(
     weights: Path, frames_dir: Path, *, use_sahi: bool, device: str
 ) -> tuple[dict[str, list[Pred]], float]:
     """Predictions per frame stem, and mean seconds per frame (after warm-up)."""
+    preds, timings = predict_frames_timed(weights, frames_dir, use_sahi=use_sahi, device=device)
+    times = [t["detect_s"] for t in timings.values()]
+    return preds, (sum(times) / len(times) if times else float("nan"))
+
+
+def predict_frames_timed(
+    weights: Path,
+    frames_dir: Path,
+    *,
+    use_sahi: bool,
+    device: str,
+    detector: Mapping[str, Any] | None = None,
+    slice_for: Callable[[Path], int | None] | None = None,
+) -> tuple[dict[str, list[Pred]], dict[str, dict[str, float]]]:
+    """Predictions per frame stem, and per-frame timings in seconds.
+
+    ``detector`` overrides :class:`DetectorConfig` fields (tile size, overlap, ...).
+    ``slice_for`` picks a tile size per photo (None keeps the configured one).
+    ``load_s`` is JPEG decoding, ``detect_s`` the detector (tiling, inference, merging).
+    A warm-up pass on the first frame runs before timing so CUDA start-up is not counted.
+    """
     from rescuelens.detect.detector import DetectorConfig, PersonDetector
 
     det = PersonDetector(
-        DetectorConfig(weights=weights, confidence=SCORE_FLOOR, device=device, use_sahi=use_sahi)
+        DetectorConfig(
+            weights=weights,
+            confidence=SCORE_FLOOR,
+            device=device,
+            use_sahi=use_sahi,
+            **dict(detector or {}),
+        )
     )
     paths = sorted(frames_dir.glob("*.jpg"))
     out: dict[str, list[Pred]] = {}
-    times: list[float] = []
+    timings: dict[str, dict[str, float]] = {}
     for i, p in enumerate(tqdm(paths, desc=f"{weights.stem} {'sahi' if use_sahi else 'full'}")):
+        t0 = time.perf_counter()
         with Image.open(p) as im:
             arr = np.asarray(im.convert("RGB"))
-        t0 = time.perf_counter()
-        dets = det.detect(arr)
-        if i > 0:  # first frame includes CUDA warm-up
-            times.append(time.perf_counter() - t0)
+        load_s = time.perf_counter() - t0
+        tile = slice_for(p) if slice_for else None
+        if i == 0:
+            det.detect(arr, slice_size=tile)  # warm-up
+        t1 = time.perf_counter()
+        dets = det.detect(arr, slice_size=tile)
+        timings[p.stem] = {"load_s": load_s, "detect_s": time.perf_counter() - t1}
         out[p.stem] = [Pred(Box(d.x, d.y, d.x + d.w, d.y + d.h), d.score) for d in dets]
-    return out, (sum(times) / len(times) if times else float("nan"))
+    return out, timings
 
 
 def save_preds(path: Path, preds: dict[str, list[Pred]], meta: dict[str, Any]) -> None:

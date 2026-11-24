@@ -30,12 +30,35 @@ class TrainConfig:
     # Nadir drone views have no "up": vertical flips are as plausible as horizontal ones.
     flipud: float = 0.5
     fliplr: float = 0.5
+    # Random zoom range is [1 - scale, 1 + scale]; Ultralytics' default is 0.5.
+    scale: float = 0.5
+    # Split scored after training. Val by default: test is reserved for final configurations.
+    eval_split: str = "val"
+    # Continue an interrupted run from <project>/<name>/weights/last.pt (saved every epoch).
+    resume: bool = False
 
 
 def train_detector(cfg: TrainConfig) -> dict[str, Any]:
     from ultralytics.models import YOLO  # heavy import, keep it lazy
 
-    model = YOLO(str(cfg.weights))
+    if cfg.resume:
+        last = cfg.project / cfg.name / "weights" / "last.pt"
+        if not last.exists():
+            raise FileNotFoundError(f"nothing to resume: {last}")
+        model = YOLO(str(last))
+        # Ultralytics restores every setting from the checkpoint except a few memory knobs,
+        # so the batch can be lowered when resuming after running out of VRAM.
+        model.train(resume=True, batch=cfg.batch)
+    else:
+        model = YOLO(str(cfg.weights))
+        _train_fresh(model, cfg)
+    trainer = model.trainer
+    if trainer is None:
+        raise RuntimeError("Ultralytics did not return a trainer")
+    return _finish(cfg, Path(trainer.best), Path(trainer.save_dir))
+
+
+def _train_fresh(model: Any, cfg: TrainConfig) -> None:  # noqa: ANN401 - Ultralytics model
     model.train(
         data=str(cfg.data),
         epochs=cfg.epochs,
@@ -51,28 +74,30 @@ def train_detector(cfg: TrainConfig) -> dict[str, Any]:
         exist_ok=False,
         flipud=cfg.flipud,
         fliplr=cfg.fliplr,
+        scale=cfg.scale,
         plots=True,
     )
-    trainer = model.trainer
-    if trainer is None:
-        raise RuntimeError("Ultralytics did not return a trainer")
-    best = Path(trainer.best)
-    run_dir = Path(trainer.save_dir)
+
+
+def _finish(cfg: TrainConfig, best: Path, run_dir: Path) -> dict[str, Any]:
+    from ultralytics.models import YOLO
 
     cfg.out_weights.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(best, cfg.out_weights)
 
-    # Tile-level metrics on the official HERIDAL test split (full-frame SAHI eval is separate).
+    # Tile-level metrics (full-frame SAHI evaluation is `rescuelens bench`).
     best_model = YOLO(str(best))
     m = best_model.val(
-        data=str(cfg.data), split="test", imgsz=cfg.imgsz, batch=cfg.batch, device=cfg.device,
-        project=str(cfg.project), name=f"{cfg.name}-test", plots=True,
+        data=str(cfg.data), split=cfg.eval_split, imgsz=cfg.imgsz, batch=cfg.batch,
+        device=cfg.device, project=str(cfg.project), name=f"{cfg.name}-{cfg.eval_split}",
+        plots=True,
     )  # fmt: skip
     summary: dict[str, Any] = {
         "config": {k: str(v) if isinstance(v, Path) else v for k, v in asdict(cfg).items()},
         "run_dir": str(run_dir),
         "best": str(best),
-        "test_tiles": {
+        "eval_split": cfg.eval_split,
+        "tiles": {
             "precision": float(m.box.mp),
             "recall": float(m.box.mr),
             "mAP50": float(m.box.map50),
@@ -80,5 +105,5 @@ def train_detector(cfg: TrainConfig) -> dict[str, Any]:
         },
     }
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
-    log.info("training_done", **summary["test_tiles"], weights=str(cfg.out_weights))
+    log.info("training_done", **summary["tiles"], weights=str(cfg.out_weights))
     return summary
