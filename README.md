@@ -6,6 +6,9 @@ looks, and the result is a ranked search list on a map.
 
 ![RescueLens replaying a search over a real HERIDAL flight](docs/demo.gif)
 
+**[Try the demo](https://sals121.github.io/rescuelens/)**: it replays a real HERIDAL flight in
+the browser, no install or weights needed.
+
 A drone photo of a hillside is 4000 × 3000 pixels. A person lying in it covers about
 60 × 40 of them, or **0.04 % of the image**. Generic detectors miss most of them, and
 the ones they find come with a lot of rocks, bags and shadows. RescueLens does three
