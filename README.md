@@ -86,8 +86,10 @@ flowchart LR
 - **One pipeline, three front ends.** `run_analysis` is an async generator of progress
   events. The CLI prints them, the API streams them over SSE, and the static demo
   re-creates them from a recorded run.
-- **Claude never decides alone.** A candidate Claude cannot verify (error, budget hit)
-  stays on the list. A search tool should fail open.
+- **Claude never decides alone.** A candidate Claude rules out is not deleted: its box
+  stays on the photo and it moves to a "ruled out" list one click away. A candidate Claude
+  cannot verify (error, budget hit) stays on the main list. A search tool should fail open.
+  Claude's confidence only orders candidates within a priority tier; it is never a threshold.
 - **Reproducible and cheap to re-run.** Verdicts are cached by a hash of model, prompt
   version and image bytes, so re-running an evaluation costs nothing. A hard budget cap
   (`RESCUELENS_MAX_COST_USD`, default $10) stops spending mid-run.
@@ -95,14 +97,16 @@ flowchart LR
   map says so. Photos without GPS get a simulated flight path, labelled as simulated.
   RescueLens never mixes the two.
 
-### Claude without an API key
+### Develop on a subscription, deploy on the API
 
-If [Claude Code](https://claude.com/claude-code) is installed, the `claude-code` backend
-runs `claude -p` headless with your Claude subscription: no tools, no MCP servers, no
-user settings, and the same JSON schema enforced with `--json-schema`. With
-`ANTHROPIC_API_KEY` set, the `api` backend calls the Messages API through the official
-SDK instead. Choose with `RESCUELENS_LLM_BACKEND=claude-code|api` (see `.env.example`).
-All the Claude numbers above were produced with the `claude-code` backend.
+For development, the `claude-code` backend runs [Claude Code](https://claude.com/claude-code)
+headless (`claude -p`) with your own Claude subscription: no tools, no MCP servers, no
+user settings, and the same JSON schema enforced with `--json-schema`. Anything that serves
+other people should use the `api` backend, which calls the Messages API through the
+official SDK with `ANTHROPIC_API_KEY`, as Anthropic's
+[terms for Claude Code](https://code.claude.com/docs/en/legal-and-compliance) require for
+products and services. Choose with `RESCUELENS_LLM_BACKEND=claude-code|api` (see
+`.env.example`). All the Claude numbers above were produced with the `claude-code` backend.
 
 ## Run it
 
